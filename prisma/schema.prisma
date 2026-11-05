@@ -1,4 +1,3 @@
-
 generator client {
   provider = "prisma-client"
   output   = "../src/generated/prisma"
@@ -7,6 +6,8 @@ generator client {
 datasource db {
   provider = "postgresql"
 }
+
+// ==================== ENUMS ====================
 
 enum UserRole {
   CUSTOMER
@@ -38,6 +39,62 @@ enum InventoryMovementType {
   DAMAGE
 }
 
+enum BulkUploadStatus {
+  PROCESSING
+  COMPLETED
+  COMPLETED_WITH_ERRORS
+  FAILED
+}
+
+enum VehicleType {
+  BIKE
+  SCOOTER
+  MOTORCYCLE
+  BICYCLE
+  THREE_WHEELER
+  OTHER
+}
+
+enum OrderStatus {
+  PLACED
+  CONFIRMED
+  PREPARING
+  READY_FOR_PICKUP
+  ASSIGNED
+  PICKED_UP
+  OUT_FOR_DELIVERY
+  DELIVERED
+  DELIVERY_FAILED
+  CANCELLED
+}
+
+enum DeliveryType {
+  EXPRESS
+  SCHEDULED
+}
+
+enum DeliveryAssignmentStatus {
+  PENDING
+  ACCEPTED
+  REJECTED
+  EXPIRED
+  CANCELLED
+  COMPLETED
+}
+
+enum DeliveryBatchStatus {
+  PENDING
+  OFFERED
+  ACCEPTED
+  PICKING_UP
+  OUT_FOR_DELIVERY
+  COMPLETED
+  CANCELLED
+  EXPIRED
+}
+
+// ==================== USER & AUTH ====================
+
 model User {
   id           String   @id @default(cuid())
   phone        String   @unique
@@ -52,9 +109,16 @@ model User {
   otpVerifications OtpVerification[]
   sellerProfile    SellerProfile?
   deliveryProfile  DeliveryPartnerProfile?
+  customerOrders   Order[]
+  productViews ProductView[]
 
-  @@index([role])
+  // Delivery partner review relations
+  reviewedDeliveryApplications DeliveryPartnerProfile[]            @relation("DeliveryPartnerReviewer")
+  deliveryPartnerReviewHistory DeliveryPartnerApplicationHistory[] @relation("DeliveryPartnerHistoryReviewer")
+  
 }
+
+// ==================== OTP ====================
 
 model OtpVerification {
   id         String    @id @default(cuid())
@@ -72,30 +136,41 @@ model OtpVerification {
   @@index([expiresAt])
 }
 
+// ==================== SELLER ====================
+
 model SellerProfile {
-  id           String            @id @default(cuid())
+  id           String @id @default(cuid())
   businessName String
   ownerName    String
   category     String
   address      String
   pincode      String
-  status       ApplicationStatus @default(PENDING)
-  createdAt    DateTime          @default(now())
-  updatedAt    DateTime          @updatedAt
 
-  userId   String @unique
-  user     User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-  products Product[]
+  // Shop location for customer discovery
+  latitude  Float?
+  longitude Float?
 
+  // Seller approval status
+  status ApplicationStatus @default(PENDING)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Seller account relation
+  userId String @unique
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  // Product and bulk upload relations
+  products    Product[]
   bulkUploads BulkUpload[]
+
+  // Indexes
+  @@index([status])
+  @@index([pincode, status])
+  @@index([latitude, longitude])
 }
 
-enum BulkUploadStatus {
-  PROCESSING
-  COMPLETED
-  COMPLETED_WITH_ERRORS
-  FAILED
-}
+// ==================== BULK PRODUCT UPLOAD ====================
 
 model BulkUpload {
   id              String           @id @default(cuid())
@@ -132,16 +207,196 @@ model BulkUploadRow {
   @@index([sku])
 }
 
+// ==================== DELIVERY PARTNER ====================
+
 model DeliveryPartnerProfile {
-  id          String            @id @default(cuid())
-  vehicleType String?
-  status      ApplicationStatus @default(PENDING)
-  createdAt   DateTime          @default(now())
-  updatedAt   DateTime          @updatedAt
+  id     String            @id @default(cuid())
+  status ApplicationStatus @default(PENDING)
+
+  // Vehicle details
+  vehicleType   VehicleType?
+  vehicleNumber String?
+  vehicleModel  String?
+  licenseNumber String?
+
+  // Uploaded documents
+  licenseDocumentUrl String?
+  vehicleDocumentUrl String?
+
+  // Application review details
+  rejectionReason String?   @db.Text
+  reviewedAt      DateTime?
+  reviewedById    String?
+  reapplyCount    Int       @default(0)
+
+  reviewedBy User? @relation("DeliveryPartnerReviewer", fields: [reviewedById], references: [id], onDelete: SetNull)
+
+  // Delivery availability and location
+  isOnline            Boolean   @default(false)
+  latitude            Float?
+  longitude           Float?
+  lastLocationAt      DateTime?
+  maxDeliveryRadiusKm Float     @default(5)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   userId String @unique
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  // Express delivery relations
+  currentOrders Order[]              @relation("CurrentDeliveryPartner")
+  assignments   DeliveryAssignment[]
+
+  // Scheduled delivery relation
+  deliveryBatches DeliveryBatch[]
+
+  // Application history
+  applicationHistory DeliveryPartnerApplicationHistory[]
+
+  @@index([status, isOnline])
+  @@index([latitude, longitude])
+  @@index([reviewedById])
 }
+
+// ==================== DELIVERY PARTNER APPLICATION HISTORY ====================
+
+model DeliveryPartnerApplicationHistory {
+  id String @id @default(cuid())
+
+  previousStatus ApplicationStatus?
+  newStatus      ApplicationStatus
+
+  // Mandatory for rejection; optional for other transitions
+  reason String? @db.Text
+
+  createdAt DateTime @default(now())
+
+  deliveryPartnerProfileId String
+  deliveryPartnerProfile   DeliveryPartnerProfile @relation(fields: [deliveryPartnerProfileId], references: [id], onDelete: Cascade)
+
+  // Admin who performed the action
+  reviewedById String?
+  reviewedBy   User?   @relation("DeliveryPartnerHistoryReviewer", fields: [reviewedById], references: [id], onDelete: SetNull)
+
+  @@index([deliveryPartnerProfileId, createdAt])
+  @@index([reviewedById, createdAt])
+  @@index([newStatus, createdAt])
+}
+
+// ==================== ORDERS ====================
+
+model Order {
+  id          String      @id @default(cuid())
+  orderNumber String      @unique
+  status      OrderStatus @default(PLACED)
+
+  customerId String
+  customer   User   @relation(fields: [customerId], references: [id], onDelete: Restrict)
+
+  // Delivery type
+  deliveryType DeliveryType @default(EXPRESS)
+
+  // Scheduled delivery information
+  scheduledDate DateTime?
+  scheduledSlot String?
+
+  // Seller/store pickup location
+  pickupAddress   String?
+  pickupLatitude  Float?
+  pickupLongitude Float?
+
+  // Customer delivery location
+  deliveryAddress   String
+  deliveryLatitude  Float?
+  deliveryLongitude Float?
+
+  // Order pricing
+  subtotal    Decimal @default(0) @db.Decimal(12, 2)
+  deliveryFee Decimal @default(0) @db.Decimal(12, 2)
+  totalAmount Decimal @default(0) @db.Decimal(12, 2)
+
+  // Currently assigned delivery partner
+  assignedDeliveryPartnerId String?
+  assignedDeliveryPartner   DeliveryPartnerProfile? @relation("CurrentDeliveryPartner", fields: [assignedDeliveryPartnerId], references: [id], onDelete: SetNull)
+
+  // Order items
+  items OrderItem[]
+
+  // Express assignment relation
+  assignments DeliveryAssignment[]
+
+  // Scheduled batch relation
+  deliveryBatchId String?
+  deliveryBatch   DeliveryBatch? @relation(fields: [deliveryBatchId], references: [id], onDelete: SetNull)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([status, createdAt])
+  @@index([assignedDeliveryPartnerId, status])
+  @@index([pickupLatitude, pickupLongitude])
+  @@index([deliveryType, status, scheduledDate])
+  @@index([deliveryBatchId])
+}
+
+// ==================== EXPRESS DELIVERY ASSIGNMENTS ====================
+
+model DeliveryAssignment {
+  id     String                   @id @default(cuid())
+  status DeliveryAssignmentStatus @default(PENDING)
+
+  distanceKm    Float?
+  attemptNumber Int       @default(1)
+  offeredAt     DateTime  @default(now())
+  expiresAt     DateTime?
+  respondedAt   DateTime?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  orderId String
+  order   Order  @relation(fields: [orderId], references: [id], onDelete: Cascade)
+
+  deliveryPartnerProfileId String
+  deliveryPartnerProfile   DeliveryPartnerProfile @relation(fields: [deliveryPartnerProfileId], references: [id], onDelete: Restrict)
+
+  @@index([orderId, status])
+  @@index([deliveryPartnerProfileId, status])
+  @@index([status, expiresAt])
+}
+
+// ==================== SCHEDULED DELIVERY BATCHES ====================
+
+model DeliveryBatch {
+  id     String              @id @default(cuid())
+  status DeliveryBatchStatus @default(PENDING)
+
+  // Batch summary
+  totalOrders     Int      @default(0)
+  totalEarning    Decimal? @db.Decimal(10, 2)
+  totalDistanceKm Float?
+
+  // Offer and acceptance details
+  offeredAt   DateTime?
+  expiresAt   DateTime?
+  acceptedAt  DateTime?
+  completedAt DateTime?
+
+  // Assigned delivery partner (optional before assignment)
+  partnerProfileId String?
+  partnerProfile   DeliveryPartnerProfile? @relation(fields: [partnerProfileId], references: [id], onDelete: Restrict)
+
+  // Orders included in this batch
+  orders Order[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([partnerProfileId, status])
+  @@index([status, expiresAt])
+}
+
+// ==================== CATEGORY ====================
 
 model Category {
   id          String   @id @default(cuid())
@@ -164,6 +419,8 @@ model Category {
   @@index([isActive, sortOrder])
 }
 
+// ==================== PRODUCTS ====================
+
 model Product {
   id          String        @id @default(cuid())
   name        String
@@ -180,8 +437,10 @@ model Product {
   categoryId String
   category   Category @relation(fields: [categoryId], references: [id], onDelete: Restrict)
 
-  variants ProductVariant[]
-  images   ProductImage[]
+  variants   ProductVariant[]
+  images     ProductImage[]
+  orderItems OrderItem[]
+  views ProductView[]
 
   @@unique([sellerProfileId, slug])
   @@index([sellerProfileId, status])
@@ -206,8 +465,9 @@ model ProductVariant {
   productId String
   product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
 
-  inventory     Inventory?
+  inventory      Inventory?
   bulkPriceTiers BulkPriceTier[]
+  orderItems     OrderItem[]
 
   @@index([productId, isActive])
   @@index([barcode])
@@ -225,6 +485,8 @@ model ProductImage {
 
   @@index([productId, sortOrder])
 }
+
+// ==================== INVENTORY ====================
 
 model Inventory {
   id                String   @id @default(cuid())
@@ -256,6 +518,8 @@ model InventoryMovement {
   @@index([type, createdAt])
 }
 
+// ==================== BULK PRICING ====================
+
 model BulkPriceTier {
   id          String   @id @default(cuid())
   minQuantity Int
@@ -269,4 +533,61 @@ model BulkPriceTier {
 
   @@unique([variantId, minQuantity])
   @@index([variantId, minQuantity])
+}
+
+// ==================== ORDER ITEMS ====================
+
+model OrderItem {
+  id String @id @default(cuid())
+
+  // Product snapshot
+  productName  String
+  variantTitle String?
+  sku          String
+
+  // Quantity and pricing
+  quantity  Int
+  unitPrice Decimal @db.Decimal(12, 2)
+  lineTotal Decimal @db.Decimal(12, 2)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Order relation
+  orderId String
+  order   Order  @relation(fields: [orderId], references: [id], onDelete: Cascade)
+
+  // Product relation
+  productId String
+  product   Product @relation(fields: [productId], references: [id], onDelete: Restrict)
+
+  // Product variant relation
+  variantId String
+  variant   ProductVariant @relation(fields: [variantId], references: [id], onDelete: Restrict)
+
+  @@index([orderId])
+  @@index([productId])
+  @@index([variantId])
+}
+
+// ==================== PRODUCT VIEWS ====================
+
+model ProductView {
+  id        String   @id @default(cuid())
+  viewedAt  DateTime @default(now())
+
+  // Logged-in customer (optional for guest)
+  userId String?
+  user   User?   @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  // Guest session tracking
+  sessionId String?
+
+  // Product relation
+  productId String
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@index([productId, viewedAt])
+  @@index([userId, viewedAt])
+  @@index([sessionId, viewedAt])
 }

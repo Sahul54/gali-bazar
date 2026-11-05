@@ -4,6 +4,12 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import {
+  MapPin,
+  LocateFixed,
+  CheckCircle2,
+  Loader2,
+} from "lucide-react";
 
 const categories = [
   "Grocery",
@@ -29,6 +35,9 @@ export default function SellerRegisterPage() {
   const router = useRouter();
 
   const [form, setForm] = useState(initialForm);
+  const [location, setLocation] = useState(null);
+  const [locationLoading, setLocationLoading] = useState(false);
+  const [locationError, setLocationError] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
@@ -46,6 +55,53 @@ export default function SellerRegisterPage() {
 
     setError("");
     setSuccess("");
+  }
+
+  function getCurrentLocation() {
+    setLocationError("");
+    setError("");
+
+    if (!navigator.geolocation) {
+      setLocationError(
+        "Your browser does not support location services."
+      );
+      return;
+    }
+
+    setLocationLoading(true);
+
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        setLocation({
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude,
+        });
+
+        setLocationLoading(false);
+      },
+      (err) => {
+        let message = "Unable to get your shop location.";
+
+        if (err.code === 1) {
+          message =
+            "Location permission denied. Please allow location access in your browser.";
+        } else if (err.code === 2) {
+          message =
+            "Shop location is currently unavailable. Please try again.";
+        } else if (err.code === 3) {
+          message =
+            "Location request timed out. Please try again.";
+        }
+
+        setLocationError(message);
+        setLocationLoading(false);
+      },
+      {
+        enableHighAccuracy: true,
+        timeout: 15000,
+        maximumAge: 0,
+      }
+    );
   }
 
   function validateForm() {
@@ -69,11 +125,16 @@ export default function SellerRegisterPage() {
       return "Please enter a valid 6-digit PIN code.";
     }
 
+    if (!location) {
+      return "Please capture your shop location before submitting.";
+    }
+
     return "";
   }
 
   async function handleSubmit(event) {
     event.preventDefault();
+
     setError("");
     setSuccess("");
 
@@ -99,6 +160,8 @@ export default function SellerRegisterPage() {
           category: form.category,
           address: form.address.trim(),
           pincode: form.pincode,
+          latitude: location.latitude,
+          longitude: location.longitude,
         }),
       });
 
@@ -121,6 +184,8 @@ export default function SellerRegisterPage() {
       );
 
       setForm(initialForm);
+      setLocation(null);
+      setLocationError("");
     } catch (err) {
       setError(
         err instanceof Error
@@ -225,8 +290,8 @@ export default function SellerRegisterPage() {
               </h2>
 
               <p className="mt-2 text-sm leading-6 text-slate-500">
-                Fill in your business details to submit your application for
-                verification.
+                Fill in your business details and shop location to submit your
+                application for verification.
               </p>
             </div>
 
@@ -366,9 +431,76 @@ export default function SellerRegisterPage() {
                 />
               </div>
 
+              {/* Shop location */}
+              <div>
+                <label className={labelClass}>
+                  Shop location <span className="text-red-500">*</span>
+                </label>
+
+                <div className="mt-2 rounded-xl border border-slate-200 bg-slate-50 p-4">
+                  <div className="flex items-start gap-3">
+                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-emerald-100 text-emerald-700">
+                      <MapPin size={20} />
+                    </div>
+
+                    <div className="min-w-0 flex-1">
+                      <p className="text-sm font-semibold text-slate-800">
+                        Confirm your shop location
+                      </p>
+                      <p className="mt-1 text-xs leading-5 text-slate-500">
+                        Stand near your shop and use GPS to capture its
+                        location. This helps customers discover your store
+                        nearby.
+                      </p>
+                    </div>
+                  </div>
+
+                  <button
+                    type="button"
+                    onClick={getCurrentLocation}
+                    disabled={locationLoading || loading}
+                    className="mt-4 flex w-full items-center justify-center gap-2 rounded-xl border border-emerald-700 bg-white px-4 py-3 text-sm font-semibold text-emerald-800 transition hover:bg-emerald-50 disabled:cursor-not-allowed disabled:opacity-60"
+                  >
+                    {locationLoading ? (
+                      <>
+                        <Loader2 size={17} className="animate-spin" />
+                        Detecting location...
+                      </>
+                    ) : (
+                      <>
+                        <LocateFixed size={17} />
+                        {location ? "Refresh Shop Location" : "Use Current Location"}
+                      </>
+                    )}
+                  </button>
+
+                  {location && (
+                    <div className="mt-3 rounded-lg border border-emerald-200 bg-emerald-50 p-3">
+                      <div className="flex items-center gap-2 text-sm font-semibold text-emerald-800">
+                        <CheckCircle2 size={17} />
+                        Shop location captured
+                      </div>
+
+                      <p className="mt-2 text-xs text-emerald-700">
+                        Latitude: {location.latitude.toFixed(6)}
+                      </p>
+                      <p className="mt-1 text-xs text-emerald-700">
+                        Longitude: {location.longitude.toFixed(6)}
+                      </p>
+                    </div>
+                  )}
+
+                  {locationError && (
+                    <p className="mt-3 text-xs leading-5 text-red-600">
+                      {locationError}
+                    </p>
+                  )}
+                </div>
+              </div>
+
               <button
                 type="submit"
-                disabled={loading}
+                disabled={loading || locationLoading}
                 className="flex w-full items-center justify-center gap-2 rounded-xl bg-[#176b49] px-5 py-3.5 text-sm font-semibold text-white shadow-lg shadow-emerald-900/10 transition hover:bg-[#12573b] focus:outline-none focus:ring-4 focus:ring-emerald-600/20 disabled:cursor-not-allowed disabled:opacity-60"
               >
                 {loading ? (

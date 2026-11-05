@@ -20,8 +20,20 @@ export type SellerProfileModel = runtime.Types.Result.DefaultSelection<Prisma.$S
 
 export type AggregateSellerProfile = {
   _count: SellerProfileCountAggregateOutputType | null
+  _avg: SellerProfileAvgAggregateOutputType | null
+  _sum: SellerProfileSumAggregateOutputType | null
   _min: SellerProfileMinAggregateOutputType | null
   _max: SellerProfileMaxAggregateOutputType | null
+}
+
+export type SellerProfileAvgAggregateOutputType = {
+  latitude: number | null
+  longitude: number | null
+}
+
+export type SellerProfileSumAggregateOutputType = {
+  latitude: number | null
+  longitude: number | null
 }
 
 export type SellerProfileMinAggregateOutputType = {
@@ -31,6 +43,8 @@ export type SellerProfileMinAggregateOutputType = {
   category: string | null
   address: string | null
   pincode: string | null
+  latitude: number | null
+  longitude: number | null
   status: $Enums.ApplicationStatus | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -44,6 +58,8 @@ export type SellerProfileMaxAggregateOutputType = {
   category: string | null
   address: string | null
   pincode: string | null
+  latitude: number | null
+  longitude: number | null
   status: $Enums.ApplicationStatus | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -57,6 +73,8 @@ export type SellerProfileCountAggregateOutputType = {
   category: number
   address: number
   pincode: number
+  latitude: number
+  longitude: number
   status: number
   createdAt: number
   updatedAt: number
@@ -65,6 +83,16 @@ export type SellerProfileCountAggregateOutputType = {
 }
 
 
+export type SellerProfileAvgAggregateInputType = {
+  latitude?: true
+  longitude?: true
+}
+
+export type SellerProfileSumAggregateInputType = {
+  latitude?: true
+  longitude?: true
+}
+
 export type SellerProfileMinAggregateInputType = {
   id?: true
   businessName?: true
@@ -72,6 +100,8 @@ export type SellerProfileMinAggregateInputType = {
   category?: true
   address?: true
   pincode?: true
+  latitude?: true
+  longitude?: true
   status?: true
   createdAt?: true
   updatedAt?: true
@@ -85,6 +115,8 @@ export type SellerProfileMaxAggregateInputType = {
   category?: true
   address?: true
   pincode?: true
+  latitude?: true
+  longitude?: true
   status?: true
   createdAt?: true
   updatedAt?: true
@@ -98,6 +130,8 @@ export type SellerProfileCountAggregateInputType = {
   category?: true
   address?: true
   pincode?: true
+  latitude?: true
+  longitude?: true
   status?: true
   createdAt?: true
   updatedAt?: true
@@ -143,6 +177,18 @@ export type SellerProfileAggregateArgs<ExtArgs extends runtime.Types.Extensions.
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
    * 
+   * Select which fields to average
+  **/
+  _avg?: SellerProfileAvgAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
+   * Select which fields to sum
+  **/
+  _sum?: SellerProfileSumAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
    * Select which fields to find the minimum value
   **/
   _min?: SellerProfileMinAggregateInputType
@@ -173,6 +219,8 @@ export type SellerProfileGroupByArgs<ExtArgs extends runtime.Types.Extensions.In
   take?: number
   skip?: number
   _count?: SellerProfileCountAggregateInputType | true
+  _avg?: SellerProfileAvgAggregateInputType
+  _sum?: SellerProfileSumAggregateInputType
   _min?: SellerProfileMinAggregateInputType
   _max?: SellerProfileMaxAggregateInputType
 }
@@ -184,11 +232,15 @@ export type SellerProfileGroupByOutputType = {
   category: string
   address: string
   pincode: string
+  latitude: number | null
+  longitude: number | null
   status: $Enums.ApplicationStatus
   createdAt: Date
   updatedAt: Date
   userId: string
   _count: SellerProfileCountAggregateOutputType | null
+  _avg: SellerProfileAvgAggregateOutputType | null
+  _sum: SellerProfileSumAggregateOutputType | null
   _min: SellerProfileMinAggregateOutputType | null
   _max: SellerProfileMaxAggregateOutputType | null
 }
@@ -218,6 +270,8 @@ export type SellerProfileWhereInput = {
   category?: Prisma.StringFilter<"SellerProfile"> | string
   address?: Prisma.StringFilter<"SellerProfile"> | string
   pincode?: Prisma.StringFilter<"SellerProfile"> | string
+  latitude?: Prisma.FloatNullableFilter<"SellerProfile"> | number | null
+  longitude?: Prisma.FloatNullableFilter<"SellerProfile"> | number | null
   status?: Prisma.EnumApplicationStatusFilter<"SellerProfile"> | $Enums.ApplicationStatus
   createdAt?: Prisma.DateTimeFilter<"SellerProfile"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"SellerProfile"> | Date | string
@@ -234,6 +288,8 @@ export type SellerProfileOrderByWithRelationInput = {
   category?: Prisma.SortOrder
   address?: Prisma.SortOrder
   pincode?: Prisma.SortOrder
+  latitude?: Prisma.SortOrderInput | Prisma.SortOrder
+  longitude?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -254,6 +310,8 @@ export type SellerProfileWhereUniqueInput = Prisma.AtLeast<{
   category?: Prisma.StringFilter<"SellerProfile"> | string
   address?: Prisma.StringFilter<"SellerProfile"> | string
   pincode?: Prisma.StringFilter<"SellerProfile"> | string
+  latitude?: Prisma.FloatNullableFilter<"SellerProfile"> | number | null
+  longitude?: Prisma.FloatNullableFilter<"SellerProfile"> | number | null
   status?: Prisma.EnumApplicationStatusFilter<"SellerProfile"> | $Enums.ApplicationStatus
   createdAt?: Prisma.DateTimeFilter<"SellerProfile"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"SellerProfile"> | Date | string
@@ -269,13 +327,17 @@ export type SellerProfileOrderByWithAggregationInput = {
   category?: Prisma.SortOrder
   address?: Prisma.SortOrder
   pincode?: Prisma.SortOrder
+  latitude?: Prisma.SortOrderInput | Prisma.SortOrder
+  longitude?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   _count?: Prisma.SellerProfileCountOrderByAggregateInput
+  _avg?: Prisma.SellerProfileAvgOrderByAggregateInput
   _max?: Prisma.SellerProfileMaxOrderByAggregateInput
   _min?: Prisma.SellerProfileMinOrderByAggregateInput
+  _sum?: Prisma.SellerProfileSumOrderByAggregateInput
 }
 
 export type SellerProfileScalarWhereWithAggregatesInput = {
@@ -288,6 +350,8 @@ export type SellerProfileScalarWhereWithAggregatesInput = {
   category?: Prisma.StringWithAggregatesFilter<"SellerProfile"> | string
   address?: Prisma.StringWithAggregatesFilter<"SellerProfile"> | string
   pincode?: Prisma.StringWithAggregatesFilter<"SellerProfile"> | string
+  latitude?: Prisma.FloatNullableWithAggregatesFilter<"SellerProfile"> | number | null
+  longitude?: Prisma.FloatNullableWithAggregatesFilter<"SellerProfile"> | number | null
   status?: Prisma.EnumApplicationStatusWithAggregatesFilter<"SellerProfile"> | $Enums.ApplicationStatus
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"SellerProfile"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"SellerProfile"> | Date | string
@@ -301,6 +365,8 @@ export type SellerProfileCreateInput = {
   category: string
   address: string
   pincode: string
+  latitude?: number | null
+  longitude?: number | null
   status?: $Enums.ApplicationStatus
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -316,6 +382,8 @@ export type SellerProfileUncheckedCreateInput = {
   category: string
   address: string
   pincode: string
+  latitude?: number | null
+  longitude?: number | null
   status?: $Enums.ApplicationStatus
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -331,6 +399,8 @@ export type SellerProfileUpdateInput = {
   category?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.StringFieldUpdateOperationsInput | string
   pincode?: Prisma.StringFieldUpdateOperationsInput | string
+  latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   status?: Prisma.EnumApplicationStatusFieldUpdateOperationsInput | $Enums.ApplicationStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -346,6 +416,8 @@ export type SellerProfileUncheckedUpdateInput = {
   category?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.StringFieldUpdateOperationsInput | string
   pincode?: Prisma.StringFieldUpdateOperationsInput | string
+  latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   status?: Prisma.EnumApplicationStatusFieldUpdateOperationsInput | $Enums.ApplicationStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -361,6 +433,8 @@ export type SellerProfileCreateManyInput = {
   category: string
   address: string
   pincode: string
+  latitude?: number | null
+  longitude?: number | null
   status?: $Enums.ApplicationStatus
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -374,6 +448,8 @@ export type SellerProfileUpdateManyMutationInput = {
   category?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.StringFieldUpdateOperationsInput | string
   pincode?: Prisma.StringFieldUpdateOperationsInput | string
+  latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   status?: Prisma.EnumApplicationStatusFieldUpdateOperationsInput | $Enums.ApplicationStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -386,6 +462,8 @@ export type SellerProfileUncheckedUpdateManyInput = {
   category?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.StringFieldUpdateOperationsInput | string
   pincode?: Prisma.StringFieldUpdateOperationsInput | string
+  latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   status?: Prisma.EnumApplicationStatusFieldUpdateOperationsInput | $Enums.ApplicationStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -404,10 +482,17 @@ export type SellerProfileCountOrderByAggregateInput = {
   category?: Prisma.SortOrder
   address?: Prisma.SortOrder
   pincode?: Prisma.SortOrder
+  latitude?: Prisma.SortOrder
+  longitude?: Prisma.SortOrder
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   userId?: Prisma.SortOrder
+}
+
+export type SellerProfileAvgOrderByAggregateInput = {
+  latitude?: Prisma.SortOrder
+  longitude?: Prisma.SortOrder
 }
 
 export type SellerProfileMaxOrderByAggregateInput = {
@@ -417,6 +502,8 @@ export type SellerProfileMaxOrderByAggregateInput = {
   category?: Prisma.SortOrder
   address?: Prisma.SortOrder
   pincode?: Prisma.SortOrder
+  latitude?: Prisma.SortOrder
+  longitude?: Prisma.SortOrder
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -430,10 +517,17 @@ export type SellerProfileMinOrderByAggregateInput = {
   category?: Prisma.SortOrder
   address?: Prisma.SortOrder
   pincode?: Prisma.SortOrder
+  latitude?: Prisma.SortOrder
+  longitude?: Prisma.SortOrder
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   userId?: Prisma.SortOrder
+}
+
+export type SellerProfileSumOrderByAggregateInput = {
+  latitude?: Prisma.SortOrder
+  longitude?: Prisma.SortOrder
 }
 
 export type SellerProfileScalarRelationFilter = {
@@ -471,6 +565,14 @@ export type SellerProfileUncheckedUpdateOneWithoutUserNestedInput = {
   delete?: Prisma.SellerProfileWhereInput | boolean
   connect?: Prisma.SellerProfileWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.SellerProfileUpdateToOneWithWhereWithoutUserInput, Prisma.SellerProfileUpdateWithoutUserInput>, Prisma.SellerProfileUncheckedUpdateWithoutUserInput>
+}
+
+export type NullableFloatFieldUpdateOperationsInput = {
+  set?: number | null
+  increment?: number
+  decrement?: number
+  multiply?: number
+  divide?: number
 }
 
 export type EnumApplicationStatusFieldUpdateOperationsInput = {
@@ -512,6 +614,8 @@ export type SellerProfileCreateWithoutUserInput = {
   category: string
   address: string
   pincode: string
+  latitude?: number | null
+  longitude?: number | null
   status?: $Enums.ApplicationStatus
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -526,6 +630,8 @@ export type SellerProfileUncheckedCreateWithoutUserInput = {
   category: string
   address: string
   pincode: string
+  latitude?: number | null
+  longitude?: number | null
   status?: $Enums.ApplicationStatus
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -556,6 +662,8 @@ export type SellerProfileUpdateWithoutUserInput = {
   category?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.StringFieldUpdateOperationsInput | string
   pincode?: Prisma.StringFieldUpdateOperationsInput | string
+  latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   status?: Prisma.EnumApplicationStatusFieldUpdateOperationsInput | $Enums.ApplicationStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -570,6 +678,8 @@ export type SellerProfileUncheckedUpdateWithoutUserInput = {
   category?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.StringFieldUpdateOperationsInput | string
   pincode?: Prisma.StringFieldUpdateOperationsInput | string
+  latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   status?: Prisma.EnumApplicationStatusFieldUpdateOperationsInput | $Enums.ApplicationStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -584,6 +694,8 @@ export type SellerProfileCreateWithoutBulkUploadsInput = {
   category: string
   address: string
   pincode: string
+  latitude?: number | null
+  longitude?: number | null
   status?: $Enums.ApplicationStatus
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -598,6 +710,8 @@ export type SellerProfileUncheckedCreateWithoutBulkUploadsInput = {
   category: string
   address: string
   pincode: string
+  latitude?: number | null
+  longitude?: number | null
   status?: $Enums.ApplicationStatus
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -628,6 +742,8 @@ export type SellerProfileUpdateWithoutBulkUploadsInput = {
   category?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.StringFieldUpdateOperationsInput | string
   pincode?: Prisma.StringFieldUpdateOperationsInput | string
+  latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   status?: Prisma.EnumApplicationStatusFieldUpdateOperationsInput | $Enums.ApplicationStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -642,6 +758,8 @@ export type SellerProfileUncheckedUpdateWithoutBulkUploadsInput = {
   category?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.StringFieldUpdateOperationsInput | string
   pincode?: Prisma.StringFieldUpdateOperationsInput | string
+  latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   status?: Prisma.EnumApplicationStatusFieldUpdateOperationsInput | $Enums.ApplicationStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -656,6 +774,8 @@ export type SellerProfileCreateWithoutProductsInput = {
   category: string
   address: string
   pincode: string
+  latitude?: number | null
+  longitude?: number | null
   status?: $Enums.ApplicationStatus
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -670,6 +790,8 @@ export type SellerProfileUncheckedCreateWithoutProductsInput = {
   category: string
   address: string
   pincode: string
+  latitude?: number | null
+  longitude?: number | null
   status?: $Enums.ApplicationStatus
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -700,6 +822,8 @@ export type SellerProfileUpdateWithoutProductsInput = {
   category?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.StringFieldUpdateOperationsInput | string
   pincode?: Prisma.StringFieldUpdateOperationsInput | string
+  latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   status?: Prisma.EnumApplicationStatusFieldUpdateOperationsInput | $Enums.ApplicationStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -714,6 +838,8 @@ export type SellerProfileUncheckedUpdateWithoutProductsInput = {
   category?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.StringFieldUpdateOperationsInput | string
   pincode?: Prisma.StringFieldUpdateOperationsInput | string
+  latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   status?: Prisma.EnumApplicationStatusFieldUpdateOperationsInput | $Enums.ApplicationStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -768,6 +894,8 @@ export type SellerProfileSelect<ExtArgs extends runtime.Types.Extensions.Interna
   category?: boolean
   address?: boolean
   pincode?: boolean
+  latitude?: boolean
+  longitude?: boolean
   status?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -785,6 +913,8 @@ export type SellerProfileSelectCreateManyAndReturn<ExtArgs extends runtime.Types
   category?: boolean
   address?: boolean
   pincode?: boolean
+  latitude?: boolean
+  longitude?: boolean
   status?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -799,6 +929,8 @@ export type SellerProfileSelectUpdateManyAndReturn<ExtArgs extends runtime.Types
   category?: boolean
   address?: boolean
   pincode?: boolean
+  latitude?: boolean
+  longitude?: boolean
   status?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -813,13 +945,15 @@ export type SellerProfileSelectScalar = {
   category?: boolean
   address?: boolean
   pincode?: boolean
+  latitude?: boolean
+  longitude?: boolean
   status?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   userId?: boolean
 }
 
-export type SellerProfileOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "businessName" | "ownerName" | "category" | "address" | "pincode" | "status" | "createdAt" | "updatedAt" | "userId", ExtArgs["result"]["sellerProfile"]>
+export type SellerProfileOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "businessName" | "ownerName" | "category" | "address" | "pincode" | "latitude" | "longitude" | "status" | "createdAt" | "updatedAt" | "userId", ExtArgs["result"]["sellerProfile"]>
 export type SellerProfileInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   products?: boolean | Prisma.SellerProfile$productsArgs<ExtArgs>
@@ -847,6 +981,8 @@ export type $SellerProfilePayload<ExtArgs extends runtime.Types.Extensions.Inter
     category: string
     address: string
     pincode: string
+    latitude: number | null
+    longitude: number | null
     status: $Enums.ApplicationStatus
     createdAt: Date
     updatedAt: Date
@@ -1283,6 +1419,8 @@ export interface SellerProfileFieldRefs {
   readonly category: Prisma.FieldRef<"SellerProfile", 'String'>
   readonly address: Prisma.FieldRef<"SellerProfile", 'String'>
   readonly pincode: Prisma.FieldRef<"SellerProfile", 'String'>
+  readonly latitude: Prisma.FieldRef<"SellerProfile", 'Float'>
+  readonly longitude: Prisma.FieldRef<"SellerProfile", 'Float'>
   readonly status: Prisma.FieldRef<"SellerProfile", 'ApplicationStatus'>
   readonly createdAt: Prisma.FieldRef<"SellerProfile", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"SellerProfile", 'DateTime'>

@@ -6,7 +6,15 @@ import { sellerValidation } from "./seller.validation.js";
 export const sellerService = {
   async registerBusiness(
     userId,
-    { businessName, ownerName, category, address, pincode } = {}
+    {
+      businessName,
+      ownerName,
+      category,
+      address,
+      pincode,
+      latitude,
+      longitude,
+    } = {}
   ) {
     if (!userId || typeof userId !== "string") {
       throw new Error("Valid seller ID is required.");
@@ -20,7 +28,7 @@ export const sellerService = {
       throw new Error(nameValidation.error);
     }
 
-    // Validate the remaining business details.
+    // Validate business details.
     const detailsValidation =
       sellerValidation.validateBusinessDetails({
         ownerName,
@@ -31,6 +39,17 @@ export const sellerService = {
 
     if (!detailsValidation.valid) {
       throw new Error(detailsValidation.error);
+    }
+
+    // Validate shop location.
+    const locationValidation =
+      sellerValidation.validateShopLocation({
+        latitude,
+        longitude,
+      });
+
+    if (!locationValidation.valid) {
+      throw new Error(locationValidation.error);
     }
 
     // Verify seller account.
@@ -58,6 +77,8 @@ export const sellerService = {
           category: detailsValidation.details.category,
           address: detailsValidation.details.address,
           pincode: detailsValidation.details.pincode,
+          latitude: locationValidation.location.latitude,
+          longitude: locationValidation.location.longitude,
           status: "PENDING",
         },
         select: {
@@ -67,6 +88,8 @@ export const sellerService = {
           category: true,
           address: true,
           pincode: true,
+          latitude: true,
+          longitude: true,
           status: true,
           createdAt: true,
         },

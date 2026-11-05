@@ -1,0 +1,118 @@
+
+src/
+├── app/
+│   ├── (auth)/
+│   ├── (customer)/
+│   ├── admin/
+│   ├── seller/
+│   └── api/
+│       └── v1/
+│           └── delivery-partner/
+│               ├── register/
+│               │   └── route.js
+│               ├── me/
+│               │   └── route.js
+│               ├── location/
+│               │   └── route.js
+│               ├── availability/
+│               │   └── route.js
+│               └── orders/
+│                   ├── route.js
+│                   └── [assignmentId]/
+│                       └── route.js
+│
+├── modules/
+│   ├── admin/
+│   ├── auth/
+│   ├── customer/
+│   ├── seller/
+│   └── delivery-partner/
+│       ├── delivery-partner.repository.js
+│       ├── delivery-partner.service.js
+│       ├── delivery-partner.validation.js
+│       ├── delivery-partner-auth.service.js
+│       ├── delivery-assignment.repository.js
+│       └── delivery-assignment.service.js
+│
+├── components/
+└── lib/
+    ├── auth.js
+    ├── prisma.js
+    ├── password.js
+    ├── rate-limit.js
+    ├── require-admin.js
+    └── require-seller-api.js
+
+
+    src/
+└── components/
+    └── delivery-partner/
+        │
+        ├── layout/
+        │   ├── PartnerSidebar.jsx
+        │   ├── PartnerHeader.jsx
+        │   ├── PartnerMobileNav.jsx
+        │   └── PartnerLayout.jsx
+        │
+        ├── dashboard/
+        │   ├── WelcomeCard.jsx
+        │   ├── AvailabilityToggle.jsx
+        │   ├── EarningsOverview.jsx
+        │   ├── DeliveryStats.jsx
+        │   ├── ActiveDeliveryCard.jsx
+        │   └── RecentDeliveries.jsx
+        │
+        ├── deliveries/
+        │   ├── DeliveryTypeBadge.jsx
+        │   ├── OrderRequestCard.jsx
+        │   ├── ExpressOrderCard.jsx
+        │   ├── ScheduledBatchCard.jsx
+        │   ├── PickupDetails.jsx
+        │   ├── DropDetails.jsx
+        │   └── DeliveryStatus.jsx
+        │
+        ├── earnings/
+        │   ├── EarningsSummary.jsx
+        │   └── EarningsHistory.jsx
+        │
+        └── shared/
+            ├── EmptyState.jsx
+            ├── LoadingState.jsx
+            └── StatusBadge.jsx
+
+
+            src/
+└── app/
+    └── (dashboard)/
+        └── delivery-partner/
+            │
+            ├── layout.jsx
+            │
+            ├── dashboard/
+            │   └── page.jsx
+            │
+            ├── deliveries/
+            │   ├── page.jsx
+            │   ├── active/
+            │   │   └── page.jsx
+            │   └── history/
+            │       └── page.jsx
+            │
+            ├── earnings/
+            │   └── page.jsx
+            │
+            ├── profile/
+            │   └── page.jsx
+            │
+            ├── support/
+            │   └── page.jsx
+            │
+            ├── register/
+            │   ├── page.jsx
+            │   └── components/
+            │
+            ├── reapply/
+            │   └── page.jsx
+            │
+            └── status/
+                └── page.jsx

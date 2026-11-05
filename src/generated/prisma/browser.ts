@@ -48,6 +48,26 @@ export type BulkUploadRow = Prisma.BulkUploadRowModel
  */
 export type DeliveryPartnerProfile = Prisma.DeliveryPartnerProfileModel
 /**
+ * Model DeliveryPartnerApplicationHistory
+ * 
+ */
+export type DeliveryPartnerApplicationHistory = Prisma.DeliveryPartnerApplicationHistoryModel
+/**
+ * Model Order
+ * 
+ */
+export type Order = Prisma.OrderModel
+/**
+ * Model DeliveryAssignment
+ * 
+ */
+export type DeliveryAssignment = Prisma.DeliveryAssignmentModel
+/**
+ * Model DeliveryBatch
+ * 
+ */
+export type DeliveryBatch = Prisma.DeliveryBatchModel
+/**
  * Model Category
  * 
  */
@@ -82,3 +102,13 @@ export type InventoryMovement = Prisma.InventoryMovementModel
  * 
  */
 export type BulkPriceTier = Prisma.BulkPriceTierModel
+/**
+ * Model OrderItem
+ * 
+ */
+export type OrderItem = Prisma.OrderItemModel
+/**
+ * Model ProductView
+ * 
+ */
+export type ProductView = Prisma.ProductViewModel

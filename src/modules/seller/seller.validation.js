@@ -36,21 +36,32 @@ export const sellerValidation = {
     return { valid: true, businessName: normalizedName };
   },
 
-  validateBusinessDetails({ ownerName, category, address, pincode } = {}) {
+  validateBusinessDetails({
+    ownerName,
+    category,
+    address,
+    pincode,
+  } = {}) {
     if (typeof ownerName !== "string" || !ownerName.trim()) {
       return { valid: false, error: "Owner name is required." };
     }
 
     const normalizedOwnerName = ownerName.trim();
 
-    if (normalizedOwnerName.length < 2 || normalizedOwnerName.length > 100) {
+    if (
+      normalizedOwnerName.length < 2 ||
+      normalizedOwnerName.length > 100
+    ) {
       return {
         valid: false,
         error: "Owner name must be between 2 and 100 characters.",
       };
     }
 
-    if (typeof category !== "string" || !ALLOWED_CATEGORIES.includes(category.trim())) {
+    if (
+      typeof category !== "string" ||
+      !ALLOWED_CATEGORIES.includes(category.trim())
+    ) {
       return {
         valid: false,
         error: "Please select a valid business category.",
@@ -63,7 +74,10 @@ export const sellerValidation = {
 
     const normalizedAddress = address.trim();
 
-    if (normalizedAddress.length < 10 || normalizedAddress.length > 300) {
+    if (
+      normalizedAddress.length < 10 ||
+      normalizedAddress.length > 300
+    ) {
       return {
         valid: false,
         error: "Address must be between 10 and 300 characters.",
@@ -87,6 +101,40 @@ export const sellerValidation = {
         category: category.trim(),
         address: normalizedAddress,
         pincode: normalizedPincode,
+      },
+    };
+  },
+
+  validateShopLocation({ latitude, longitude } = {}) {
+    if (
+      typeof latitude !== "number" ||
+      !Number.isFinite(latitude) ||
+      latitude < -90 ||
+      latitude > 90
+    ) {
+      return {
+        valid: false,
+        error: "Valid shop latitude is required.",
+      };
+    }
+
+    if (
+      typeof longitude !== "number" ||
+      !Number.isFinite(longitude) ||
+      longitude < -180 ||
+      longitude > 180
+    ) {
+      return {
+        valid: false,
+        error: "Valid shop longitude is required.",
+      };
+    }
+
+    return {
+      valid: true,
+      location: {
+        latitude,
+        longitude,
       },
     };
   },

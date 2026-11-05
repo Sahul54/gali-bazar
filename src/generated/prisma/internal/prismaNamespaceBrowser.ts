@@ -57,13 +57,19 @@ export const ModelName = {
   BulkUpload: 'BulkUpload',
   BulkUploadRow: 'BulkUploadRow',
   DeliveryPartnerProfile: 'DeliveryPartnerProfile',
+  DeliveryPartnerApplicationHistory: 'DeliveryPartnerApplicationHistory',
+  Order: 'Order',
+  DeliveryAssignment: 'DeliveryAssignment',
+  DeliveryBatch: 'DeliveryBatch',
   Category: 'Category',
   Product: 'Product',
   ProductVariant: 'ProductVariant',
   ProductImage: 'ProductImage',
   Inventory: 'Inventory',
   InventoryMovement: 'InventoryMovement',
-  BulkPriceTier: 'BulkPriceTier'
+  BulkPriceTier: 'BulkPriceTier',
+  OrderItem: 'OrderItem',
+  ProductView: 'ProductView'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -118,6 +124,8 @@ export const SellerProfileScalarFieldEnum = {
   category: 'category',
   address: 'address',
   pincode: 'pincode',
+  latitude: 'latitude',
+  longitude: 'longitude',
   status: 'status',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
@@ -159,14 +167,102 @@ export type BulkUploadRowScalarFieldEnum = (typeof BulkUploadRowScalarFieldEnum)
 
 export const DeliveryPartnerProfileScalarFieldEnum = {
   id: 'id',
-  vehicleType: 'vehicleType',
   status: 'status',
+  vehicleType: 'vehicleType',
+  vehicleNumber: 'vehicleNumber',
+  vehicleModel: 'vehicleModel',
+  licenseNumber: 'licenseNumber',
+  licenseDocumentUrl: 'licenseDocumentUrl',
+  vehicleDocumentUrl: 'vehicleDocumentUrl',
+  rejectionReason: 'rejectionReason',
+  reviewedAt: 'reviewedAt',
+  reviewedById: 'reviewedById',
+  reapplyCount: 'reapplyCount',
+  isOnline: 'isOnline',
+  latitude: 'latitude',
+  longitude: 'longitude',
+  lastLocationAt: 'lastLocationAt',
+  maxDeliveryRadiusKm: 'maxDeliveryRadiusKm',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   userId: 'userId'
 } as const
 
 export type DeliveryPartnerProfileScalarFieldEnum = (typeof DeliveryPartnerProfileScalarFieldEnum)[keyof typeof DeliveryPartnerProfileScalarFieldEnum]
+
+
+export const DeliveryPartnerApplicationHistoryScalarFieldEnum = {
+  id: 'id',
+  previousStatus: 'previousStatus',
+  newStatus: 'newStatus',
+  reason: 'reason',
+  createdAt: 'createdAt',
+  deliveryPartnerProfileId: 'deliveryPartnerProfileId',
+  reviewedById: 'reviewedById'
+} as const
+
+export type DeliveryPartnerApplicationHistoryScalarFieldEnum = (typeof DeliveryPartnerApplicationHistoryScalarFieldEnum)[keyof typeof DeliveryPartnerApplicationHistoryScalarFieldEnum]
+
+
+export const OrderScalarFieldEnum = {
+  id: 'id',
+  orderNumber: 'orderNumber',
+  status: 'status',
+  customerId: 'customerId',
+  deliveryType: 'deliveryType',
+  scheduledDate: 'scheduledDate',
+  scheduledSlot: 'scheduledSlot',
+  pickupAddress: 'pickupAddress',
+  pickupLatitude: 'pickupLatitude',
+  pickupLongitude: 'pickupLongitude',
+  deliveryAddress: 'deliveryAddress',
+  deliveryLatitude: 'deliveryLatitude',
+  deliveryLongitude: 'deliveryLongitude',
+  subtotal: 'subtotal',
+  deliveryFee: 'deliveryFee',
+  totalAmount: 'totalAmount',
+  assignedDeliveryPartnerId: 'assignedDeliveryPartnerId',
+  deliveryBatchId: 'deliveryBatchId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type OrderScalarFieldEnum = (typeof OrderScalarFieldEnum)[keyof typeof OrderScalarFieldEnum]
+
+
+export const DeliveryAssignmentScalarFieldEnum = {
+  id: 'id',
+  status: 'status',
+  distanceKm: 'distanceKm',
+  attemptNumber: 'attemptNumber',
+  offeredAt: 'offeredAt',
+  expiresAt: 'expiresAt',
+  respondedAt: 'respondedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  orderId: 'orderId',
+  deliveryPartnerProfileId: 'deliveryPartnerProfileId'
+} as const
+
+export type DeliveryAssignmentScalarFieldEnum = (typeof DeliveryAssignmentScalarFieldEnum)[keyof typeof DeliveryAssignmentScalarFieldEnum]
+
+
+export const DeliveryBatchScalarFieldEnum = {
+  id: 'id',
+  status: 'status',
+  totalOrders: 'totalOrders',
+  totalEarning: 'totalEarning',
+  totalDistanceKm: 'totalDistanceKm',
+  offeredAt: 'offeredAt',
+  expiresAt: 'expiresAt',
+  acceptedAt: 'acceptedAt',
+  completedAt: 'completedAt',
+  partnerProfileId: 'partnerProfileId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type DeliveryBatchScalarFieldEnum = (typeof DeliveryBatchScalarFieldEnum)[keyof typeof DeliveryBatchScalarFieldEnum]
 
 
 export const CategoryScalarFieldEnum = {
@@ -268,6 +364,35 @@ export const BulkPriceTierScalarFieldEnum = {
 } as const
 
 export type BulkPriceTierScalarFieldEnum = (typeof BulkPriceTierScalarFieldEnum)[keyof typeof BulkPriceTierScalarFieldEnum]
+
+
+export const OrderItemScalarFieldEnum = {
+  id: 'id',
+  productName: 'productName',
+  variantTitle: 'variantTitle',
+  sku: 'sku',
+  quantity: 'quantity',
+  unitPrice: 'unitPrice',
+  lineTotal: 'lineTotal',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  orderId: 'orderId',
+  productId: 'productId',
+  variantId: 'variantId'
+} as const
+
+export type OrderItemScalarFieldEnum = (typeof OrderItemScalarFieldEnum)[keyof typeof OrderItemScalarFieldEnum]
+
+
+export const ProductViewScalarFieldEnum = {
+  id: 'id',
+  viewedAt: 'viewedAt',
+  userId: 'userId',
+  sessionId: 'sessionId',
+  productId: 'productId'
+} as const
+
+export type ProductViewScalarFieldEnum = (typeof ProductViewScalarFieldEnum)[keyof typeof ProductViewScalarFieldEnum]
 
 
 export const SortOrder = {

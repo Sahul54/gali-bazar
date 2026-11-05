@@ -20,14 +20,44 @@ export type DeliveryPartnerProfileModel = runtime.Types.Result.DefaultSelection<
 
 export type AggregateDeliveryPartnerProfile = {
   _count: DeliveryPartnerProfileCountAggregateOutputType | null
+  _avg: DeliveryPartnerProfileAvgAggregateOutputType | null
+  _sum: DeliveryPartnerProfileSumAggregateOutputType | null
   _min: DeliveryPartnerProfileMinAggregateOutputType | null
   _max: DeliveryPartnerProfileMaxAggregateOutputType | null
 }
 
+export type DeliveryPartnerProfileAvgAggregateOutputType = {
+  reapplyCount: number | null
+  latitude: number | null
+  longitude: number | null
+  maxDeliveryRadiusKm: number | null
+}
+
+export type DeliveryPartnerProfileSumAggregateOutputType = {
+  reapplyCount: number | null
+  latitude: number | null
+  longitude: number | null
+  maxDeliveryRadiusKm: number | null
+}
+
 export type DeliveryPartnerProfileMinAggregateOutputType = {
   id: string | null
-  vehicleType: string | null
   status: $Enums.ApplicationStatus | null
+  vehicleType: $Enums.VehicleType | null
+  vehicleNumber: string | null
+  vehicleModel: string | null
+  licenseNumber: string | null
+  licenseDocumentUrl: string | null
+  vehicleDocumentUrl: string | null
+  rejectionReason: string | null
+  reviewedAt: Date | null
+  reviewedById: string | null
+  reapplyCount: number | null
+  isOnline: boolean | null
+  latitude: number | null
+  longitude: number | null
+  lastLocationAt: Date | null
+  maxDeliveryRadiusKm: number | null
   createdAt: Date | null
   updatedAt: Date | null
   userId: string | null
@@ -35,8 +65,22 @@ export type DeliveryPartnerProfileMinAggregateOutputType = {
 
 export type DeliveryPartnerProfileMaxAggregateOutputType = {
   id: string | null
-  vehicleType: string | null
   status: $Enums.ApplicationStatus | null
+  vehicleType: $Enums.VehicleType | null
+  vehicleNumber: string | null
+  vehicleModel: string | null
+  licenseNumber: string | null
+  licenseDocumentUrl: string | null
+  vehicleDocumentUrl: string | null
+  rejectionReason: string | null
+  reviewedAt: Date | null
+  reviewedById: string | null
+  reapplyCount: number | null
+  isOnline: boolean | null
+  latitude: number | null
+  longitude: number | null
+  lastLocationAt: Date | null
+  maxDeliveryRadiusKm: number | null
   createdAt: Date | null
   updatedAt: Date | null
   userId: string | null
@@ -44,8 +88,22 @@ export type DeliveryPartnerProfileMaxAggregateOutputType = {
 
 export type DeliveryPartnerProfileCountAggregateOutputType = {
   id: number
-  vehicleType: number
   status: number
+  vehicleType: number
+  vehicleNumber: number
+  vehicleModel: number
+  licenseNumber: number
+  licenseDocumentUrl: number
+  vehicleDocumentUrl: number
+  rejectionReason: number
+  reviewedAt: number
+  reviewedById: number
+  reapplyCount: number
+  isOnline: number
+  latitude: number
+  longitude: number
+  lastLocationAt: number
+  maxDeliveryRadiusKm: number
   createdAt: number
   updatedAt: number
   userId: number
@@ -53,10 +111,38 @@ export type DeliveryPartnerProfileCountAggregateOutputType = {
 }
 
 
+export type DeliveryPartnerProfileAvgAggregateInputType = {
+  reapplyCount?: true
+  latitude?: true
+  longitude?: true
+  maxDeliveryRadiusKm?: true
+}
+
+export type DeliveryPartnerProfileSumAggregateInputType = {
+  reapplyCount?: true
+  latitude?: true
+  longitude?: true
+  maxDeliveryRadiusKm?: true
+}
+
 export type DeliveryPartnerProfileMinAggregateInputType = {
   id?: true
-  vehicleType?: true
   status?: true
+  vehicleType?: true
+  vehicleNumber?: true
+  vehicleModel?: true
+  licenseNumber?: true
+  licenseDocumentUrl?: true
+  vehicleDocumentUrl?: true
+  rejectionReason?: true
+  reviewedAt?: true
+  reviewedById?: true
+  reapplyCount?: true
+  isOnline?: true
+  latitude?: true
+  longitude?: true
+  lastLocationAt?: true
+  maxDeliveryRadiusKm?: true
   createdAt?: true
   updatedAt?: true
   userId?: true
@@ -64,8 +150,22 @@ export type DeliveryPartnerProfileMinAggregateInputType = {
 
 export type DeliveryPartnerProfileMaxAggregateInputType = {
   id?: true
-  vehicleType?: true
   status?: true
+  vehicleType?: true
+  vehicleNumber?: true
+  vehicleModel?: true
+  licenseNumber?: true
+  licenseDocumentUrl?: true
+  vehicleDocumentUrl?: true
+  rejectionReason?: true
+  reviewedAt?: true
+  reviewedById?: true
+  reapplyCount?: true
+  isOnline?: true
+  latitude?: true
+  longitude?: true
+  lastLocationAt?: true
+  maxDeliveryRadiusKm?: true
   createdAt?: true
   updatedAt?: true
   userId?: true
@@ -73,8 +173,22 @@ export type DeliveryPartnerProfileMaxAggregateInputType = {
 
 export type DeliveryPartnerProfileCountAggregateInputType = {
   id?: true
-  vehicleType?: true
   status?: true
+  vehicleType?: true
+  vehicleNumber?: true
+  vehicleModel?: true
+  licenseNumber?: true
+  licenseDocumentUrl?: true
+  vehicleDocumentUrl?: true
+  rejectionReason?: true
+  reviewedAt?: true
+  reviewedById?: true
+  reapplyCount?: true
+  isOnline?: true
+  latitude?: true
+  longitude?: true
+  lastLocationAt?: true
+  maxDeliveryRadiusKm?: true
   createdAt?: true
   updatedAt?: true
   userId?: true
@@ -119,6 +233,18 @@ export type DeliveryPartnerProfileAggregateArgs<ExtArgs extends runtime.Types.Ex
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
    * 
+   * Select which fields to average
+  **/
+  _avg?: DeliveryPartnerProfileAvgAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
+   * Select which fields to sum
+  **/
+  _sum?: DeliveryPartnerProfileSumAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
    * Select which fields to find the minimum value
   **/
   _min?: DeliveryPartnerProfileMinAggregateInputType
@@ -149,18 +275,36 @@ export type DeliveryPartnerProfileGroupByArgs<ExtArgs extends runtime.Types.Exte
   take?: number
   skip?: number
   _count?: DeliveryPartnerProfileCountAggregateInputType | true
+  _avg?: DeliveryPartnerProfileAvgAggregateInputType
+  _sum?: DeliveryPartnerProfileSumAggregateInputType
   _min?: DeliveryPartnerProfileMinAggregateInputType
   _max?: DeliveryPartnerProfileMaxAggregateInputType
 }
 
 export type DeliveryPartnerProfileGroupByOutputType = {
   id: string
-  vehicleType: string | null
   status: $Enums.ApplicationStatus
+  vehicleType: $Enums.VehicleType | null
+  vehicleNumber: string | null
+  vehicleModel: string | null
+  licenseNumber: string | null
+  licenseDocumentUrl: string | null
+  vehicleDocumentUrl: string | null
+  rejectionReason: string | null
+  reviewedAt: Date | null
+  reviewedById: string | null
+  reapplyCount: number
+  isOnline: boolean
+  latitude: number | null
+  longitude: number | null
+  lastLocationAt: Date | null
+  maxDeliveryRadiusKm: number
   createdAt: Date
   updatedAt: Date
   userId: string
   _count: DeliveryPartnerProfileCountAggregateOutputType | null
+  _avg: DeliveryPartnerProfileAvgAggregateOutputType | null
+  _sum: DeliveryPartnerProfileSumAggregateOutputType | null
   _min: DeliveryPartnerProfileMinAggregateOutputType | null
   _max: DeliveryPartnerProfileMaxAggregateOutputType | null
 }
@@ -185,22 +329,60 @@ export type DeliveryPartnerProfileWhereInput = {
   OR?: Prisma.DeliveryPartnerProfileWhereInput[]
   NOT?: Prisma.DeliveryPartnerProfileWhereInput | Prisma.DeliveryPartnerProfileWhereInput[]
   id?: Prisma.StringFilter<"DeliveryPartnerProfile"> | string
-  vehicleType?: Prisma.StringNullableFilter<"DeliveryPartnerProfile"> | string | null
   status?: Prisma.EnumApplicationStatusFilter<"DeliveryPartnerProfile"> | $Enums.ApplicationStatus
+  vehicleType?: Prisma.EnumVehicleTypeNullableFilter<"DeliveryPartnerProfile"> | $Enums.VehicleType | null
+  vehicleNumber?: Prisma.StringNullableFilter<"DeliveryPartnerProfile"> | string | null
+  vehicleModel?: Prisma.StringNullableFilter<"DeliveryPartnerProfile"> | string | null
+  licenseNumber?: Prisma.StringNullableFilter<"DeliveryPartnerProfile"> | string | null
+  licenseDocumentUrl?: Prisma.StringNullableFilter<"DeliveryPartnerProfile"> | string | null
+  vehicleDocumentUrl?: Prisma.StringNullableFilter<"DeliveryPartnerProfile"> | string | null
+  rejectionReason?: Prisma.StringNullableFilter<"DeliveryPartnerProfile"> | string | null
+  reviewedAt?: Prisma.DateTimeNullableFilter<"DeliveryPartnerProfile"> | Date | string | null
+  reviewedById?: Prisma.StringNullableFilter<"DeliveryPartnerProfile"> | string | null
+  reapplyCount?: Prisma.IntFilter<"DeliveryPartnerProfile"> | number
+  isOnline?: Prisma.BoolFilter<"DeliveryPartnerProfile"> | boolean
+  latitude?: Prisma.FloatNullableFilter<"DeliveryPartnerProfile"> | number | null
+  longitude?: Prisma.FloatNullableFilter<"DeliveryPartnerProfile"> | number | null
+  lastLocationAt?: Prisma.DateTimeNullableFilter<"DeliveryPartnerProfile"> | Date | string | null
+  maxDeliveryRadiusKm?: Prisma.FloatFilter<"DeliveryPartnerProfile"> | number
   createdAt?: Prisma.DateTimeFilter<"DeliveryPartnerProfile"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"DeliveryPartnerProfile"> | Date | string
   userId?: Prisma.StringFilter<"DeliveryPartnerProfile"> | string
+  reviewedBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
+  currentOrders?: Prisma.OrderListRelationFilter
+  assignments?: Prisma.DeliveryAssignmentListRelationFilter
+  deliveryBatches?: Prisma.DeliveryBatchListRelationFilter
+  applicationHistory?: Prisma.DeliveryPartnerApplicationHistoryListRelationFilter
 }
 
 export type DeliveryPartnerProfileOrderByWithRelationInput = {
   id?: Prisma.SortOrder
-  vehicleType?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
+  vehicleType?: Prisma.SortOrderInput | Prisma.SortOrder
+  vehicleNumber?: Prisma.SortOrderInput | Prisma.SortOrder
+  vehicleModel?: Prisma.SortOrderInput | Prisma.SortOrder
+  licenseNumber?: Prisma.SortOrderInput | Prisma.SortOrder
+  licenseDocumentUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  vehicleDocumentUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  rejectionReason?: Prisma.SortOrderInput | Prisma.SortOrder
+  reviewedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  reviewedById?: Prisma.SortOrderInput | Prisma.SortOrder
+  reapplyCount?: Prisma.SortOrder
+  isOnline?: Prisma.SortOrder
+  latitude?: Prisma.SortOrderInput | Prisma.SortOrder
+  longitude?: Prisma.SortOrderInput | Prisma.SortOrder
+  lastLocationAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  maxDeliveryRadiusKm?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   userId?: Prisma.SortOrder
+  reviewedBy?: Prisma.UserOrderByWithRelationInput
   user?: Prisma.UserOrderByWithRelationInput
+  currentOrders?: Prisma.OrderOrderByRelationAggregateInput
+  assignments?: Prisma.DeliveryAssignmentOrderByRelationAggregateInput
+  deliveryBatches?: Prisma.DeliveryBatchOrderByRelationAggregateInput
+  applicationHistory?: Prisma.DeliveryPartnerApplicationHistoryOrderByRelationAggregateInput
 }
 
 export type DeliveryPartnerProfileWhereUniqueInput = Prisma.AtLeast<{
@@ -209,23 +391,58 @@ export type DeliveryPartnerProfileWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.DeliveryPartnerProfileWhereInput | Prisma.DeliveryPartnerProfileWhereInput[]
   OR?: Prisma.DeliveryPartnerProfileWhereInput[]
   NOT?: Prisma.DeliveryPartnerProfileWhereInput | Prisma.DeliveryPartnerProfileWhereInput[]
-  vehicleType?: Prisma.StringNullableFilter<"DeliveryPartnerProfile"> | string | null
   status?: Prisma.EnumApplicationStatusFilter<"DeliveryPartnerProfile"> | $Enums.ApplicationStatus
+  vehicleType?: Prisma.EnumVehicleTypeNullableFilter<"DeliveryPartnerProfile"> | $Enums.VehicleType | null
+  vehicleNumber?: Prisma.StringNullableFilter<"DeliveryPartnerProfile"> | string | null
+  vehicleModel?: Prisma.StringNullableFilter<"DeliveryPartnerProfile"> | string | null
+  licenseNumber?: Prisma.StringNullableFilter<"DeliveryPartnerProfile"> | string | null
+  licenseDocumentUrl?: Prisma.StringNullableFilter<"DeliveryPartnerProfile"> | string | null
+  vehicleDocumentUrl?: Prisma.StringNullableFilter<"DeliveryPartnerProfile"> | string | null
+  rejectionReason?: Prisma.StringNullableFilter<"DeliveryPartnerProfile"> | string | null
+  reviewedAt?: Prisma.DateTimeNullableFilter<"DeliveryPartnerProfile"> | Date | string | null
+  reviewedById?: Prisma.StringNullableFilter<"DeliveryPartnerProfile"> | string | null
+  reapplyCount?: Prisma.IntFilter<"DeliveryPartnerProfile"> | number
+  isOnline?: Prisma.BoolFilter<"DeliveryPartnerProfile"> | boolean
+  latitude?: Prisma.FloatNullableFilter<"DeliveryPartnerProfile"> | number | null
+  longitude?: Prisma.FloatNullableFilter<"DeliveryPartnerProfile"> | number | null
+  lastLocationAt?: Prisma.DateTimeNullableFilter<"DeliveryPartnerProfile"> | Date | string | null
+  maxDeliveryRadiusKm?: Prisma.FloatFilter<"DeliveryPartnerProfile"> | number
   createdAt?: Prisma.DateTimeFilter<"DeliveryPartnerProfile"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"DeliveryPartnerProfile"> | Date | string
+  reviewedBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
+  currentOrders?: Prisma.OrderListRelationFilter
+  assignments?: Prisma.DeliveryAssignmentListRelationFilter
+  deliveryBatches?: Prisma.DeliveryBatchListRelationFilter
+  applicationHistory?: Prisma.DeliveryPartnerApplicationHistoryListRelationFilter
 }, "id" | "userId">
 
 export type DeliveryPartnerProfileOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
-  vehicleType?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
+  vehicleType?: Prisma.SortOrderInput | Prisma.SortOrder
+  vehicleNumber?: Prisma.SortOrderInput | Prisma.SortOrder
+  vehicleModel?: Prisma.SortOrderInput | Prisma.SortOrder
+  licenseNumber?: Prisma.SortOrderInput | Prisma.SortOrder
+  licenseDocumentUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  vehicleDocumentUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  rejectionReason?: Prisma.SortOrderInput | Prisma.SortOrder
+  reviewedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  reviewedById?: Prisma.SortOrderInput | Prisma.SortOrder
+  reapplyCount?: Prisma.SortOrder
+  isOnline?: Prisma.SortOrder
+  latitude?: Prisma.SortOrderInput | Prisma.SortOrder
+  longitude?: Prisma.SortOrderInput | Prisma.SortOrder
+  lastLocationAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  maxDeliveryRadiusKm?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   _count?: Prisma.DeliveryPartnerProfileCountOrderByAggregateInput
+  _avg?: Prisma.DeliveryPartnerProfileAvgOrderByAggregateInput
   _max?: Prisma.DeliveryPartnerProfileMaxOrderByAggregateInput
   _min?: Prisma.DeliveryPartnerProfileMinOrderByAggregateInput
+  _sum?: Prisma.DeliveryPartnerProfileSumOrderByAggregateInput
 }
 
 export type DeliveryPartnerProfileScalarWhereWithAggregatesInput = {
@@ -233,8 +450,22 @@ export type DeliveryPartnerProfileScalarWhereWithAggregatesInput = {
   OR?: Prisma.DeliveryPartnerProfileScalarWhereWithAggregatesInput[]
   NOT?: Prisma.DeliveryPartnerProfileScalarWhereWithAggregatesInput | Prisma.DeliveryPartnerProfileScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"DeliveryPartnerProfile"> | string
-  vehicleType?: Prisma.StringNullableWithAggregatesFilter<"DeliveryPartnerProfile"> | string | null
   status?: Prisma.EnumApplicationStatusWithAggregatesFilter<"DeliveryPartnerProfile"> | $Enums.ApplicationStatus
+  vehicleType?: Prisma.EnumVehicleTypeNullableWithAggregatesFilter<"DeliveryPartnerProfile"> | $Enums.VehicleType | null
+  vehicleNumber?: Prisma.StringNullableWithAggregatesFilter<"DeliveryPartnerProfile"> | string | null
+  vehicleModel?: Prisma.StringNullableWithAggregatesFilter<"DeliveryPartnerProfile"> | string | null
+  licenseNumber?: Prisma.StringNullableWithAggregatesFilter<"DeliveryPartnerProfile"> | string | null
+  licenseDocumentUrl?: Prisma.StringNullableWithAggregatesFilter<"DeliveryPartnerProfile"> | string | null
+  vehicleDocumentUrl?: Prisma.StringNullableWithAggregatesFilter<"DeliveryPartnerProfile"> | string | null
+  rejectionReason?: Prisma.StringNullableWithAggregatesFilter<"DeliveryPartnerProfile"> | string | null
+  reviewedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"DeliveryPartnerProfile"> | Date | string | null
+  reviewedById?: Prisma.StringNullableWithAggregatesFilter<"DeliveryPartnerProfile"> | string | null
+  reapplyCount?: Prisma.IntWithAggregatesFilter<"DeliveryPartnerProfile"> | number
+  isOnline?: Prisma.BoolWithAggregatesFilter<"DeliveryPartnerProfile"> | boolean
+  latitude?: Prisma.FloatNullableWithAggregatesFilter<"DeliveryPartnerProfile"> | number | null
+  longitude?: Prisma.FloatNullableWithAggregatesFilter<"DeliveryPartnerProfile"> | number | null
+  lastLocationAt?: Prisma.DateTimeNullableWithAggregatesFilter<"DeliveryPartnerProfile"> | Date | string | null
+  maxDeliveryRadiusKm?: Prisma.FloatWithAggregatesFilter<"DeliveryPartnerProfile"> | number
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"DeliveryPartnerProfile"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"DeliveryPartnerProfile"> | Date | string
   userId?: Prisma.StringWithAggregatesFilter<"DeliveryPartnerProfile"> | string
@@ -242,44 +473,130 @@ export type DeliveryPartnerProfileScalarWhereWithAggregatesInput = {
 
 export type DeliveryPartnerProfileCreateInput = {
   id?: string
-  vehicleType?: string | null
   status?: $Enums.ApplicationStatus
+  vehicleType?: $Enums.VehicleType | null
+  vehicleNumber?: string | null
+  vehicleModel?: string | null
+  licenseNumber?: string | null
+  licenseDocumentUrl?: string | null
+  vehicleDocumentUrl?: string | null
+  rejectionReason?: string | null
+  reviewedAt?: Date | string | null
+  reapplyCount?: number
+  isOnline?: boolean
+  latitude?: number | null
+  longitude?: number | null
+  lastLocationAt?: Date | string | null
+  maxDeliveryRadiusKm?: number
   createdAt?: Date | string
   updatedAt?: Date | string
+  reviewedBy?: Prisma.UserCreateNestedOneWithoutReviewedDeliveryApplicationsInput
   user: Prisma.UserCreateNestedOneWithoutDeliveryProfileInput
+  currentOrders?: Prisma.OrderCreateNestedManyWithoutAssignedDeliveryPartnerInput
+  assignments?: Prisma.DeliveryAssignmentCreateNestedManyWithoutDeliveryPartnerProfileInput
+  deliveryBatches?: Prisma.DeliveryBatchCreateNestedManyWithoutPartnerProfileInput
+  applicationHistory?: Prisma.DeliveryPartnerApplicationHistoryCreateNestedManyWithoutDeliveryPartnerProfileInput
 }
 
 export type DeliveryPartnerProfileUncheckedCreateInput = {
   id?: string
-  vehicleType?: string | null
   status?: $Enums.ApplicationStatus
+  vehicleType?: $Enums.VehicleType | null
+  vehicleNumber?: string | null
+  vehicleModel?: string | null
+  licenseNumber?: string | null
+  licenseDocumentUrl?: string | null
+  vehicleDocumentUrl?: string | null
+  rejectionReason?: string | null
+  reviewedAt?: Date | string | null
+  reviewedById?: string | null
+  reapplyCount?: number
+  isOnline?: boolean
+  latitude?: number | null
+  longitude?: number | null
+  lastLocationAt?: Date | string | null
+  maxDeliveryRadiusKm?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   userId: string
+  currentOrders?: Prisma.OrderUncheckedCreateNestedManyWithoutAssignedDeliveryPartnerInput
+  assignments?: Prisma.DeliveryAssignmentUncheckedCreateNestedManyWithoutDeliveryPartnerProfileInput
+  deliveryBatches?: Prisma.DeliveryBatchUncheckedCreateNestedManyWithoutPartnerProfileInput
+  applicationHistory?: Prisma.DeliveryPartnerApplicationHistoryUncheckedCreateNestedManyWithoutDeliveryPartnerProfileInput
 }
 
 export type DeliveryPartnerProfileUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  vehicleType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumApplicationStatusFieldUpdateOperationsInput | $Enums.ApplicationStatus
+  vehicleType?: Prisma.NullableEnumVehicleTypeFieldUpdateOperationsInput | $Enums.VehicleType | null
+  vehicleNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  vehicleModel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  licenseNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  licenseDocumentUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  vehicleDocumentUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  reviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  reapplyCount?: Prisma.IntFieldUpdateOperationsInput | number
+  isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  lastLocationAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  maxDeliveryRadiusKm?: Prisma.FloatFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  reviewedBy?: Prisma.UserUpdateOneWithoutReviewedDeliveryApplicationsNestedInput
   user?: Prisma.UserUpdateOneRequiredWithoutDeliveryProfileNestedInput
+  currentOrders?: Prisma.OrderUpdateManyWithoutAssignedDeliveryPartnerNestedInput
+  assignments?: Prisma.DeliveryAssignmentUpdateManyWithoutDeliveryPartnerProfileNestedInput
+  deliveryBatches?: Prisma.DeliveryBatchUpdateManyWithoutPartnerProfileNestedInput
+  applicationHistory?: Prisma.DeliveryPartnerApplicationHistoryUpdateManyWithoutDeliveryPartnerProfileNestedInput
 }
 
 export type DeliveryPartnerProfileUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  vehicleType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumApplicationStatusFieldUpdateOperationsInput | $Enums.ApplicationStatus
+  vehicleType?: Prisma.NullableEnumVehicleTypeFieldUpdateOperationsInput | $Enums.VehicleType | null
+  vehicleNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  vehicleModel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  licenseNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  licenseDocumentUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  vehicleDocumentUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  reviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  reviewedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  reapplyCount?: Prisma.IntFieldUpdateOperationsInput | number
+  isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  lastLocationAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  maxDeliveryRadiusKm?: Prisma.FloatFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
+  currentOrders?: Prisma.OrderUncheckedUpdateManyWithoutAssignedDeliveryPartnerNestedInput
+  assignments?: Prisma.DeliveryAssignmentUncheckedUpdateManyWithoutDeliveryPartnerProfileNestedInput
+  deliveryBatches?: Prisma.DeliveryBatchUncheckedUpdateManyWithoutPartnerProfileNestedInput
+  applicationHistory?: Prisma.DeliveryPartnerApplicationHistoryUncheckedUpdateManyWithoutDeliveryPartnerProfileNestedInput
 }
 
 export type DeliveryPartnerProfileCreateManyInput = {
   id?: string
-  vehicleType?: string | null
   status?: $Enums.ApplicationStatus
+  vehicleType?: $Enums.VehicleType | null
+  vehicleNumber?: string | null
+  vehicleModel?: string | null
+  licenseNumber?: string | null
+  licenseDocumentUrl?: string | null
+  vehicleDocumentUrl?: string | null
+  rejectionReason?: string | null
+  reviewedAt?: Date | string | null
+  reviewedById?: string | null
+  reapplyCount?: number
+  isOnline?: boolean
+  latitude?: number | null
+  longitude?: number | null
+  lastLocationAt?: Date | string | null
+  maxDeliveryRadiusKm?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   userId: string
@@ -287,16 +604,43 @@ export type DeliveryPartnerProfileCreateManyInput = {
 
 export type DeliveryPartnerProfileUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  vehicleType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumApplicationStatusFieldUpdateOperationsInput | $Enums.ApplicationStatus
+  vehicleType?: Prisma.NullableEnumVehicleTypeFieldUpdateOperationsInput | $Enums.VehicleType | null
+  vehicleNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  vehicleModel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  licenseNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  licenseDocumentUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  vehicleDocumentUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  reviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  reapplyCount?: Prisma.IntFieldUpdateOperationsInput | number
+  isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  lastLocationAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  maxDeliveryRadiusKm?: Prisma.FloatFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type DeliveryPartnerProfileUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  vehicleType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumApplicationStatusFieldUpdateOperationsInput | $Enums.ApplicationStatus
+  vehicleType?: Prisma.NullableEnumVehicleTypeFieldUpdateOperationsInput | $Enums.VehicleType | null
+  vehicleNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  vehicleModel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  licenseNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  licenseDocumentUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  vehicleDocumentUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  reviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  reviewedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  reapplyCount?: Prisma.IntFieldUpdateOperationsInput | number
+  isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  lastLocationAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  maxDeliveryRadiusKm?: Prisma.FloatFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -307,19 +651,64 @@ export type DeliveryPartnerProfileNullableScalarRelationFilter = {
   isNot?: Prisma.DeliveryPartnerProfileWhereInput | null
 }
 
+export type DeliveryPartnerProfileListRelationFilter = {
+  every?: Prisma.DeliveryPartnerProfileWhereInput
+  some?: Prisma.DeliveryPartnerProfileWhereInput
+  none?: Prisma.DeliveryPartnerProfileWhereInput
+}
+
+export type DeliveryPartnerProfileOrderByRelationAggregateInput = {
+  _count?: Prisma.SortOrder
+}
+
 export type DeliveryPartnerProfileCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  vehicleType?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  vehicleType?: Prisma.SortOrder
+  vehicleNumber?: Prisma.SortOrder
+  vehicleModel?: Prisma.SortOrder
+  licenseNumber?: Prisma.SortOrder
+  licenseDocumentUrl?: Prisma.SortOrder
+  vehicleDocumentUrl?: Prisma.SortOrder
+  rejectionReason?: Prisma.SortOrder
+  reviewedAt?: Prisma.SortOrder
+  reviewedById?: Prisma.SortOrder
+  reapplyCount?: Prisma.SortOrder
+  isOnline?: Prisma.SortOrder
+  latitude?: Prisma.SortOrder
+  longitude?: Prisma.SortOrder
+  lastLocationAt?: Prisma.SortOrder
+  maxDeliveryRadiusKm?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   userId?: Prisma.SortOrder
 }
 
+export type DeliveryPartnerProfileAvgOrderByAggregateInput = {
+  reapplyCount?: Prisma.SortOrder
+  latitude?: Prisma.SortOrder
+  longitude?: Prisma.SortOrder
+  maxDeliveryRadiusKm?: Prisma.SortOrder
+}
+
 export type DeliveryPartnerProfileMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  vehicleType?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  vehicleType?: Prisma.SortOrder
+  vehicleNumber?: Prisma.SortOrder
+  vehicleModel?: Prisma.SortOrder
+  licenseNumber?: Prisma.SortOrder
+  licenseDocumentUrl?: Prisma.SortOrder
+  vehicleDocumentUrl?: Prisma.SortOrder
+  rejectionReason?: Prisma.SortOrder
+  reviewedAt?: Prisma.SortOrder
+  reviewedById?: Prisma.SortOrder
+  reapplyCount?: Prisma.SortOrder
+  isOnline?: Prisma.SortOrder
+  latitude?: Prisma.SortOrder
+  longitude?: Prisma.SortOrder
+  lastLocationAt?: Prisma.SortOrder
+  maxDeliveryRadiusKm?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   userId?: Prisma.SortOrder
@@ -327,11 +716,37 @@ export type DeliveryPartnerProfileMaxOrderByAggregateInput = {
 
 export type DeliveryPartnerProfileMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  vehicleType?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  vehicleType?: Prisma.SortOrder
+  vehicleNumber?: Prisma.SortOrder
+  vehicleModel?: Prisma.SortOrder
+  licenseNumber?: Prisma.SortOrder
+  licenseDocumentUrl?: Prisma.SortOrder
+  vehicleDocumentUrl?: Prisma.SortOrder
+  rejectionReason?: Prisma.SortOrder
+  reviewedAt?: Prisma.SortOrder
+  reviewedById?: Prisma.SortOrder
+  reapplyCount?: Prisma.SortOrder
+  isOnline?: Prisma.SortOrder
+  latitude?: Prisma.SortOrder
+  longitude?: Prisma.SortOrder
+  lastLocationAt?: Prisma.SortOrder
+  maxDeliveryRadiusKm?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   userId?: Prisma.SortOrder
+}
+
+export type DeliveryPartnerProfileSumOrderByAggregateInput = {
+  reapplyCount?: Prisma.SortOrder
+  latitude?: Prisma.SortOrder
+  longitude?: Prisma.SortOrder
+  maxDeliveryRadiusKm?: Prisma.SortOrder
+}
+
+export type DeliveryPartnerProfileScalarRelationFilter = {
+  is?: Prisma.DeliveryPartnerProfileWhereInput
+  isNot?: Prisma.DeliveryPartnerProfileWhereInput
 }
 
 export type DeliveryPartnerProfileCreateNestedOneWithoutUserInput = {
@@ -340,10 +755,24 @@ export type DeliveryPartnerProfileCreateNestedOneWithoutUserInput = {
   connect?: Prisma.DeliveryPartnerProfileWhereUniqueInput
 }
 
+export type DeliveryPartnerProfileCreateNestedManyWithoutReviewedByInput = {
+  create?: Prisma.XOR<Prisma.DeliveryPartnerProfileCreateWithoutReviewedByInput, Prisma.DeliveryPartnerProfileUncheckedCreateWithoutReviewedByInput> | Prisma.DeliveryPartnerProfileCreateWithoutReviewedByInput[] | Prisma.DeliveryPartnerProfileUncheckedCreateWithoutReviewedByInput[]
+  connectOrCreate?: Prisma.DeliveryPartnerProfileCreateOrConnectWithoutReviewedByInput | Prisma.DeliveryPartnerProfileCreateOrConnectWithoutReviewedByInput[]
+  createMany?: Prisma.DeliveryPartnerProfileCreateManyReviewedByInputEnvelope
+  connect?: Prisma.DeliveryPartnerProfileWhereUniqueInput | Prisma.DeliveryPartnerProfileWhereUniqueInput[]
+}
+
 export type DeliveryPartnerProfileUncheckedCreateNestedOneWithoutUserInput = {
   create?: Prisma.XOR<Prisma.DeliveryPartnerProfileCreateWithoutUserInput, Prisma.DeliveryPartnerProfileUncheckedCreateWithoutUserInput>
   connectOrCreate?: Prisma.DeliveryPartnerProfileCreateOrConnectWithoutUserInput
   connect?: Prisma.DeliveryPartnerProfileWhereUniqueInput
+}
+
+export type DeliveryPartnerProfileUncheckedCreateNestedManyWithoutReviewedByInput = {
+  create?: Prisma.XOR<Prisma.DeliveryPartnerProfileCreateWithoutReviewedByInput, Prisma.DeliveryPartnerProfileUncheckedCreateWithoutReviewedByInput> | Prisma.DeliveryPartnerProfileCreateWithoutReviewedByInput[] | Prisma.DeliveryPartnerProfileUncheckedCreateWithoutReviewedByInput[]
+  connectOrCreate?: Prisma.DeliveryPartnerProfileCreateOrConnectWithoutReviewedByInput | Prisma.DeliveryPartnerProfileCreateOrConnectWithoutReviewedByInput[]
+  createMany?: Prisma.DeliveryPartnerProfileCreateManyReviewedByInputEnvelope
+  connect?: Prisma.DeliveryPartnerProfileWhereUniqueInput | Prisma.DeliveryPartnerProfileWhereUniqueInput[]
 }
 
 export type DeliveryPartnerProfileUpdateOneWithoutUserNestedInput = {
@@ -356,6 +785,20 @@ export type DeliveryPartnerProfileUpdateOneWithoutUserNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.DeliveryPartnerProfileUpdateToOneWithWhereWithoutUserInput, Prisma.DeliveryPartnerProfileUpdateWithoutUserInput>, Prisma.DeliveryPartnerProfileUncheckedUpdateWithoutUserInput>
 }
 
+export type DeliveryPartnerProfileUpdateManyWithoutReviewedByNestedInput = {
+  create?: Prisma.XOR<Prisma.DeliveryPartnerProfileCreateWithoutReviewedByInput, Prisma.DeliveryPartnerProfileUncheckedCreateWithoutReviewedByInput> | Prisma.DeliveryPartnerProfileCreateWithoutReviewedByInput[] | Prisma.DeliveryPartnerProfileUncheckedCreateWithoutReviewedByInput[]
+  connectOrCreate?: Prisma.DeliveryPartnerProfileCreateOrConnectWithoutReviewedByInput | Prisma.DeliveryPartnerProfileCreateOrConnectWithoutReviewedByInput[]
+  upsert?: Prisma.DeliveryPartnerProfileUpsertWithWhereUniqueWithoutReviewedByInput | Prisma.DeliveryPartnerProfileUpsertWithWhereUniqueWithoutReviewedByInput[]
+  createMany?: Prisma.DeliveryPartnerProfileCreateManyReviewedByInputEnvelope
+  set?: Prisma.DeliveryPartnerProfileWhereUniqueInput | Prisma.DeliveryPartnerProfileWhereUniqueInput[]
+  disconnect?: Prisma.DeliveryPartnerProfileWhereUniqueInput | Prisma.DeliveryPartnerProfileWhereUniqueInput[]
+  delete?: Prisma.DeliveryPartnerProfileWhereUniqueInput | Prisma.DeliveryPartnerProfileWhereUniqueInput[]
+  connect?: Prisma.DeliveryPartnerProfileWhereUniqueInput | Prisma.DeliveryPartnerProfileWhereUniqueInput[]
+  update?: Prisma.DeliveryPartnerProfileUpdateWithWhereUniqueWithoutReviewedByInput | Prisma.DeliveryPartnerProfileUpdateWithWhereUniqueWithoutReviewedByInput[]
+  updateMany?: Prisma.DeliveryPartnerProfileUpdateManyWithWhereWithoutReviewedByInput | Prisma.DeliveryPartnerProfileUpdateManyWithWhereWithoutReviewedByInput[]
+  deleteMany?: Prisma.DeliveryPartnerProfileScalarWhereInput | Prisma.DeliveryPartnerProfileScalarWhereInput[]
+}
+
 export type DeliveryPartnerProfileUncheckedUpdateOneWithoutUserNestedInput = {
   create?: Prisma.XOR<Prisma.DeliveryPartnerProfileCreateWithoutUserInput, Prisma.DeliveryPartnerProfileUncheckedCreateWithoutUserInput>
   connectOrCreate?: Prisma.DeliveryPartnerProfileCreateOrConnectWithoutUserInput
@@ -366,25 +809,209 @@ export type DeliveryPartnerProfileUncheckedUpdateOneWithoutUserNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.DeliveryPartnerProfileUpdateToOneWithWhereWithoutUserInput, Prisma.DeliveryPartnerProfileUpdateWithoutUserInput>, Prisma.DeliveryPartnerProfileUncheckedUpdateWithoutUserInput>
 }
 
+export type DeliveryPartnerProfileUncheckedUpdateManyWithoutReviewedByNestedInput = {
+  create?: Prisma.XOR<Prisma.DeliveryPartnerProfileCreateWithoutReviewedByInput, Prisma.DeliveryPartnerProfileUncheckedCreateWithoutReviewedByInput> | Prisma.DeliveryPartnerProfileCreateWithoutReviewedByInput[] | Prisma.DeliveryPartnerProfileUncheckedCreateWithoutReviewedByInput[]
+  connectOrCreate?: Prisma.DeliveryPartnerProfileCreateOrConnectWithoutReviewedByInput | Prisma.DeliveryPartnerProfileCreateOrConnectWithoutReviewedByInput[]
+  upsert?: Prisma.DeliveryPartnerProfileUpsertWithWhereUniqueWithoutReviewedByInput | Prisma.DeliveryPartnerProfileUpsertWithWhereUniqueWithoutReviewedByInput[]
+  createMany?: Prisma.DeliveryPartnerProfileCreateManyReviewedByInputEnvelope
+  set?: Prisma.DeliveryPartnerProfileWhereUniqueInput | Prisma.DeliveryPartnerProfileWhereUniqueInput[]
+  disconnect?: Prisma.DeliveryPartnerProfileWhereUniqueInput | Prisma.DeliveryPartnerProfileWhereUniqueInput[]
+  delete?: Prisma.DeliveryPartnerProfileWhereUniqueInput | Prisma.DeliveryPartnerProfileWhereUniqueInput[]
+  connect?: Prisma.DeliveryPartnerProfileWhereUniqueInput | Prisma.DeliveryPartnerProfileWhereUniqueInput[]
+  update?: Prisma.DeliveryPartnerProfileUpdateWithWhereUniqueWithoutReviewedByInput | Prisma.DeliveryPartnerProfileUpdateWithWhereUniqueWithoutReviewedByInput[]
+  updateMany?: Prisma.DeliveryPartnerProfileUpdateManyWithWhereWithoutReviewedByInput | Prisma.DeliveryPartnerProfileUpdateManyWithWhereWithoutReviewedByInput[]
+  deleteMany?: Prisma.DeliveryPartnerProfileScalarWhereInput | Prisma.DeliveryPartnerProfileScalarWhereInput[]
+}
+
+export type NullableEnumVehicleTypeFieldUpdateOperationsInput = {
+  set?: $Enums.VehicleType | null
+}
+
+export type FloatFieldUpdateOperationsInput = {
+  set?: number
+  increment?: number
+  decrement?: number
+  multiply?: number
+  divide?: number
+}
+
+export type DeliveryPartnerProfileCreateNestedOneWithoutApplicationHistoryInput = {
+  create?: Prisma.XOR<Prisma.DeliveryPartnerProfileCreateWithoutApplicationHistoryInput, Prisma.DeliveryPartnerProfileUncheckedCreateWithoutApplicationHistoryInput>
+  connectOrCreate?: Prisma.DeliveryPartnerProfileCreateOrConnectWithoutApplicationHistoryInput
+  connect?: Prisma.DeliveryPartnerProfileWhereUniqueInput
+}
+
+export type DeliveryPartnerProfileUpdateOneRequiredWithoutApplicationHistoryNestedInput = {
+  create?: Prisma.XOR<Prisma.DeliveryPartnerProfileCreateWithoutApplicationHistoryInput, Prisma.DeliveryPartnerProfileUncheckedCreateWithoutApplicationHistoryInput>
+  connectOrCreate?: Prisma.DeliveryPartnerProfileCreateOrConnectWithoutApplicationHistoryInput
+  upsert?: Prisma.DeliveryPartnerProfileUpsertWithoutApplicationHistoryInput
+  connect?: Prisma.DeliveryPartnerProfileWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.DeliveryPartnerProfileUpdateToOneWithWhereWithoutApplicationHistoryInput, Prisma.DeliveryPartnerProfileUpdateWithoutApplicationHistoryInput>, Prisma.DeliveryPartnerProfileUncheckedUpdateWithoutApplicationHistoryInput>
+}
+
+export type DeliveryPartnerProfileCreateNestedOneWithoutCurrentOrdersInput = {
+  create?: Prisma.XOR<Prisma.DeliveryPartnerProfileCreateWithoutCurrentOrdersInput, Prisma.DeliveryPartnerProfileUncheckedCreateWithoutCurrentOrdersInput>
+  connectOrCreate?: Prisma.DeliveryPartnerProfileCreateOrConnectWithoutCurrentOrdersInput
+  connect?: Prisma.DeliveryPartnerProfileWhereUniqueInput
+}
+
+export type DeliveryPartnerProfileUpdateOneWithoutCurrentOrdersNestedInput = {
+  create?: Prisma.XOR<Prisma.DeliveryPartnerProfileCreateWithoutCurrentOrdersInput, Prisma.DeliveryPartnerProfileUncheckedCreateWithoutCurrentOrdersInput>
+  connectOrCreate?: Prisma.DeliveryPartnerProfileCreateOrConnectWithoutCurrentOrdersInput
+  upsert?: Prisma.DeliveryPartnerProfileUpsertWithoutCurrentOrdersInput
+  disconnect?: Prisma.DeliveryPartnerProfileWhereInput | boolean
+  delete?: Prisma.DeliveryPartnerProfileWhereInput | boolean
+  connect?: Prisma.DeliveryPartnerProfileWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.DeliveryPartnerProfileUpdateToOneWithWhereWithoutCurrentOrdersInput, Prisma.DeliveryPartnerProfileUpdateWithoutCurrentOrdersInput>, Prisma.DeliveryPartnerProfileUncheckedUpdateWithoutCurrentOrdersInput>
+}
+
+export type DeliveryPartnerProfileCreateNestedOneWithoutAssignmentsInput = {
+  create?: Prisma.XOR<Prisma.DeliveryPartnerProfileCreateWithoutAssignmentsInput, Prisma.DeliveryPartnerProfileUncheckedCreateWithoutAssignmentsInput>
+  connectOrCreate?: Prisma.DeliveryPartnerProfileCreateOrConnectWithoutAssignmentsInput
+  connect?: Prisma.DeliveryPartnerProfileWhereUniqueInput
+}
+
+export type DeliveryPartnerProfileUpdateOneRequiredWithoutAssignmentsNestedInput = {
+  create?: Prisma.XOR<Prisma.DeliveryPartnerProfileCreateWithoutAssignmentsInput, Prisma.DeliveryPartnerProfileUncheckedCreateWithoutAssignmentsInput>
+  connectOrCreate?: Prisma.DeliveryPartnerProfileCreateOrConnectWithoutAssignmentsInput
+  upsert?: Prisma.DeliveryPartnerProfileUpsertWithoutAssignmentsInput
+  connect?: Prisma.DeliveryPartnerProfileWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.DeliveryPartnerProfileUpdateToOneWithWhereWithoutAssignmentsInput, Prisma.DeliveryPartnerProfileUpdateWithoutAssignmentsInput>, Prisma.DeliveryPartnerProfileUncheckedUpdateWithoutAssignmentsInput>
+}
+
+export type DeliveryPartnerProfileCreateNestedOneWithoutDeliveryBatchesInput = {
+  create?: Prisma.XOR<Prisma.DeliveryPartnerProfileCreateWithoutDeliveryBatchesInput, Prisma.DeliveryPartnerProfileUncheckedCreateWithoutDeliveryBatchesInput>
+  connectOrCreate?: Prisma.DeliveryPartnerProfileCreateOrConnectWithoutDeliveryBatchesInput
+  connect?: Prisma.DeliveryPartnerProfileWhereUniqueInput
+}
+
+export type DeliveryPartnerProfileUpdateOneWithoutDeliveryBatchesNestedInput = {
+  create?: Prisma.XOR<Prisma.DeliveryPartnerProfileCreateWithoutDeliveryBatchesInput, Prisma.DeliveryPartnerProfileUncheckedCreateWithoutDeliveryBatchesInput>
+  connectOrCreate?: Prisma.DeliveryPartnerProfileCreateOrConnectWithoutDeliveryBatchesInput
+  upsert?: Prisma.DeliveryPartnerProfileUpsertWithoutDeliveryBatchesInput
+  disconnect?: Prisma.DeliveryPartnerProfileWhereInput | boolean
+  delete?: Prisma.DeliveryPartnerProfileWhereInput | boolean
+  connect?: Prisma.DeliveryPartnerProfileWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.DeliveryPartnerProfileUpdateToOneWithWhereWithoutDeliveryBatchesInput, Prisma.DeliveryPartnerProfileUpdateWithoutDeliveryBatchesInput>, Prisma.DeliveryPartnerProfileUncheckedUpdateWithoutDeliveryBatchesInput>
+}
+
 export type DeliveryPartnerProfileCreateWithoutUserInput = {
   id?: string
-  vehicleType?: string | null
   status?: $Enums.ApplicationStatus
+  vehicleType?: $Enums.VehicleType | null
+  vehicleNumber?: string | null
+  vehicleModel?: string | null
+  licenseNumber?: string | null
+  licenseDocumentUrl?: string | null
+  vehicleDocumentUrl?: string | null
+  rejectionReason?: string | null
+  reviewedAt?: Date | string | null
+  reapplyCount?: number
+  isOnline?: boolean
+  latitude?: number | null
+  longitude?: number | null
+  lastLocationAt?: Date | string | null
+  maxDeliveryRadiusKm?: number
   createdAt?: Date | string
   updatedAt?: Date | string
+  reviewedBy?: Prisma.UserCreateNestedOneWithoutReviewedDeliveryApplicationsInput
+  currentOrders?: Prisma.OrderCreateNestedManyWithoutAssignedDeliveryPartnerInput
+  assignments?: Prisma.DeliveryAssignmentCreateNestedManyWithoutDeliveryPartnerProfileInput
+  deliveryBatches?: Prisma.DeliveryBatchCreateNestedManyWithoutPartnerProfileInput
+  applicationHistory?: Prisma.DeliveryPartnerApplicationHistoryCreateNestedManyWithoutDeliveryPartnerProfileInput
 }
 
 export type DeliveryPartnerProfileUncheckedCreateWithoutUserInput = {
   id?: string
-  vehicleType?: string | null
   status?: $Enums.ApplicationStatus
+  vehicleType?: $Enums.VehicleType | null
+  vehicleNumber?: string | null
+  vehicleModel?: string | null
+  licenseNumber?: string | null
+  licenseDocumentUrl?: string | null
+  vehicleDocumentUrl?: string | null
+  rejectionReason?: string | null
+  reviewedAt?: Date | string | null
+  reviewedById?: string | null
+  reapplyCount?: number
+  isOnline?: boolean
+  latitude?: number | null
+  longitude?: number | null
+  lastLocationAt?: Date | string | null
+  maxDeliveryRadiusKm?: number
   createdAt?: Date | string
   updatedAt?: Date | string
+  currentOrders?: Prisma.OrderUncheckedCreateNestedManyWithoutAssignedDeliveryPartnerInput
+  assignments?: Prisma.DeliveryAssignmentUncheckedCreateNestedManyWithoutDeliveryPartnerProfileInput
+  deliveryBatches?: Prisma.DeliveryBatchUncheckedCreateNestedManyWithoutPartnerProfileInput
+  applicationHistory?: Prisma.DeliveryPartnerApplicationHistoryUncheckedCreateNestedManyWithoutDeliveryPartnerProfileInput
 }
 
 export type DeliveryPartnerProfileCreateOrConnectWithoutUserInput = {
   where: Prisma.DeliveryPartnerProfileWhereUniqueInput
   create: Prisma.XOR<Prisma.DeliveryPartnerProfileCreateWithoutUserInput, Prisma.DeliveryPartnerProfileUncheckedCreateWithoutUserInput>
+}
+
+export type DeliveryPartnerProfileCreateWithoutReviewedByInput = {
+  id?: string
+  status?: $Enums.ApplicationStatus
+  vehicleType?: $Enums.VehicleType | null
+  vehicleNumber?: string | null
+  vehicleModel?: string | null
+  licenseNumber?: string | null
+  licenseDocumentUrl?: string | null
+  vehicleDocumentUrl?: string | null
+  rejectionReason?: string | null
+  reviewedAt?: Date | string | null
+  reapplyCount?: number
+  isOnline?: boolean
+  latitude?: number | null
+  longitude?: number | null
+  lastLocationAt?: Date | string | null
+  maxDeliveryRadiusKm?: number
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  user: Prisma.UserCreateNestedOneWithoutDeliveryProfileInput
+  currentOrders?: Prisma.OrderCreateNestedManyWithoutAssignedDeliveryPartnerInput
+  assignments?: Prisma.DeliveryAssignmentCreateNestedManyWithoutDeliveryPartnerProfileInput
+  deliveryBatches?: Prisma.DeliveryBatchCreateNestedManyWithoutPartnerProfileInput
+  applicationHistory?: Prisma.DeliveryPartnerApplicationHistoryCreateNestedManyWithoutDeliveryPartnerProfileInput
+}
+
+export type DeliveryPartnerProfileUncheckedCreateWithoutReviewedByInput = {
+  id?: string
+  status?: $Enums.ApplicationStatus
+  vehicleType?: $Enums.VehicleType | null
+  vehicleNumber?: string | null
+  vehicleModel?: string | null
+  licenseNumber?: string | null
+  licenseDocumentUrl?: string | null
+  vehicleDocumentUrl?: string | null
+  rejectionReason?: string | null
+  reviewedAt?: Date | string | null
+  reapplyCount?: number
+  isOnline?: boolean
+  latitude?: number | null
+  longitude?: number | null
+  lastLocationAt?: Date | string | null
+  maxDeliveryRadiusKm?: number
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  userId: string
+  currentOrders?: Prisma.OrderUncheckedCreateNestedManyWithoutAssignedDeliveryPartnerInput
+  assignments?: Prisma.DeliveryAssignmentUncheckedCreateNestedManyWithoutDeliveryPartnerProfileInput
+  deliveryBatches?: Prisma.DeliveryBatchUncheckedCreateNestedManyWithoutPartnerProfileInput
+  applicationHistory?: Prisma.DeliveryPartnerApplicationHistoryUncheckedCreateNestedManyWithoutDeliveryPartnerProfileInput
+}
+
+export type DeliveryPartnerProfileCreateOrConnectWithoutReviewedByInput = {
+  where: Prisma.DeliveryPartnerProfileWhereUniqueInput
+  create: Prisma.XOR<Prisma.DeliveryPartnerProfileCreateWithoutReviewedByInput, Prisma.DeliveryPartnerProfileUncheckedCreateWithoutReviewedByInput>
+}
+
+export type DeliveryPartnerProfileCreateManyReviewedByInputEnvelope = {
+  data: Prisma.DeliveryPartnerProfileCreateManyReviewedByInput | Prisma.DeliveryPartnerProfileCreateManyReviewedByInput[]
+  skipDuplicates?: boolean
 }
 
 export type DeliveryPartnerProfileUpsertWithoutUserInput = {
@@ -400,81 +1027,882 @@ export type DeliveryPartnerProfileUpdateToOneWithWhereWithoutUserInput = {
 
 export type DeliveryPartnerProfileUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  vehicleType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumApplicationStatusFieldUpdateOperationsInput | $Enums.ApplicationStatus
+  vehicleType?: Prisma.NullableEnumVehicleTypeFieldUpdateOperationsInput | $Enums.VehicleType | null
+  vehicleNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  vehicleModel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  licenseNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  licenseDocumentUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  vehicleDocumentUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  reviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  reapplyCount?: Prisma.IntFieldUpdateOperationsInput | number
+  isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  lastLocationAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  maxDeliveryRadiusKm?: Prisma.FloatFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  reviewedBy?: Prisma.UserUpdateOneWithoutReviewedDeliveryApplicationsNestedInput
+  currentOrders?: Prisma.OrderUpdateManyWithoutAssignedDeliveryPartnerNestedInput
+  assignments?: Prisma.DeliveryAssignmentUpdateManyWithoutDeliveryPartnerProfileNestedInput
+  deliveryBatches?: Prisma.DeliveryBatchUpdateManyWithoutPartnerProfileNestedInput
+  applicationHistory?: Prisma.DeliveryPartnerApplicationHistoryUpdateManyWithoutDeliveryPartnerProfileNestedInput
 }
 
 export type DeliveryPartnerProfileUncheckedUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  vehicleType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumApplicationStatusFieldUpdateOperationsInput | $Enums.ApplicationStatus
+  vehicleType?: Prisma.NullableEnumVehicleTypeFieldUpdateOperationsInput | $Enums.VehicleType | null
+  vehicleNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  vehicleModel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  licenseNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  licenseDocumentUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  vehicleDocumentUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  reviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  reviewedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  reapplyCount?: Prisma.IntFieldUpdateOperationsInput | number
+  isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  lastLocationAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  maxDeliveryRadiusKm?: Prisma.FloatFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  currentOrders?: Prisma.OrderUncheckedUpdateManyWithoutAssignedDeliveryPartnerNestedInput
+  assignments?: Prisma.DeliveryAssignmentUncheckedUpdateManyWithoutDeliveryPartnerProfileNestedInput
+  deliveryBatches?: Prisma.DeliveryBatchUncheckedUpdateManyWithoutPartnerProfileNestedInput
+  applicationHistory?: Prisma.DeliveryPartnerApplicationHistoryUncheckedUpdateManyWithoutDeliveryPartnerProfileNestedInput
 }
 
+export type DeliveryPartnerProfileUpsertWithWhereUniqueWithoutReviewedByInput = {
+  where: Prisma.DeliveryPartnerProfileWhereUniqueInput
+  update: Prisma.XOR<Prisma.DeliveryPartnerProfileUpdateWithoutReviewedByInput, Prisma.DeliveryPartnerProfileUncheckedUpdateWithoutReviewedByInput>
+  create: Prisma.XOR<Prisma.DeliveryPartnerProfileCreateWithoutReviewedByInput, Prisma.DeliveryPartnerProfileUncheckedCreateWithoutReviewedByInput>
+}
+
+export type DeliveryPartnerProfileUpdateWithWhereUniqueWithoutReviewedByInput = {
+  where: Prisma.DeliveryPartnerProfileWhereUniqueInput
+  data: Prisma.XOR<Prisma.DeliveryPartnerProfileUpdateWithoutReviewedByInput, Prisma.DeliveryPartnerProfileUncheckedUpdateWithoutReviewedByInput>
+}
+
+export type DeliveryPartnerProfileUpdateManyWithWhereWithoutReviewedByInput = {
+  where: Prisma.DeliveryPartnerProfileScalarWhereInput
+  data: Prisma.XOR<Prisma.DeliveryPartnerProfileUpdateManyMutationInput, Prisma.DeliveryPartnerProfileUncheckedUpdateManyWithoutReviewedByInput>
+}
+
+export type DeliveryPartnerProfileScalarWhereInput = {
+  AND?: Prisma.DeliveryPartnerProfileScalarWhereInput | Prisma.DeliveryPartnerProfileScalarWhereInput[]
+  OR?: Prisma.DeliveryPartnerProfileScalarWhereInput[]
+  NOT?: Prisma.DeliveryPartnerProfileScalarWhereInput | Prisma.DeliveryPartnerProfileScalarWhereInput[]
+  id?: Prisma.StringFilter<"DeliveryPartnerProfile"> | string
+  status?: Prisma.EnumApplicationStatusFilter<"DeliveryPartnerProfile"> | $Enums.ApplicationStatus
+  vehicleType?: Prisma.EnumVehicleTypeNullableFilter<"DeliveryPartnerProfile"> | $Enums.VehicleType | null
+  vehicleNumber?: Prisma.StringNullableFilter<"DeliveryPartnerProfile"> | string | null
+  vehicleModel?: Prisma.StringNullableFilter<"DeliveryPartnerProfile"> | string | null
+  licenseNumber?: Prisma.StringNullableFilter<"DeliveryPartnerProfile"> | string | null
+  licenseDocumentUrl?: Prisma.StringNullableFilter<"DeliveryPartnerProfile"> | string | null
+  vehicleDocumentUrl?: Prisma.StringNullableFilter<"DeliveryPartnerProfile"> | string | null
+  rejectionReason?: Prisma.StringNullableFilter<"DeliveryPartnerProfile"> | string | null
+  reviewedAt?: Prisma.DateTimeNullableFilter<"DeliveryPartnerProfile"> | Date | string | null
+  reviewedById?: Prisma.StringNullableFilter<"DeliveryPartnerProfile"> | string | null
+  reapplyCount?: Prisma.IntFilter<"DeliveryPartnerProfile"> | number
+  isOnline?: Prisma.BoolFilter<"DeliveryPartnerProfile"> | boolean
+  latitude?: Prisma.FloatNullableFilter<"DeliveryPartnerProfile"> | number | null
+  longitude?: Prisma.FloatNullableFilter<"DeliveryPartnerProfile"> | number | null
+  lastLocationAt?: Prisma.DateTimeNullableFilter<"DeliveryPartnerProfile"> | Date | string | null
+  maxDeliveryRadiusKm?: Prisma.FloatFilter<"DeliveryPartnerProfile"> | number
+  createdAt?: Prisma.DateTimeFilter<"DeliveryPartnerProfile"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"DeliveryPartnerProfile"> | Date | string
+  userId?: Prisma.StringFilter<"DeliveryPartnerProfile"> | string
+}
+
+export type DeliveryPartnerProfileCreateWithoutApplicationHistoryInput = {
+  id?: string
+  status?: $Enums.ApplicationStatus
+  vehicleType?: $Enums.VehicleType | null
+  vehicleNumber?: string | null
+  vehicleModel?: string | null
+  licenseNumber?: string | null
+  licenseDocumentUrl?: string | null
+  vehicleDocumentUrl?: string | null
+  rejectionReason?: string | null
+  reviewedAt?: Date | string | null
+  reapplyCount?: number
+  isOnline?: boolean
+  latitude?: number | null
+  longitude?: number | null
+  lastLocationAt?: Date | string | null
+  maxDeliveryRadiusKm?: number
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  reviewedBy?: Prisma.UserCreateNestedOneWithoutReviewedDeliveryApplicationsInput
+  user: Prisma.UserCreateNestedOneWithoutDeliveryProfileInput
+  currentOrders?: Prisma.OrderCreateNestedManyWithoutAssignedDeliveryPartnerInput
+  assignments?: Prisma.DeliveryAssignmentCreateNestedManyWithoutDeliveryPartnerProfileInput
+  deliveryBatches?: Prisma.DeliveryBatchCreateNestedManyWithoutPartnerProfileInput
+}
+
+export type DeliveryPartnerProfileUncheckedCreateWithoutApplicationHistoryInput = {
+  id?: string
+  status?: $Enums.ApplicationStatus
+  vehicleType?: $Enums.VehicleType | null
+  vehicleNumber?: string | null
+  vehicleModel?: string | null
+  licenseNumber?: string | null
+  licenseDocumentUrl?: string | null
+  vehicleDocumentUrl?: string | null
+  rejectionReason?: string | null
+  reviewedAt?: Date | string | null
+  reviewedById?: string | null
+  reapplyCount?: number
+  isOnline?: boolean
+  latitude?: number | null
+  longitude?: number | null
+  lastLocationAt?: Date | string | null
+  maxDeliveryRadiusKm?: number
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  userId: string
+  currentOrders?: Prisma.OrderUncheckedCreateNestedManyWithoutAssignedDeliveryPartnerInput
+  assignments?: Prisma.DeliveryAssignmentUncheckedCreateNestedManyWithoutDeliveryPartnerProfileInput
+  deliveryBatches?: Prisma.DeliveryBatchUncheckedCreateNestedManyWithoutPartnerProfileInput
+}
+
+export type DeliveryPartnerProfileCreateOrConnectWithoutApplicationHistoryInput = {
+  where: Prisma.DeliveryPartnerProfileWhereUniqueInput
+  create: Prisma.XOR<Prisma.DeliveryPartnerProfileCreateWithoutApplicationHistoryInput, Prisma.DeliveryPartnerProfileUncheckedCreateWithoutApplicationHistoryInput>
+}
+
+export type DeliveryPartnerProfileUpsertWithoutApplicationHistoryInput = {
+  update: Prisma.XOR<Prisma.DeliveryPartnerProfileUpdateWithoutApplicationHistoryInput, Prisma.DeliveryPartnerProfileUncheckedUpdateWithoutApplicationHistoryInput>
+  create: Prisma.XOR<Prisma.DeliveryPartnerProfileCreateWithoutApplicationHistoryInput, Prisma.DeliveryPartnerProfileUncheckedCreateWithoutApplicationHistoryInput>
+  where?: Prisma.DeliveryPartnerProfileWhereInput
+}
+
+export type DeliveryPartnerProfileUpdateToOneWithWhereWithoutApplicationHistoryInput = {
+  where?: Prisma.DeliveryPartnerProfileWhereInput
+  data: Prisma.XOR<Prisma.DeliveryPartnerProfileUpdateWithoutApplicationHistoryInput, Prisma.DeliveryPartnerProfileUncheckedUpdateWithoutApplicationHistoryInput>
+}
+
+export type DeliveryPartnerProfileUpdateWithoutApplicationHistoryInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumApplicationStatusFieldUpdateOperationsInput | $Enums.ApplicationStatus
+  vehicleType?: Prisma.NullableEnumVehicleTypeFieldUpdateOperationsInput | $Enums.VehicleType | null
+  vehicleNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  vehicleModel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  licenseNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  licenseDocumentUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  vehicleDocumentUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  reviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  reapplyCount?: Prisma.IntFieldUpdateOperationsInput | number
+  isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  lastLocationAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  maxDeliveryRadiusKm?: Prisma.FloatFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  reviewedBy?: Prisma.UserUpdateOneWithoutReviewedDeliveryApplicationsNestedInput
+  user?: Prisma.UserUpdateOneRequiredWithoutDeliveryProfileNestedInput
+  currentOrders?: Prisma.OrderUpdateManyWithoutAssignedDeliveryPartnerNestedInput
+  assignments?: Prisma.DeliveryAssignmentUpdateManyWithoutDeliveryPartnerProfileNestedInput
+  deliveryBatches?: Prisma.DeliveryBatchUpdateManyWithoutPartnerProfileNestedInput
+}
+
+export type DeliveryPartnerProfileUncheckedUpdateWithoutApplicationHistoryInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumApplicationStatusFieldUpdateOperationsInput | $Enums.ApplicationStatus
+  vehicleType?: Prisma.NullableEnumVehicleTypeFieldUpdateOperationsInput | $Enums.VehicleType | null
+  vehicleNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  vehicleModel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  licenseNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  licenseDocumentUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  vehicleDocumentUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  reviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  reviewedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  reapplyCount?: Prisma.IntFieldUpdateOperationsInput | number
+  isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  lastLocationAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  maxDeliveryRadiusKm?: Prisma.FloatFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  currentOrders?: Prisma.OrderUncheckedUpdateManyWithoutAssignedDeliveryPartnerNestedInput
+  assignments?: Prisma.DeliveryAssignmentUncheckedUpdateManyWithoutDeliveryPartnerProfileNestedInput
+  deliveryBatches?: Prisma.DeliveryBatchUncheckedUpdateManyWithoutPartnerProfileNestedInput
+}
+
+export type DeliveryPartnerProfileCreateWithoutCurrentOrdersInput = {
+  id?: string
+  status?: $Enums.ApplicationStatus
+  vehicleType?: $Enums.VehicleType | null
+  vehicleNumber?: string | null
+  vehicleModel?: string | null
+  licenseNumber?: string | null
+  licenseDocumentUrl?: string | null
+  vehicleDocumentUrl?: string | null
+  rejectionReason?: string | null
+  reviewedAt?: Date | string | null
+  reapplyCount?: number
+  isOnline?: boolean
+  latitude?: number | null
+  longitude?: number | null
+  lastLocationAt?: Date | string | null
+  maxDeliveryRadiusKm?: number
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  reviewedBy?: Prisma.UserCreateNestedOneWithoutReviewedDeliveryApplicationsInput
+  user: Prisma.UserCreateNestedOneWithoutDeliveryProfileInput
+  assignments?: Prisma.DeliveryAssignmentCreateNestedManyWithoutDeliveryPartnerProfileInput
+  deliveryBatches?: Prisma.DeliveryBatchCreateNestedManyWithoutPartnerProfileInput
+  applicationHistory?: Prisma.DeliveryPartnerApplicationHistoryCreateNestedManyWithoutDeliveryPartnerProfileInput
+}
+
+export type DeliveryPartnerProfileUncheckedCreateWithoutCurrentOrdersInput = {
+  id?: string
+  status?: $Enums.ApplicationStatus
+  vehicleType?: $Enums.VehicleType | null
+  vehicleNumber?: string | null
+  vehicleModel?: string | null
+  licenseNumber?: string | null
+  licenseDocumentUrl?: string | null
+  vehicleDocumentUrl?: string | null
+  rejectionReason?: string | null
+  reviewedAt?: Date | string | null
+  reviewedById?: string | null
+  reapplyCount?: number
+  isOnline?: boolean
+  latitude?: number | null
+  longitude?: number | null
+  lastLocationAt?: Date | string | null
+  maxDeliveryRadiusKm?: number
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  userId: string
+  assignments?: Prisma.DeliveryAssignmentUncheckedCreateNestedManyWithoutDeliveryPartnerProfileInput
+  deliveryBatches?: Prisma.DeliveryBatchUncheckedCreateNestedManyWithoutPartnerProfileInput
+  applicationHistory?: Prisma.DeliveryPartnerApplicationHistoryUncheckedCreateNestedManyWithoutDeliveryPartnerProfileInput
+}
+
+export type DeliveryPartnerProfileCreateOrConnectWithoutCurrentOrdersInput = {
+  where: Prisma.DeliveryPartnerProfileWhereUniqueInput
+  create: Prisma.XOR<Prisma.DeliveryPartnerProfileCreateWithoutCurrentOrdersInput, Prisma.DeliveryPartnerProfileUncheckedCreateWithoutCurrentOrdersInput>
+}
+
+export type DeliveryPartnerProfileUpsertWithoutCurrentOrdersInput = {
+  update: Prisma.XOR<Prisma.DeliveryPartnerProfileUpdateWithoutCurrentOrdersInput, Prisma.DeliveryPartnerProfileUncheckedUpdateWithoutCurrentOrdersInput>
+  create: Prisma.XOR<Prisma.DeliveryPartnerProfileCreateWithoutCurrentOrdersInput, Prisma.DeliveryPartnerProfileUncheckedCreateWithoutCurrentOrdersInput>
+  where?: Prisma.DeliveryPartnerProfileWhereInput
+}
+
+export type DeliveryPartnerProfileUpdateToOneWithWhereWithoutCurrentOrdersInput = {
+  where?: Prisma.DeliveryPartnerProfileWhereInput
+  data: Prisma.XOR<Prisma.DeliveryPartnerProfileUpdateWithoutCurrentOrdersInput, Prisma.DeliveryPartnerProfileUncheckedUpdateWithoutCurrentOrdersInput>
+}
+
+export type DeliveryPartnerProfileUpdateWithoutCurrentOrdersInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumApplicationStatusFieldUpdateOperationsInput | $Enums.ApplicationStatus
+  vehicleType?: Prisma.NullableEnumVehicleTypeFieldUpdateOperationsInput | $Enums.VehicleType | null
+  vehicleNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  vehicleModel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  licenseNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  licenseDocumentUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  vehicleDocumentUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  reviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  reapplyCount?: Prisma.IntFieldUpdateOperationsInput | number
+  isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  lastLocationAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  maxDeliveryRadiusKm?: Prisma.FloatFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  reviewedBy?: Prisma.UserUpdateOneWithoutReviewedDeliveryApplicationsNestedInput
+  user?: Prisma.UserUpdateOneRequiredWithoutDeliveryProfileNestedInput
+  assignments?: Prisma.DeliveryAssignmentUpdateManyWithoutDeliveryPartnerProfileNestedInput
+  deliveryBatches?: Prisma.DeliveryBatchUpdateManyWithoutPartnerProfileNestedInput
+  applicationHistory?: Prisma.DeliveryPartnerApplicationHistoryUpdateManyWithoutDeliveryPartnerProfileNestedInput
+}
+
+export type DeliveryPartnerProfileUncheckedUpdateWithoutCurrentOrdersInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumApplicationStatusFieldUpdateOperationsInput | $Enums.ApplicationStatus
+  vehicleType?: Prisma.NullableEnumVehicleTypeFieldUpdateOperationsInput | $Enums.VehicleType | null
+  vehicleNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  vehicleModel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  licenseNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  licenseDocumentUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  vehicleDocumentUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  reviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  reviewedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  reapplyCount?: Prisma.IntFieldUpdateOperationsInput | number
+  isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  lastLocationAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  maxDeliveryRadiusKm?: Prisma.FloatFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  assignments?: Prisma.DeliveryAssignmentUncheckedUpdateManyWithoutDeliveryPartnerProfileNestedInput
+  deliveryBatches?: Prisma.DeliveryBatchUncheckedUpdateManyWithoutPartnerProfileNestedInput
+  applicationHistory?: Prisma.DeliveryPartnerApplicationHistoryUncheckedUpdateManyWithoutDeliveryPartnerProfileNestedInput
+}
+
+export type DeliveryPartnerProfileCreateWithoutAssignmentsInput = {
+  id?: string
+  status?: $Enums.ApplicationStatus
+  vehicleType?: $Enums.VehicleType | null
+  vehicleNumber?: string | null
+  vehicleModel?: string | null
+  licenseNumber?: string | null
+  licenseDocumentUrl?: string | null
+  vehicleDocumentUrl?: string | null
+  rejectionReason?: string | null
+  reviewedAt?: Date | string | null
+  reapplyCount?: number
+  isOnline?: boolean
+  latitude?: number | null
+  longitude?: number | null
+  lastLocationAt?: Date | string | null
+  maxDeliveryRadiusKm?: number
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  reviewedBy?: Prisma.UserCreateNestedOneWithoutReviewedDeliveryApplicationsInput
+  user: Prisma.UserCreateNestedOneWithoutDeliveryProfileInput
+  currentOrders?: Prisma.OrderCreateNestedManyWithoutAssignedDeliveryPartnerInput
+  deliveryBatches?: Prisma.DeliveryBatchCreateNestedManyWithoutPartnerProfileInput
+  applicationHistory?: Prisma.DeliveryPartnerApplicationHistoryCreateNestedManyWithoutDeliveryPartnerProfileInput
+}
+
+export type DeliveryPartnerProfileUncheckedCreateWithoutAssignmentsInput = {
+  id?: string
+  status?: $Enums.ApplicationStatus
+  vehicleType?: $Enums.VehicleType | null
+  vehicleNumber?: string | null
+  vehicleModel?: string | null
+  licenseNumber?: string | null
+  licenseDocumentUrl?: string | null
+  vehicleDocumentUrl?: string | null
+  rejectionReason?: string | null
+  reviewedAt?: Date | string | null
+  reviewedById?: string | null
+  reapplyCount?: number
+  isOnline?: boolean
+  latitude?: number | null
+  longitude?: number | null
+  lastLocationAt?: Date | string | null
+  maxDeliveryRadiusKm?: number
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  userId: string
+  currentOrders?: Prisma.OrderUncheckedCreateNestedManyWithoutAssignedDeliveryPartnerInput
+  deliveryBatches?: Prisma.DeliveryBatchUncheckedCreateNestedManyWithoutPartnerProfileInput
+  applicationHistory?: Prisma.DeliveryPartnerApplicationHistoryUncheckedCreateNestedManyWithoutDeliveryPartnerProfileInput
+}
+
+export type DeliveryPartnerProfileCreateOrConnectWithoutAssignmentsInput = {
+  where: Prisma.DeliveryPartnerProfileWhereUniqueInput
+  create: Prisma.XOR<Prisma.DeliveryPartnerProfileCreateWithoutAssignmentsInput, Prisma.DeliveryPartnerProfileUncheckedCreateWithoutAssignmentsInput>
+}
+
+export type DeliveryPartnerProfileUpsertWithoutAssignmentsInput = {
+  update: Prisma.XOR<Prisma.DeliveryPartnerProfileUpdateWithoutAssignmentsInput, Prisma.DeliveryPartnerProfileUncheckedUpdateWithoutAssignmentsInput>
+  create: Prisma.XOR<Prisma.DeliveryPartnerProfileCreateWithoutAssignmentsInput, Prisma.DeliveryPartnerProfileUncheckedCreateWithoutAssignmentsInput>
+  where?: Prisma.DeliveryPartnerProfileWhereInput
+}
+
+export type DeliveryPartnerProfileUpdateToOneWithWhereWithoutAssignmentsInput = {
+  where?: Prisma.DeliveryPartnerProfileWhereInput
+  data: Prisma.XOR<Prisma.DeliveryPartnerProfileUpdateWithoutAssignmentsInput, Prisma.DeliveryPartnerProfileUncheckedUpdateWithoutAssignmentsInput>
+}
+
+export type DeliveryPartnerProfileUpdateWithoutAssignmentsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumApplicationStatusFieldUpdateOperationsInput | $Enums.ApplicationStatus
+  vehicleType?: Prisma.NullableEnumVehicleTypeFieldUpdateOperationsInput | $Enums.VehicleType | null
+  vehicleNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  vehicleModel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  licenseNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  licenseDocumentUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  vehicleDocumentUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  reviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  reapplyCount?: Prisma.IntFieldUpdateOperationsInput | number
+  isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  lastLocationAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  maxDeliveryRadiusKm?: Prisma.FloatFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  reviewedBy?: Prisma.UserUpdateOneWithoutReviewedDeliveryApplicationsNestedInput
+  user?: Prisma.UserUpdateOneRequiredWithoutDeliveryProfileNestedInput
+  currentOrders?: Prisma.OrderUpdateManyWithoutAssignedDeliveryPartnerNestedInput
+  deliveryBatches?: Prisma.DeliveryBatchUpdateManyWithoutPartnerProfileNestedInput
+  applicationHistory?: Prisma.DeliveryPartnerApplicationHistoryUpdateManyWithoutDeliveryPartnerProfileNestedInput
+}
+
+export type DeliveryPartnerProfileUncheckedUpdateWithoutAssignmentsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumApplicationStatusFieldUpdateOperationsInput | $Enums.ApplicationStatus
+  vehicleType?: Prisma.NullableEnumVehicleTypeFieldUpdateOperationsInput | $Enums.VehicleType | null
+  vehicleNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  vehicleModel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  licenseNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  licenseDocumentUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  vehicleDocumentUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  reviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  reviewedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  reapplyCount?: Prisma.IntFieldUpdateOperationsInput | number
+  isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  lastLocationAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  maxDeliveryRadiusKm?: Prisma.FloatFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  currentOrders?: Prisma.OrderUncheckedUpdateManyWithoutAssignedDeliveryPartnerNestedInput
+  deliveryBatches?: Prisma.DeliveryBatchUncheckedUpdateManyWithoutPartnerProfileNestedInput
+  applicationHistory?: Prisma.DeliveryPartnerApplicationHistoryUncheckedUpdateManyWithoutDeliveryPartnerProfileNestedInput
+}
+
+export type DeliveryPartnerProfileCreateWithoutDeliveryBatchesInput = {
+  id?: string
+  status?: $Enums.ApplicationStatus
+  vehicleType?: $Enums.VehicleType | null
+  vehicleNumber?: string | null
+  vehicleModel?: string | null
+  licenseNumber?: string | null
+  licenseDocumentUrl?: string | null
+  vehicleDocumentUrl?: string | null
+  rejectionReason?: string | null
+  reviewedAt?: Date | string | null
+  reapplyCount?: number
+  isOnline?: boolean
+  latitude?: number | null
+  longitude?: number | null
+  lastLocationAt?: Date | string | null
+  maxDeliveryRadiusKm?: number
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  reviewedBy?: Prisma.UserCreateNestedOneWithoutReviewedDeliveryApplicationsInput
+  user: Prisma.UserCreateNestedOneWithoutDeliveryProfileInput
+  currentOrders?: Prisma.OrderCreateNestedManyWithoutAssignedDeliveryPartnerInput
+  assignments?: Prisma.DeliveryAssignmentCreateNestedManyWithoutDeliveryPartnerProfileInput
+  applicationHistory?: Prisma.DeliveryPartnerApplicationHistoryCreateNestedManyWithoutDeliveryPartnerProfileInput
+}
+
+export type DeliveryPartnerProfileUncheckedCreateWithoutDeliveryBatchesInput = {
+  id?: string
+  status?: $Enums.ApplicationStatus
+  vehicleType?: $Enums.VehicleType | null
+  vehicleNumber?: string | null
+  vehicleModel?: string | null
+  licenseNumber?: string | null
+  licenseDocumentUrl?: string | null
+  vehicleDocumentUrl?: string | null
+  rejectionReason?: string | null
+  reviewedAt?: Date | string | null
+  reviewedById?: string | null
+  reapplyCount?: number
+  isOnline?: boolean
+  latitude?: number | null
+  longitude?: number | null
+  lastLocationAt?: Date | string | null
+  maxDeliveryRadiusKm?: number
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  userId: string
+  currentOrders?: Prisma.OrderUncheckedCreateNestedManyWithoutAssignedDeliveryPartnerInput
+  assignments?: Prisma.DeliveryAssignmentUncheckedCreateNestedManyWithoutDeliveryPartnerProfileInput
+  applicationHistory?: Prisma.DeliveryPartnerApplicationHistoryUncheckedCreateNestedManyWithoutDeliveryPartnerProfileInput
+}
+
+export type DeliveryPartnerProfileCreateOrConnectWithoutDeliveryBatchesInput = {
+  where: Prisma.DeliveryPartnerProfileWhereUniqueInput
+  create: Prisma.XOR<Prisma.DeliveryPartnerProfileCreateWithoutDeliveryBatchesInput, Prisma.DeliveryPartnerProfileUncheckedCreateWithoutDeliveryBatchesInput>
+}
+
+export type DeliveryPartnerProfileUpsertWithoutDeliveryBatchesInput = {
+  update: Prisma.XOR<Prisma.DeliveryPartnerProfileUpdateWithoutDeliveryBatchesInput, Prisma.DeliveryPartnerProfileUncheckedUpdateWithoutDeliveryBatchesInput>
+  create: Prisma.XOR<Prisma.DeliveryPartnerProfileCreateWithoutDeliveryBatchesInput, Prisma.DeliveryPartnerProfileUncheckedCreateWithoutDeliveryBatchesInput>
+  where?: Prisma.DeliveryPartnerProfileWhereInput
+}
+
+export type DeliveryPartnerProfileUpdateToOneWithWhereWithoutDeliveryBatchesInput = {
+  where?: Prisma.DeliveryPartnerProfileWhereInput
+  data: Prisma.XOR<Prisma.DeliveryPartnerProfileUpdateWithoutDeliveryBatchesInput, Prisma.DeliveryPartnerProfileUncheckedUpdateWithoutDeliveryBatchesInput>
+}
+
+export type DeliveryPartnerProfileUpdateWithoutDeliveryBatchesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumApplicationStatusFieldUpdateOperationsInput | $Enums.ApplicationStatus
+  vehicleType?: Prisma.NullableEnumVehicleTypeFieldUpdateOperationsInput | $Enums.VehicleType | null
+  vehicleNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  vehicleModel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  licenseNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  licenseDocumentUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  vehicleDocumentUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  reviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  reapplyCount?: Prisma.IntFieldUpdateOperationsInput | number
+  isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  lastLocationAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  maxDeliveryRadiusKm?: Prisma.FloatFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  reviewedBy?: Prisma.UserUpdateOneWithoutReviewedDeliveryApplicationsNestedInput
+  user?: Prisma.UserUpdateOneRequiredWithoutDeliveryProfileNestedInput
+  currentOrders?: Prisma.OrderUpdateManyWithoutAssignedDeliveryPartnerNestedInput
+  assignments?: Prisma.DeliveryAssignmentUpdateManyWithoutDeliveryPartnerProfileNestedInput
+  applicationHistory?: Prisma.DeliveryPartnerApplicationHistoryUpdateManyWithoutDeliveryPartnerProfileNestedInput
+}
+
+export type DeliveryPartnerProfileUncheckedUpdateWithoutDeliveryBatchesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumApplicationStatusFieldUpdateOperationsInput | $Enums.ApplicationStatus
+  vehicleType?: Prisma.NullableEnumVehicleTypeFieldUpdateOperationsInput | $Enums.VehicleType | null
+  vehicleNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  vehicleModel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  licenseNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  licenseDocumentUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  vehicleDocumentUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  reviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  reviewedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  reapplyCount?: Prisma.IntFieldUpdateOperationsInput | number
+  isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  lastLocationAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  maxDeliveryRadiusKm?: Prisma.FloatFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  currentOrders?: Prisma.OrderUncheckedUpdateManyWithoutAssignedDeliveryPartnerNestedInput
+  assignments?: Prisma.DeliveryAssignmentUncheckedUpdateManyWithoutDeliveryPartnerProfileNestedInput
+  applicationHistory?: Prisma.DeliveryPartnerApplicationHistoryUncheckedUpdateManyWithoutDeliveryPartnerProfileNestedInput
+}
+
+export type DeliveryPartnerProfileCreateManyReviewedByInput = {
+  id?: string
+  status?: $Enums.ApplicationStatus
+  vehicleType?: $Enums.VehicleType | null
+  vehicleNumber?: string | null
+  vehicleModel?: string | null
+  licenseNumber?: string | null
+  licenseDocumentUrl?: string | null
+  vehicleDocumentUrl?: string | null
+  rejectionReason?: string | null
+  reviewedAt?: Date | string | null
+  reapplyCount?: number
+  isOnline?: boolean
+  latitude?: number | null
+  longitude?: number | null
+  lastLocationAt?: Date | string | null
+  maxDeliveryRadiusKm?: number
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  userId: string
+}
+
+export type DeliveryPartnerProfileUpdateWithoutReviewedByInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumApplicationStatusFieldUpdateOperationsInput | $Enums.ApplicationStatus
+  vehicleType?: Prisma.NullableEnumVehicleTypeFieldUpdateOperationsInput | $Enums.VehicleType | null
+  vehicleNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  vehicleModel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  licenseNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  licenseDocumentUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  vehicleDocumentUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  reviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  reapplyCount?: Prisma.IntFieldUpdateOperationsInput | number
+  isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  lastLocationAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  maxDeliveryRadiusKm?: Prisma.FloatFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  user?: Prisma.UserUpdateOneRequiredWithoutDeliveryProfileNestedInput
+  currentOrders?: Prisma.OrderUpdateManyWithoutAssignedDeliveryPartnerNestedInput
+  assignments?: Prisma.DeliveryAssignmentUpdateManyWithoutDeliveryPartnerProfileNestedInput
+  deliveryBatches?: Prisma.DeliveryBatchUpdateManyWithoutPartnerProfileNestedInput
+  applicationHistory?: Prisma.DeliveryPartnerApplicationHistoryUpdateManyWithoutDeliveryPartnerProfileNestedInput
+}
+
+export type DeliveryPartnerProfileUncheckedUpdateWithoutReviewedByInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumApplicationStatusFieldUpdateOperationsInput | $Enums.ApplicationStatus
+  vehicleType?: Prisma.NullableEnumVehicleTypeFieldUpdateOperationsInput | $Enums.VehicleType | null
+  vehicleNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  vehicleModel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  licenseNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  licenseDocumentUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  vehicleDocumentUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  reviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  reapplyCount?: Prisma.IntFieldUpdateOperationsInput | number
+  isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  lastLocationAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  maxDeliveryRadiusKm?: Prisma.FloatFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  currentOrders?: Prisma.OrderUncheckedUpdateManyWithoutAssignedDeliveryPartnerNestedInput
+  assignments?: Prisma.DeliveryAssignmentUncheckedUpdateManyWithoutDeliveryPartnerProfileNestedInput
+  deliveryBatches?: Prisma.DeliveryBatchUncheckedUpdateManyWithoutPartnerProfileNestedInput
+  applicationHistory?: Prisma.DeliveryPartnerApplicationHistoryUncheckedUpdateManyWithoutDeliveryPartnerProfileNestedInput
+}
+
+export type DeliveryPartnerProfileUncheckedUpdateManyWithoutReviewedByInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumApplicationStatusFieldUpdateOperationsInput | $Enums.ApplicationStatus
+  vehicleType?: Prisma.NullableEnumVehicleTypeFieldUpdateOperationsInput | $Enums.VehicleType | null
+  vehicleNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  vehicleModel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  licenseNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  licenseDocumentUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  vehicleDocumentUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  reviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  reapplyCount?: Prisma.IntFieldUpdateOperationsInput | number
+  isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  lastLocationAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  maxDeliveryRadiusKm?: Prisma.FloatFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+}
+
+
+/**
+ * Count Type DeliveryPartnerProfileCountOutputType
+ */
+
+export type DeliveryPartnerProfileCountOutputType = {
+  currentOrders: number
+  assignments: number
+  deliveryBatches: number
+  applicationHistory: number
+}
+
+export type DeliveryPartnerProfileCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  currentOrders?: boolean | DeliveryPartnerProfileCountOutputTypeCountCurrentOrdersArgs
+  assignments?: boolean | DeliveryPartnerProfileCountOutputTypeCountAssignmentsArgs
+  deliveryBatches?: boolean | DeliveryPartnerProfileCountOutputTypeCountDeliveryBatchesArgs
+  applicationHistory?: boolean | DeliveryPartnerProfileCountOutputTypeCountApplicationHistoryArgs
+}
+
+/**
+ * DeliveryPartnerProfileCountOutputType without action
+ */
+export type DeliveryPartnerProfileCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the DeliveryPartnerProfileCountOutputType
+   */
+  select?: Prisma.DeliveryPartnerProfileCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * DeliveryPartnerProfileCountOutputType without action
+ */
+export type DeliveryPartnerProfileCountOutputTypeCountCurrentOrdersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.OrderWhereInput
+}
+
+/**
+ * DeliveryPartnerProfileCountOutputType without action
+ */
+export type DeliveryPartnerProfileCountOutputTypeCountAssignmentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.DeliveryAssignmentWhereInput
+}
+
+/**
+ * DeliveryPartnerProfileCountOutputType without action
+ */
+export type DeliveryPartnerProfileCountOutputTypeCountDeliveryBatchesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.DeliveryBatchWhereInput
+}
+
+/**
+ * DeliveryPartnerProfileCountOutputType without action
+ */
+export type DeliveryPartnerProfileCountOutputTypeCountApplicationHistoryArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.DeliveryPartnerApplicationHistoryWhereInput
+}
 
 
 export type DeliveryPartnerProfileSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  vehicleType?: boolean
   status?: boolean
+  vehicleType?: boolean
+  vehicleNumber?: boolean
+  vehicleModel?: boolean
+  licenseNumber?: boolean
+  licenseDocumentUrl?: boolean
+  vehicleDocumentUrl?: boolean
+  rejectionReason?: boolean
+  reviewedAt?: boolean
+  reviewedById?: boolean
+  reapplyCount?: boolean
+  isOnline?: boolean
+  latitude?: boolean
+  longitude?: boolean
+  lastLocationAt?: boolean
+  maxDeliveryRadiusKm?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   userId?: boolean
+  reviewedBy?: boolean | Prisma.DeliveryPartnerProfile$reviewedByArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  currentOrders?: boolean | Prisma.DeliveryPartnerProfile$currentOrdersArgs<ExtArgs>
+  assignments?: boolean | Prisma.DeliveryPartnerProfile$assignmentsArgs<ExtArgs>
+  deliveryBatches?: boolean | Prisma.DeliveryPartnerProfile$deliveryBatchesArgs<ExtArgs>
+  applicationHistory?: boolean | Prisma.DeliveryPartnerProfile$applicationHistoryArgs<ExtArgs>
+  _count?: boolean | Prisma.DeliveryPartnerProfileCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["deliveryPartnerProfile"]>
 
 export type DeliveryPartnerProfileSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  vehicleType?: boolean
   status?: boolean
+  vehicleType?: boolean
+  vehicleNumber?: boolean
+  vehicleModel?: boolean
+  licenseNumber?: boolean
+  licenseDocumentUrl?: boolean
+  vehicleDocumentUrl?: boolean
+  rejectionReason?: boolean
+  reviewedAt?: boolean
+  reviewedById?: boolean
+  reapplyCount?: boolean
+  isOnline?: boolean
+  latitude?: boolean
+  longitude?: boolean
+  lastLocationAt?: boolean
+  maxDeliveryRadiusKm?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   userId?: boolean
+  reviewedBy?: boolean | Prisma.DeliveryPartnerProfile$reviewedByArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["deliveryPartnerProfile"]>
 
 export type DeliveryPartnerProfileSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  vehicleType?: boolean
   status?: boolean
+  vehicleType?: boolean
+  vehicleNumber?: boolean
+  vehicleModel?: boolean
+  licenseNumber?: boolean
+  licenseDocumentUrl?: boolean
+  vehicleDocumentUrl?: boolean
+  rejectionReason?: boolean
+  reviewedAt?: boolean
+  reviewedById?: boolean
+  reapplyCount?: boolean
+  isOnline?: boolean
+  latitude?: boolean
+  longitude?: boolean
+  lastLocationAt?: boolean
+  maxDeliveryRadiusKm?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   userId?: boolean
+  reviewedBy?: boolean | Prisma.DeliveryPartnerProfile$reviewedByArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["deliveryPartnerProfile"]>
 
 export type DeliveryPartnerProfileSelectScalar = {
   id?: boolean
-  vehicleType?: boolean
   status?: boolean
+  vehicleType?: boolean
+  vehicleNumber?: boolean
+  vehicleModel?: boolean
+  licenseNumber?: boolean
+  licenseDocumentUrl?: boolean
+  vehicleDocumentUrl?: boolean
+  rejectionReason?: boolean
+  reviewedAt?: boolean
+  reviewedById?: boolean
+  reapplyCount?: boolean
+  isOnline?: boolean
+  latitude?: boolean
+  longitude?: boolean
+  lastLocationAt?: boolean
+  maxDeliveryRadiusKm?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   userId?: boolean
 }
 
-export type DeliveryPartnerProfileOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "vehicleType" | "status" | "createdAt" | "updatedAt" | "userId", ExtArgs["result"]["deliveryPartnerProfile"]>
+export type DeliveryPartnerProfileOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "status" | "vehicleType" | "vehicleNumber" | "vehicleModel" | "licenseNumber" | "licenseDocumentUrl" | "vehicleDocumentUrl" | "rejectionReason" | "reviewedAt" | "reviewedById" | "reapplyCount" | "isOnline" | "latitude" | "longitude" | "lastLocationAt" | "maxDeliveryRadiusKm" | "createdAt" | "updatedAt" | "userId", ExtArgs["result"]["deliveryPartnerProfile"]>
 export type DeliveryPartnerProfileInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  reviewedBy?: boolean | Prisma.DeliveryPartnerProfile$reviewedByArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  currentOrders?: boolean | Prisma.DeliveryPartnerProfile$currentOrdersArgs<ExtArgs>
+  assignments?: boolean | Prisma.DeliveryPartnerProfile$assignmentsArgs<ExtArgs>
+  deliveryBatches?: boolean | Prisma.DeliveryPartnerProfile$deliveryBatchesArgs<ExtArgs>
+  applicationHistory?: boolean | Prisma.DeliveryPartnerProfile$applicationHistoryArgs<ExtArgs>
+  _count?: boolean | Prisma.DeliveryPartnerProfileCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type DeliveryPartnerProfileIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  reviewedBy?: boolean | Prisma.DeliveryPartnerProfile$reviewedByArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
 export type DeliveryPartnerProfileIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  reviewedBy?: boolean | Prisma.DeliveryPartnerProfile$reviewedByArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
 
 export type $DeliveryPartnerProfilePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "DeliveryPartnerProfile"
   objects: {
+    reviewedBy: Prisma.$UserPayload<ExtArgs> | null
     user: Prisma.$UserPayload<ExtArgs>
+    currentOrders: Prisma.$OrderPayload<ExtArgs>[]
+    assignments: Prisma.$DeliveryAssignmentPayload<ExtArgs>[]
+    deliveryBatches: Prisma.$DeliveryBatchPayload<ExtArgs>[]
+    applicationHistory: Prisma.$DeliveryPartnerApplicationHistoryPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
-    vehicleType: string | null
     status: $Enums.ApplicationStatus
+    vehicleType: $Enums.VehicleType | null
+    vehicleNumber: string | null
+    vehicleModel: string | null
+    licenseNumber: string | null
+    licenseDocumentUrl: string | null
+    vehicleDocumentUrl: string | null
+    rejectionReason: string | null
+    reviewedAt: Date | null
+    reviewedById: string | null
+    reapplyCount: number
+    isOnline: boolean
+    latitude: number | null
+    longitude: number | null
+    lastLocationAt: Date | null
+    maxDeliveryRadiusKm: number
     createdAt: Date
     updatedAt: Date
     userId: string
@@ -872,7 +2300,12 @@ readonly fields: DeliveryPartnerProfileFieldRefs;
  */
 export interface Prisma__DeliveryPartnerProfileClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  reviewedBy<T extends Prisma.DeliveryPartnerProfile$reviewedByArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.DeliveryPartnerProfile$reviewedByArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  currentOrders<T extends Prisma.DeliveryPartnerProfile$currentOrdersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.DeliveryPartnerProfile$currentOrdersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$OrderPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  assignments<T extends Prisma.DeliveryPartnerProfile$assignmentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.DeliveryPartnerProfile$assignmentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DeliveryAssignmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  deliveryBatches<T extends Prisma.DeliveryPartnerProfile$deliveryBatchesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.DeliveryPartnerProfile$deliveryBatchesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DeliveryBatchPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  applicationHistory<T extends Prisma.DeliveryPartnerProfile$applicationHistoryArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.DeliveryPartnerProfile$applicationHistoryArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DeliveryPartnerApplicationHistoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -903,8 +2336,22 @@ export interface Prisma__DeliveryPartnerProfileClient<T, Null = never, ExtArgs e
  */
 export interface DeliveryPartnerProfileFieldRefs {
   readonly id: Prisma.FieldRef<"DeliveryPartnerProfile", 'String'>
-  readonly vehicleType: Prisma.FieldRef<"DeliveryPartnerProfile", 'String'>
   readonly status: Prisma.FieldRef<"DeliveryPartnerProfile", 'ApplicationStatus'>
+  readonly vehicleType: Prisma.FieldRef<"DeliveryPartnerProfile", 'VehicleType'>
+  readonly vehicleNumber: Prisma.FieldRef<"DeliveryPartnerProfile", 'String'>
+  readonly vehicleModel: Prisma.FieldRef<"DeliveryPartnerProfile", 'String'>
+  readonly licenseNumber: Prisma.FieldRef<"DeliveryPartnerProfile", 'String'>
+  readonly licenseDocumentUrl: Prisma.FieldRef<"DeliveryPartnerProfile", 'String'>
+  readonly vehicleDocumentUrl: Prisma.FieldRef<"DeliveryPartnerProfile", 'String'>
+  readonly rejectionReason: Prisma.FieldRef<"DeliveryPartnerProfile", 'String'>
+  readonly reviewedAt: Prisma.FieldRef<"DeliveryPartnerProfile", 'DateTime'>
+  readonly reviewedById: Prisma.FieldRef<"DeliveryPartnerProfile", 'String'>
+  readonly reapplyCount: Prisma.FieldRef<"DeliveryPartnerProfile", 'Int'>
+  readonly isOnline: Prisma.FieldRef<"DeliveryPartnerProfile", 'Boolean'>
+  readonly latitude: Prisma.FieldRef<"DeliveryPartnerProfile", 'Float'>
+  readonly longitude: Prisma.FieldRef<"DeliveryPartnerProfile", 'Float'>
+  readonly lastLocationAt: Prisma.FieldRef<"DeliveryPartnerProfile", 'DateTime'>
+  readonly maxDeliveryRadiusKm: Prisma.FieldRef<"DeliveryPartnerProfile", 'Float'>
   readonly createdAt: Prisma.FieldRef<"DeliveryPartnerProfile", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"DeliveryPartnerProfile", 'DateTime'>
   readonly userId: Prisma.FieldRef<"DeliveryPartnerProfile", 'String'>
@@ -1306,6 +2753,121 @@ export type DeliveryPartnerProfileDeleteManyArgs<ExtArgs extends runtime.Types.E
    * Limit how many DeliveryPartnerProfiles to delete.
    */
   limit?: number
+}
+
+/**
+ * DeliveryPartnerProfile.reviewedBy
+ */
+export type DeliveryPartnerProfile$reviewedByArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the User
+   */
+  select?: Prisma.UserSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the User
+   */
+  omit?: Prisma.UserOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserInclude<ExtArgs> | null
+  where?: Prisma.UserWhereInput
+}
+
+/**
+ * DeliveryPartnerProfile.currentOrders
+ */
+export type DeliveryPartnerProfile$currentOrdersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Order
+   */
+  select?: Prisma.OrderSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Order
+   */
+  omit?: Prisma.OrderOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.OrderInclude<ExtArgs> | null
+  where?: Prisma.OrderWhereInput
+  orderBy?: Prisma.OrderOrderByWithRelationInput | Prisma.OrderOrderByWithRelationInput[]
+  cursor?: Prisma.OrderWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.OrderScalarFieldEnum | Prisma.OrderScalarFieldEnum[]
+}
+
+/**
+ * DeliveryPartnerProfile.assignments
+ */
+export type DeliveryPartnerProfile$assignmentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the DeliveryAssignment
+   */
+  select?: Prisma.DeliveryAssignmentSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the DeliveryAssignment
+   */
+  omit?: Prisma.DeliveryAssignmentOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.DeliveryAssignmentInclude<ExtArgs> | null
+  where?: Prisma.DeliveryAssignmentWhereInput
+  orderBy?: Prisma.DeliveryAssignmentOrderByWithRelationInput | Prisma.DeliveryAssignmentOrderByWithRelationInput[]
+  cursor?: Prisma.DeliveryAssignmentWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.DeliveryAssignmentScalarFieldEnum | Prisma.DeliveryAssignmentScalarFieldEnum[]
+}
+
+/**
+ * DeliveryPartnerProfile.deliveryBatches
+ */
+export type DeliveryPartnerProfile$deliveryBatchesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the DeliveryBatch
+   */
+  select?: Prisma.DeliveryBatchSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the DeliveryBatch
+   */
+  omit?: Prisma.DeliveryBatchOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.DeliveryBatchInclude<ExtArgs> | null
+  where?: Prisma.DeliveryBatchWhereInput
+  orderBy?: Prisma.DeliveryBatchOrderByWithRelationInput | Prisma.DeliveryBatchOrderByWithRelationInput[]
+  cursor?: Prisma.DeliveryBatchWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.DeliveryBatchScalarFieldEnum | Prisma.DeliveryBatchScalarFieldEnum[]
+}
+
+/**
+ * DeliveryPartnerProfile.applicationHistory
+ */
+export type DeliveryPartnerProfile$applicationHistoryArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the DeliveryPartnerApplicationHistory
+   */
+  select?: Prisma.DeliveryPartnerApplicationHistorySelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the DeliveryPartnerApplicationHistory
+   */
+  omit?: Prisma.DeliveryPartnerApplicationHistoryOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.DeliveryPartnerApplicationHistoryInclude<ExtArgs> | null
+  where?: Prisma.DeliveryPartnerApplicationHistoryWhereInput
+  orderBy?: Prisma.DeliveryPartnerApplicationHistoryOrderByWithRelationInput | Prisma.DeliveryPartnerApplicationHistoryOrderByWithRelationInput[]
+  cursor?: Prisma.DeliveryPartnerApplicationHistoryWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.DeliveryPartnerApplicationHistoryScalarFieldEnum | Prisma.DeliveryPartnerApplicationHistoryScalarFieldEnum[]
 }
 
 /**

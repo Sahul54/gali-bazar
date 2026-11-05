@@ -59,3 +59,65 @@ export const BulkUploadStatus = {
 } as const
 
 export type BulkUploadStatus = (typeof BulkUploadStatus)[keyof typeof BulkUploadStatus]
+
+
+export const VehicleType = {
+  BIKE: 'BIKE',
+  SCOOTER: 'SCOOTER',
+  MOTORCYCLE: 'MOTORCYCLE',
+  BICYCLE: 'BICYCLE',
+  THREE_WHEELER: 'THREE_WHEELER',
+  OTHER: 'OTHER'
+} as const
+
+export type VehicleType = (typeof VehicleType)[keyof typeof VehicleType]
+
+
+export const OrderStatus = {
+  PLACED: 'PLACED',
+  CONFIRMED: 'CONFIRMED',
+  PREPARING: 'PREPARING',
+  READY_FOR_PICKUP: 'READY_FOR_PICKUP',
+  ASSIGNED: 'ASSIGNED',
+  PICKED_UP: 'PICKED_UP',
+  OUT_FOR_DELIVERY: 'OUT_FOR_DELIVERY',
+  DELIVERED: 'DELIVERED',
+  DELIVERY_FAILED: 'DELIVERY_FAILED',
+  CANCELLED: 'CANCELLED'
+} as const
+
+export type OrderStatus = (typeof OrderStatus)[keyof typeof OrderStatus]
+
+
+export const DeliveryType = {
+  EXPRESS: 'EXPRESS',
+  SCHEDULED: 'SCHEDULED'
+} as const
+
+export type DeliveryType = (typeof DeliveryType)[keyof typeof DeliveryType]
+
+
+export const DeliveryAssignmentStatus = {
+  PENDING: 'PENDING',
+  ACCEPTED: 'ACCEPTED',
+  REJECTED: 'REJECTED',
+  EXPIRED: 'EXPIRED',
+  CANCELLED: 'CANCELLED',
+  COMPLETED: 'COMPLETED'
+} as const
+
+export type DeliveryAssignmentStatus = (typeof DeliveryAssignmentStatus)[keyof typeof DeliveryAssignmentStatus]
+
+
+export const DeliveryBatchStatus = {
+  PENDING: 'PENDING',
+  OFFERED: 'OFFERED',
+  ACCEPTED: 'ACCEPTED',
+  PICKING_UP: 'PICKING_UP',
+  OUT_FOR_DELIVERY: 'OUT_FOR_DELIVERY',
+  COMPLETED: 'COMPLETED',
+  CANCELLED: 'CANCELLED',
+  EXPIRED: 'EXPIRED'
+} as const
+
+export type DeliveryBatchStatus = (typeof DeliveryBatchStatus)[keyof typeof DeliveryBatchStatus]

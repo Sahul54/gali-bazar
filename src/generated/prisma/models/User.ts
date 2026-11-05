@@ -217,6 +217,10 @@ export type UserWhereInput = {
   otpVerifications?: Prisma.OtpVerificationListRelationFilter
   sellerProfile?: Prisma.XOR<Prisma.SellerProfileNullableScalarRelationFilter, Prisma.SellerProfileWhereInput> | null
   deliveryProfile?: Prisma.XOR<Prisma.DeliveryPartnerProfileNullableScalarRelationFilter, Prisma.DeliveryPartnerProfileWhereInput> | null
+  customerOrders?: Prisma.OrderListRelationFilter
+  productViews?: Prisma.ProductViewListRelationFilter
+  reviewedDeliveryApplications?: Prisma.DeliveryPartnerProfileListRelationFilter
+  deliveryPartnerReviewHistory?: Prisma.DeliveryPartnerApplicationHistoryListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -232,6 +236,10 @@ export type UserOrderByWithRelationInput = {
   otpVerifications?: Prisma.OtpVerificationOrderByRelationAggregateInput
   sellerProfile?: Prisma.SellerProfileOrderByWithRelationInput
   deliveryProfile?: Prisma.DeliveryPartnerProfileOrderByWithRelationInput
+  customerOrders?: Prisma.OrderOrderByRelationAggregateInput
+  productViews?: Prisma.ProductViewOrderByRelationAggregateInput
+  reviewedDeliveryApplications?: Prisma.DeliveryPartnerProfileOrderByRelationAggregateInput
+  deliveryPartnerReviewHistory?: Prisma.DeliveryPartnerApplicationHistoryOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -250,6 +258,10 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   otpVerifications?: Prisma.OtpVerificationListRelationFilter
   sellerProfile?: Prisma.XOR<Prisma.SellerProfileNullableScalarRelationFilter, Prisma.SellerProfileWhereInput> | null
   deliveryProfile?: Prisma.XOR<Prisma.DeliveryPartnerProfileNullableScalarRelationFilter, Prisma.DeliveryPartnerProfileWhereInput> | null
+  customerOrders?: Prisma.OrderListRelationFilter
+  productViews?: Prisma.ProductViewListRelationFilter
+  reviewedDeliveryApplications?: Prisma.DeliveryPartnerProfileListRelationFilter
+  deliveryPartnerReviewHistory?: Prisma.DeliveryPartnerApplicationHistoryListRelationFilter
 }, "id" | "phone" | "email">
 
 export type UserOrderByWithAggregationInput = {
@@ -295,6 +307,10 @@ export type UserCreateInput = {
   otpVerifications?: Prisma.OtpVerificationCreateNestedManyWithoutUserInput
   sellerProfile?: Prisma.SellerProfileCreateNestedOneWithoutUserInput
   deliveryProfile?: Prisma.DeliveryPartnerProfileCreateNestedOneWithoutUserInput
+  customerOrders?: Prisma.OrderCreateNestedManyWithoutCustomerInput
+  productViews?: Prisma.ProductViewCreateNestedManyWithoutUserInput
+  reviewedDeliveryApplications?: Prisma.DeliveryPartnerProfileCreateNestedManyWithoutReviewedByInput
+  deliveryPartnerReviewHistory?: Prisma.DeliveryPartnerApplicationHistoryCreateNestedManyWithoutReviewedByInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -310,6 +326,10 @@ export type UserUncheckedCreateInput = {
   otpVerifications?: Prisma.OtpVerificationUncheckedCreateNestedManyWithoutUserInput
   sellerProfile?: Prisma.SellerProfileUncheckedCreateNestedOneWithoutUserInput
   deliveryProfile?: Prisma.DeliveryPartnerProfileUncheckedCreateNestedOneWithoutUserInput
+  customerOrders?: Prisma.OrderUncheckedCreateNestedManyWithoutCustomerInput
+  productViews?: Prisma.ProductViewUncheckedCreateNestedManyWithoutUserInput
+  reviewedDeliveryApplications?: Prisma.DeliveryPartnerProfileUncheckedCreateNestedManyWithoutReviewedByInput
+  deliveryPartnerReviewHistory?: Prisma.DeliveryPartnerApplicationHistoryUncheckedCreateNestedManyWithoutReviewedByInput
 }
 
 export type UserUpdateInput = {
@@ -325,6 +345,10 @@ export type UserUpdateInput = {
   otpVerifications?: Prisma.OtpVerificationUpdateManyWithoutUserNestedInput
   sellerProfile?: Prisma.SellerProfileUpdateOneWithoutUserNestedInput
   deliveryProfile?: Prisma.DeliveryPartnerProfileUpdateOneWithoutUserNestedInput
+  customerOrders?: Prisma.OrderUpdateManyWithoutCustomerNestedInput
+  productViews?: Prisma.ProductViewUpdateManyWithoutUserNestedInput
+  reviewedDeliveryApplications?: Prisma.DeliveryPartnerProfileUpdateManyWithoutReviewedByNestedInput
+  deliveryPartnerReviewHistory?: Prisma.DeliveryPartnerApplicationHistoryUpdateManyWithoutReviewedByNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -340,6 +364,10 @@ export type UserUncheckedUpdateInput = {
   otpVerifications?: Prisma.OtpVerificationUncheckedUpdateManyWithoutUserNestedInput
   sellerProfile?: Prisma.SellerProfileUncheckedUpdateOneWithoutUserNestedInput
   deliveryProfile?: Prisma.DeliveryPartnerProfileUncheckedUpdateOneWithoutUserNestedInput
+  customerOrders?: Prisma.OrderUncheckedUpdateManyWithoutCustomerNestedInput
+  productViews?: Prisma.ProductViewUncheckedUpdateManyWithoutUserNestedInput
+  reviewedDeliveryApplications?: Prisma.DeliveryPartnerProfileUncheckedUpdateManyWithoutReviewedByNestedInput
+  deliveryPartnerReviewHistory?: Prisma.DeliveryPartnerApplicationHistoryUncheckedUpdateManyWithoutReviewedByNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -474,10 +502,26 @@ export type UserUpdateOneRequiredWithoutSellerProfileNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutSellerProfileInput, Prisma.UserUpdateWithoutSellerProfileInput>, Prisma.UserUncheckedUpdateWithoutSellerProfileInput>
 }
 
+export type UserCreateNestedOneWithoutReviewedDeliveryApplicationsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutReviewedDeliveryApplicationsInput, Prisma.UserUncheckedCreateWithoutReviewedDeliveryApplicationsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutReviewedDeliveryApplicationsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
 export type UserCreateNestedOneWithoutDeliveryProfileInput = {
   create?: Prisma.XOR<Prisma.UserCreateWithoutDeliveryProfileInput, Prisma.UserUncheckedCreateWithoutDeliveryProfileInput>
   connectOrCreate?: Prisma.UserCreateOrConnectWithoutDeliveryProfileInput
   connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneWithoutReviewedDeliveryApplicationsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutReviewedDeliveryApplicationsInput, Prisma.UserUncheckedCreateWithoutReviewedDeliveryApplicationsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutReviewedDeliveryApplicationsInput
+  upsert?: Prisma.UserUpsertWithoutReviewedDeliveryApplicationsInput
+  disconnect?: Prisma.UserWhereInput | boolean
+  delete?: Prisma.UserWhereInput | boolean
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutReviewedDeliveryApplicationsInput, Prisma.UserUpdateWithoutReviewedDeliveryApplicationsInput>, Prisma.UserUncheckedUpdateWithoutReviewedDeliveryApplicationsInput>
 }
 
 export type UserUpdateOneRequiredWithoutDeliveryProfileNestedInput = {
@@ -486,6 +530,52 @@ export type UserUpdateOneRequiredWithoutDeliveryProfileNestedInput = {
   upsert?: Prisma.UserUpsertWithoutDeliveryProfileInput
   connect?: Prisma.UserWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutDeliveryProfileInput, Prisma.UserUpdateWithoutDeliveryProfileInput>, Prisma.UserUncheckedUpdateWithoutDeliveryProfileInput>
+}
+
+export type UserCreateNestedOneWithoutDeliveryPartnerReviewHistoryInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutDeliveryPartnerReviewHistoryInput, Prisma.UserUncheckedCreateWithoutDeliveryPartnerReviewHistoryInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutDeliveryPartnerReviewHistoryInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneWithoutDeliveryPartnerReviewHistoryNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutDeliveryPartnerReviewHistoryInput, Prisma.UserUncheckedCreateWithoutDeliveryPartnerReviewHistoryInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutDeliveryPartnerReviewHistoryInput
+  upsert?: Prisma.UserUpsertWithoutDeliveryPartnerReviewHistoryInput
+  disconnect?: Prisma.UserWhereInput | boolean
+  delete?: Prisma.UserWhereInput | boolean
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutDeliveryPartnerReviewHistoryInput, Prisma.UserUpdateWithoutDeliveryPartnerReviewHistoryInput>, Prisma.UserUncheckedUpdateWithoutDeliveryPartnerReviewHistoryInput>
+}
+
+export type UserCreateNestedOneWithoutCustomerOrdersInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutCustomerOrdersInput, Prisma.UserUncheckedCreateWithoutCustomerOrdersInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutCustomerOrdersInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutCustomerOrdersNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutCustomerOrdersInput, Prisma.UserUncheckedCreateWithoutCustomerOrdersInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutCustomerOrdersInput
+  upsert?: Prisma.UserUpsertWithoutCustomerOrdersInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutCustomerOrdersInput, Prisma.UserUpdateWithoutCustomerOrdersInput>, Prisma.UserUncheckedUpdateWithoutCustomerOrdersInput>
+}
+
+export type UserCreateNestedOneWithoutProductViewsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutProductViewsInput, Prisma.UserUncheckedCreateWithoutProductViewsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutProductViewsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneWithoutProductViewsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutProductViewsInput, Prisma.UserUncheckedCreateWithoutProductViewsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutProductViewsInput
+  upsert?: Prisma.UserUpsertWithoutProductViewsInput
+  disconnect?: Prisma.UserWhereInput | boolean
+  delete?: Prisma.UserWhereInput | boolean
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutProductViewsInput, Prisma.UserUpdateWithoutProductViewsInput>, Prisma.UserUncheckedUpdateWithoutProductViewsInput>
 }
 
 export type UserCreateWithoutOtpVerificationsInput = {
@@ -500,6 +590,10 @@ export type UserCreateWithoutOtpVerificationsInput = {
   updatedAt?: Date | string
   sellerProfile?: Prisma.SellerProfileCreateNestedOneWithoutUserInput
   deliveryProfile?: Prisma.DeliveryPartnerProfileCreateNestedOneWithoutUserInput
+  customerOrders?: Prisma.OrderCreateNestedManyWithoutCustomerInput
+  productViews?: Prisma.ProductViewCreateNestedManyWithoutUserInput
+  reviewedDeliveryApplications?: Prisma.DeliveryPartnerProfileCreateNestedManyWithoutReviewedByInput
+  deliveryPartnerReviewHistory?: Prisma.DeliveryPartnerApplicationHistoryCreateNestedManyWithoutReviewedByInput
 }
 
 export type UserUncheckedCreateWithoutOtpVerificationsInput = {
@@ -514,6 +608,10 @@ export type UserUncheckedCreateWithoutOtpVerificationsInput = {
   updatedAt?: Date | string
   sellerProfile?: Prisma.SellerProfileUncheckedCreateNestedOneWithoutUserInput
   deliveryProfile?: Prisma.DeliveryPartnerProfileUncheckedCreateNestedOneWithoutUserInput
+  customerOrders?: Prisma.OrderUncheckedCreateNestedManyWithoutCustomerInput
+  productViews?: Prisma.ProductViewUncheckedCreateNestedManyWithoutUserInput
+  reviewedDeliveryApplications?: Prisma.DeliveryPartnerProfileUncheckedCreateNestedManyWithoutReviewedByInput
+  deliveryPartnerReviewHistory?: Prisma.DeliveryPartnerApplicationHistoryUncheckedCreateNestedManyWithoutReviewedByInput
 }
 
 export type UserCreateOrConnectWithoutOtpVerificationsInput = {
@@ -544,6 +642,10 @@ export type UserUpdateWithoutOtpVerificationsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   sellerProfile?: Prisma.SellerProfileUpdateOneWithoutUserNestedInput
   deliveryProfile?: Prisma.DeliveryPartnerProfileUpdateOneWithoutUserNestedInput
+  customerOrders?: Prisma.OrderUpdateManyWithoutCustomerNestedInput
+  productViews?: Prisma.ProductViewUpdateManyWithoutUserNestedInput
+  reviewedDeliveryApplications?: Prisma.DeliveryPartnerProfileUpdateManyWithoutReviewedByNestedInput
+  deliveryPartnerReviewHistory?: Prisma.DeliveryPartnerApplicationHistoryUpdateManyWithoutReviewedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutOtpVerificationsInput = {
@@ -558,6 +660,10 @@ export type UserUncheckedUpdateWithoutOtpVerificationsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   sellerProfile?: Prisma.SellerProfileUncheckedUpdateOneWithoutUserNestedInput
   deliveryProfile?: Prisma.DeliveryPartnerProfileUncheckedUpdateOneWithoutUserNestedInput
+  customerOrders?: Prisma.OrderUncheckedUpdateManyWithoutCustomerNestedInput
+  productViews?: Prisma.ProductViewUncheckedUpdateManyWithoutUserNestedInput
+  reviewedDeliveryApplications?: Prisma.DeliveryPartnerProfileUncheckedUpdateManyWithoutReviewedByNestedInput
+  deliveryPartnerReviewHistory?: Prisma.DeliveryPartnerApplicationHistoryUncheckedUpdateManyWithoutReviewedByNestedInput
 }
 
 export type UserCreateWithoutSellerProfileInput = {
@@ -572,6 +678,10 @@ export type UserCreateWithoutSellerProfileInput = {
   updatedAt?: Date | string
   otpVerifications?: Prisma.OtpVerificationCreateNestedManyWithoutUserInput
   deliveryProfile?: Prisma.DeliveryPartnerProfileCreateNestedOneWithoutUserInput
+  customerOrders?: Prisma.OrderCreateNestedManyWithoutCustomerInput
+  productViews?: Prisma.ProductViewCreateNestedManyWithoutUserInput
+  reviewedDeliveryApplications?: Prisma.DeliveryPartnerProfileCreateNestedManyWithoutReviewedByInput
+  deliveryPartnerReviewHistory?: Prisma.DeliveryPartnerApplicationHistoryCreateNestedManyWithoutReviewedByInput
 }
 
 export type UserUncheckedCreateWithoutSellerProfileInput = {
@@ -586,6 +696,10 @@ export type UserUncheckedCreateWithoutSellerProfileInput = {
   updatedAt?: Date | string
   otpVerifications?: Prisma.OtpVerificationUncheckedCreateNestedManyWithoutUserInput
   deliveryProfile?: Prisma.DeliveryPartnerProfileUncheckedCreateNestedOneWithoutUserInput
+  customerOrders?: Prisma.OrderUncheckedCreateNestedManyWithoutCustomerInput
+  productViews?: Prisma.ProductViewUncheckedCreateNestedManyWithoutUserInput
+  reviewedDeliveryApplications?: Prisma.DeliveryPartnerProfileUncheckedCreateNestedManyWithoutReviewedByInput
+  deliveryPartnerReviewHistory?: Prisma.DeliveryPartnerApplicationHistoryUncheckedCreateNestedManyWithoutReviewedByInput
 }
 
 export type UserCreateOrConnectWithoutSellerProfileInput = {
@@ -616,6 +730,10 @@ export type UserUpdateWithoutSellerProfileInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   otpVerifications?: Prisma.OtpVerificationUpdateManyWithoutUserNestedInput
   deliveryProfile?: Prisma.DeliveryPartnerProfileUpdateOneWithoutUserNestedInput
+  customerOrders?: Prisma.OrderUpdateManyWithoutCustomerNestedInput
+  productViews?: Prisma.ProductViewUpdateManyWithoutUserNestedInput
+  reviewedDeliveryApplications?: Prisma.DeliveryPartnerProfileUpdateManyWithoutReviewedByNestedInput
+  deliveryPartnerReviewHistory?: Prisma.DeliveryPartnerApplicationHistoryUpdateManyWithoutReviewedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutSellerProfileInput = {
@@ -630,6 +748,51 @@ export type UserUncheckedUpdateWithoutSellerProfileInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   otpVerifications?: Prisma.OtpVerificationUncheckedUpdateManyWithoutUserNestedInput
   deliveryProfile?: Prisma.DeliveryPartnerProfileUncheckedUpdateOneWithoutUserNestedInput
+  customerOrders?: Prisma.OrderUncheckedUpdateManyWithoutCustomerNestedInput
+  productViews?: Prisma.ProductViewUncheckedUpdateManyWithoutUserNestedInput
+  reviewedDeliveryApplications?: Prisma.DeliveryPartnerProfileUncheckedUpdateManyWithoutReviewedByNestedInput
+  deliveryPartnerReviewHistory?: Prisma.DeliveryPartnerApplicationHistoryUncheckedUpdateManyWithoutReviewedByNestedInput
+}
+
+export type UserCreateWithoutReviewedDeliveryApplicationsInput = {
+  id?: string
+  phone: string
+  name?: string | null
+  email?: string | null
+  passwordHash?: string | null
+  role?: $Enums.UserRole
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  otpVerifications?: Prisma.OtpVerificationCreateNestedManyWithoutUserInput
+  sellerProfile?: Prisma.SellerProfileCreateNestedOneWithoutUserInput
+  deliveryProfile?: Prisma.DeliveryPartnerProfileCreateNestedOneWithoutUserInput
+  customerOrders?: Prisma.OrderCreateNestedManyWithoutCustomerInput
+  productViews?: Prisma.ProductViewCreateNestedManyWithoutUserInput
+  deliveryPartnerReviewHistory?: Prisma.DeliveryPartnerApplicationHistoryCreateNestedManyWithoutReviewedByInput
+}
+
+export type UserUncheckedCreateWithoutReviewedDeliveryApplicationsInput = {
+  id?: string
+  phone: string
+  name?: string | null
+  email?: string | null
+  passwordHash?: string | null
+  role?: $Enums.UserRole
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  otpVerifications?: Prisma.OtpVerificationUncheckedCreateNestedManyWithoutUserInput
+  sellerProfile?: Prisma.SellerProfileUncheckedCreateNestedOneWithoutUserInput
+  deliveryProfile?: Prisma.DeliveryPartnerProfileUncheckedCreateNestedOneWithoutUserInput
+  customerOrders?: Prisma.OrderUncheckedCreateNestedManyWithoutCustomerInput
+  productViews?: Prisma.ProductViewUncheckedCreateNestedManyWithoutUserInput
+  deliveryPartnerReviewHistory?: Prisma.DeliveryPartnerApplicationHistoryUncheckedCreateNestedManyWithoutReviewedByInput
+}
+
+export type UserCreateOrConnectWithoutReviewedDeliveryApplicationsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutReviewedDeliveryApplicationsInput, Prisma.UserUncheckedCreateWithoutReviewedDeliveryApplicationsInput>
 }
 
 export type UserCreateWithoutDeliveryProfileInput = {
@@ -644,6 +807,10 @@ export type UserCreateWithoutDeliveryProfileInput = {
   updatedAt?: Date | string
   otpVerifications?: Prisma.OtpVerificationCreateNestedManyWithoutUserInput
   sellerProfile?: Prisma.SellerProfileCreateNestedOneWithoutUserInput
+  customerOrders?: Prisma.OrderCreateNestedManyWithoutCustomerInput
+  productViews?: Prisma.ProductViewCreateNestedManyWithoutUserInput
+  reviewedDeliveryApplications?: Prisma.DeliveryPartnerProfileCreateNestedManyWithoutReviewedByInput
+  deliveryPartnerReviewHistory?: Prisma.DeliveryPartnerApplicationHistoryCreateNestedManyWithoutReviewedByInput
 }
 
 export type UserUncheckedCreateWithoutDeliveryProfileInput = {
@@ -658,11 +825,62 @@ export type UserUncheckedCreateWithoutDeliveryProfileInput = {
   updatedAt?: Date | string
   otpVerifications?: Prisma.OtpVerificationUncheckedCreateNestedManyWithoutUserInput
   sellerProfile?: Prisma.SellerProfileUncheckedCreateNestedOneWithoutUserInput
+  customerOrders?: Prisma.OrderUncheckedCreateNestedManyWithoutCustomerInput
+  productViews?: Prisma.ProductViewUncheckedCreateNestedManyWithoutUserInput
+  reviewedDeliveryApplications?: Prisma.DeliveryPartnerProfileUncheckedCreateNestedManyWithoutReviewedByInput
+  deliveryPartnerReviewHistory?: Prisma.DeliveryPartnerApplicationHistoryUncheckedCreateNestedManyWithoutReviewedByInput
 }
 
 export type UserCreateOrConnectWithoutDeliveryProfileInput = {
   where: Prisma.UserWhereUniqueInput
   create: Prisma.XOR<Prisma.UserCreateWithoutDeliveryProfileInput, Prisma.UserUncheckedCreateWithoutDeliveryProfileInput>
+}
+
+export type UserUpsertWithoutReviewedDeliveryApplicationsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutReviewedDeliveryApplicationsInput, Prisma.UserUncheckedUpdateWithoutReviewedDeliveryApplicationsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutReviewedDeliveryApplicationsInput, Prisma.UserUncheckedCreateWithoutReviewedDeliveryApplicationsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutReviewedDeliveryApplicationsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutReviewedDeliveryApplicationsInput, Prisma.UserUncheckedUpdateWithoutReviewedDeliveryApplicationsInput>
+}
+
+export type UserUpdateWithoutReviewedDeliveryApplicationsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  otpVerifications?: Prisma.OtpVerificationUpdateManyWithoutUserNestedInput
+  sellerProfile?: Prisma.SellerProfileUpdateOneWithoutUserNestedInput
+  deliveryProfile?: Prisma.DeliveryPartnerProfileUpdateOneWithoutUserNestedInput
+  customerOrders?: Prisma.OrderUpdateManyWithoutCustomerNestedInput
+  productViews?: Prisma.ProductViewUpdateManyWithoutUserNestedInput
+  deliveryPartnerReviewHistory?: Prisma.DeliveryPartnerApplicationHistoryUpdateManyWithoutReviewedByNestedInput
+}
+
+export type UserUncheckedUpdateWithoutReviewedDeliveryApplicationsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  otpVerifications?: Prisma.OtpVerificationUncheckedUpdateManyWithoutUserNestedInput
+  sellerProfile?: Prisma.SellerProfileUncheckedUpdateOneWithoutUserNestedInput
+  deliveryProfile?: Prisma.DeliveryPartnerProfileUncheckedUpdateOneWithoutUserNestedInput
+  customerOrders?: Prisma.OrderUncheckedUpdateManyWithoutCustomerNestedInput
+  productViews?: Prisma.ProductViewUncheckedUpdateManyWithoutUserNestedInput
+  deliveryPartnerReviewHistory?: Prisma.DeliveryPartnerApplicationHistoryUncheckedUpdateManyWithoutReviewedByNestedInput
 }
 
 export type UserUpsertWithoutDeliveryProfileInput = {
@@ -688,6 +906,10 @@ export type UserUpdateWithoutDeliveryProfileInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   otpVerifications?: Prisma.OtpVerificationUpdateManyWithoutUserNestedInput
   sellerProfile?: Prisma.SellerProfileUpdateOneWithoutUserNestedInput
+  customerOrders?: Prisma.OrderUpdateManyWithoutCustomerNestedInput
+  productViews?: Prisma.ProductViewUpdateManyWithoutUserNestedInput
+  reviewedDeliveryApplications?: Prisma.DeliveryPartnerProfileUpdateManyWithoutReviewedByNestedInput
+  deliveryPartnerReviewHistory?: Prisma.DeliveryPartnerApplicationHistoryUpdateManyWithoutReviewedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutDeliveryProfileInput = {
@@ -702,6 +924,274 @@ export type UserUncheckedUpdateWithoutDeliveryProfileInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   otpVerifications?: Prisma.OtpVerificationUncheckedUpdateManyWithoutUserNestedInput
   sellerProfile?: Prisma.SellerProfileUncheckedUpdateOneWithoutUserNestedInput
+  customerOrders?: Prisma.OrderUncheckedUpdateManyWithoutCustomerNestedInput
+  productViews?: Prisma.ProductViewUncheckedUpdateManyWithoutUserNestedInput
+  reviewedDeliveryApplications?: Prisma.DeliveryPartnerProfileUncheckedUpdateManyWithoutReviewedByNestedInput
+  deliveryPartnerReviewHistory?: Prisma.DeliveryPartnerApplicationHistoryUncheckedUpdateManyWithoutReviewedByNestedInput
+}
+
+export type UserCreateWithoutDeliveryPartnerReviewHistoryInput = {
+  id?: string
+  phone: string
+  name?: string | null
+  email?: string | null
+  passwordHash?: string | null
+  role?: $Enums.UserRole
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  otpVerifications?: Prisma.OtpVerificationCreateNestedManyWithoutUserInput
+  sellerProfile?: Prisma.SellerProfileCreateNestedOneWithoutUserInput
+  deliveryProfile?: Prisma.DeliveryPartnerProfileCreateNestedOneWithoutUserInput
+  customerOrders?: Prisma.OrderCreateNestedManyWithoutCustomerInput
+  productViews?: Prisma.ProductViewCreateNestedManyWithoutUserInput
+  reviewedDeliveryApplications?: Prisma.DeliveryPartnerProfileCreateNestedManyWithoutReviewedByInput
+}
+
+export type UserUncheckedCreateWithoutDeliveryPartnerReviewHistoryInput = {
+  id?: string
+  phone: string
+  name?: string | null
+  email?: string | null
+  passwordHash?: string | null
+  role?: $Enums.UserRole
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  otpVerifications?: Prisma.OtpVerificationUncheckedCreateNestedManyWithoutUserInput
+  sellerProfile?: Prisma.SellerProfileUncheckedCreateNestedOneWithoutUserInput
+  deliveryProfile?: Prisma.DeliveryPartnerProfileUncheckedCreateNestedOneWithoutUserInput
+  customerOrders?: Prisma.OrderUncheckedCreateNestedManyWithoutCustomerInput
+  productViews?: Prisma.ProductViewUncheckedCreateNestedManyWithoutUserInput
+  reviewedDeliveryApplications?: Prisma.DeliveryPartnerProfileUncheckedCreateNestedManyWithoutReviewedByInput
+}
+
+export type UserCreateOrConnectWithoutDeliveryPartnerReviewHistoryInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutDeliveryPartnerReviewHistoryInput, Prisma.UserUncheckedCreateWithoutDeliveryPartnerReviewHistoryInput>
+}
+
+export type UserUpsertWithoutDeliveryPartnerReviewHistoryInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutDeliveryPartnerReviewHistoryInput, Prisma.UserUncheckedUpdateWithoutDeliveryPartnerReviewHistoryInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutDeliveryPartnerReviewHistoryInput, Prisma.UserUncheckedCreateWithoutDeliveryPartnerReviewHistoryInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutDeliveryPartnerReviewHistoryInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutDeliveryPartnerReviewHistoryInput, Prisma.UserUncheckedUpdateWithoutDeliveryPartnerReviewHistoryInput>
+}
+
+export type UserUpdateWithoutDeliveryPartnerReviewHistoryInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  otpVerifications?: Prisma.OtpVerificationUpdateManyWithoutUserNestedInput
+  sellerProfile?: Prisma.SellerProfileUpdateOneWithoutUserNestedInput
+  deliveryProfile?: Prisma.DeliveryPartnerProfileUpdateOneWithoutUserNestedInput
+  customerOrders?: Prisma.OrderUpdateManyWithoutCustomerNestedInput
+  productViews?: Prisma.ProductViewUpdateManyWithoutUserNestedInput
+  reviewedDeliveryApplications?: Prisma.DeliveryPartnerProfileUpdateManyWithoutReviewedByNestedInput
+}
+
+export type UserUncheckedUpdateWithoutDeliveryPartnerReviewHistoryInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  otpVerifications?: Prisma.OtpVerificationUncheckedUpdateManyWithoutUserNestedInput
+  sellerProfile?: Prisma.SellerProfileUncheckedUpdateOneWithoutUserNestedInput
+  deliveryProfile?: Prisma.DeliveryPartnerProfileUncheckedUpdateOneWithoutUserNestedInput
+  customerOrders?: Prisma.OrderUncheckedUpdateManyWithoutCustomerNestedInput
+  productViews?: Prisma.ProductViewUncheckedUpdateManyWithoutUserNestedInput
+  reviewedDeliveryApplications?: Prisma.DeliveryPartnerProfileUncheckedUpdateManyWithoutReviewedByNestedInput
+}
+
+export type UserCreateWithoutCustomerOrdersInput = {
+  id?: string
+  phone: string
+  name?: string | null
+  email?: string | null
+  passwordHash?: string | null
+  role?: $Enums.UserRole
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  otpVerifications?: Prisma.OtpVerificationCreateNestedManyWithoutUserInput
+  sellerProfile?: Prisma.SellerProfileCreateNestedOneWithoutUserInput
+  deliveryProfile?: Prisma.DeliveryPartnerProfileCreateNestedOneWithoutUserInput
+  productViews?: Prisma.ProductViewCreateNestedManyWithoutUserInput
+  reviewedDeliveryApplications?: Prisma.DeliveryPartnerProfileCreateNestedManyWithoutReviewedByInput
+  deliveryPartnerReviewHistory?: Prisma.DeliveryPartnerApplicationHistoryCreateNestedManyWithoutReviewedByInput
+}
+
+export type UserUncheckedCreateWithoutCustomerOrdersInput = {
+  id?: string
+  phone: string
+  name?: string | null
+  email?: string | null
+  passwordHash?: string | null
+  role?: $Enums.UserRole
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  otpVerifications?: Prisma.OtpVerificationUncheckedCreateNestedManyWithoutUserInput
+  sellerProfile?: Prisma.SellerProfileUncheckedCreateNestedOneWithoutUserInput
+  deliveryProfile?: Prisma.DeliveryPartnerProfileUncheckedCreateNestedOneWithoutUserInput
+  productViews?: Prisma.ProductViewUncheckedCreateNestedManyWithoutUserInput
+  reviewedDeliveryApplications?: Prisma.DeliveryPartnerProfileUncheckedCreateNestedManyWithoutReviewedByInput
+  deliveryPartnerReviewHistory?: Prisma.DeliveryPartnerApplicationHistoryUncheckedCreateNestedManyWithoutReviewedByInput
+}
+
+export type UserCreateOrConnectWithoutCustomerOrdersInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutCustomerOrdersInput, Prisma.UserUncheckedCreateWithoutCustomerOrdersInput>
+}
+
+export type UserUpsertWithoutCustomerOrdersInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutCustomerOrdersInput, Prisma.UserUncheckedUpdateWithoutCustomerOrdersInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutCustomerOrdersInput, Prisma.UserUncheckedCreateWithoutCustomerOrdersInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutCustomerOrdersInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutCustomerOrdersInput, Prisma.UserUncheckedUpdateWithoutCustomerOrdersInput>
+}
+
+export type UserUpdateWithoutCustomerOrdersInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  otpVerifications?: Prisma.OtpVerificationUpdateManyWithoutUserNestedInput
+  sellerProfile?: Prisma.SellerProfileUpdateOneWithoutUserNestedInput
+  deliveryProfile?: Prisma.DeliveryPartnerProfileUpdateOneWithoutUserNestedInput
+  productViews?: Prisma.ProductViewUpdateManyWithoutUserNestedInput
+  reviewedDeliveryApplications?: Prisma.DeliveryPartnerProfileUpdateManyWithoutReviewedByNestedInput
+  deliveryPartnerReviewHistory?: Prisma.DeliveryPartnerApplicationHistoryUpdateManyWithoutReviewedByNestedInput
+}
+
+export type UserUncheckedUpdateWithoutCustomerOrdersInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  otpVerifications?: Prisma.OtpVerificationUncheckedUpdateManyWithoutUserNestedInput
+  sellerProfile?: Prisma.SellerProfileUncheckedUpdateOneWithoutUserNestedInput
+  deliveryProfile?: Prisma.DeliveryPartnerProfileUncheckedUpdateOneWithoutUserNestedInput
+  productViews?: Prisma.ProductViewUncheckedUpdateManyWithoutUserNestedInput
+  reviewedDeliveryApplications?: Prisma.DeliveryPartnerProfileUncheckedUpdateManyWithoutReviewedByNestedInput
+  deliveryPartnerReviewHistory?: Prisma.DeliveryPartnerApplicationHistoryUncheckedUpdateManyWithoutReviewedByNestedInput
+}
+
+export type UserCreateWithoutProductViewsInput = {
+  id?: string
+  phone: string
+  name?: string | null
+  email?: string | null
+  passwordHash?: string | null
+  role?: $Enums.UserRole
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  otpVerifications?: Prisma.OtpVerificationCreateNestedManyWithoutUserInput
+  sellerProfile?: Prisma.SellerProfileCreateNestedOneWithoutUserInput
+  deliveryProfile?: Prisma.DeliveryPartnerProfileCreateNestedOneWithoutUserInput
+  customerOrders?: Prisma.OrderCreateNestedManyWithoutCustomerInput
+  reviewedDeliveryApplications?: Prisma.DeliveryPartnerProfileCreateNestedManyWithoutReviewedByInput
+  deliveryPartnerReviewHistory?: Prisma.DeliveryPartnerApplicationHistoryCreateNestedManyWithoutReviewedByInput
+}
+
+export type UserUncheckedCreateWithoutProductViewsInput = {
+  id?: string
+  phone: string
+  name?: string | null
+  email?: string | null
+  passwordHash?: string | null
+  role?: $Enums.UserRole
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  otpVerifications?: Prisma.OtpVerificationUncheckedCreateNestedManyWithoutUserInput
+  sellerProfile?: Prisma.SellerProfileUncheckedCreateNestedOneWithoutUserInput
+  deliveryProfile?: Prisma.DeliveryPartnerProfileUncheckedCreateNestedOneWithoutUserInput
+  customerOrders?: Prisma.OrderUncheckedCreateNestedManyWithoutCustomerInput
+  reviewedDeliveryApplications?: Prisma.DeliveryPartnerProfileUncheckedCreateNestedManyWithoutReviewedByInput
+  deliveryPartnerReviewHistory?: Prisma.DeliveryPartnerApplicationHistoryUncheckedCreateNestedManyWithoutReviewedByInput
+}
+
+export type UserCreateOrConnectWithoutProductViewsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutProductViewsInput, Prisma.UserUncheckedCreateWithoutProductViewsInput>
+}
+
+export type UserUpsertWithoutProductViewsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutProductViewsInput, Prisma.UserUncheckedUpdateWithoutProductViewsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutProductViewsInput, Prisma.UserUncheckedCreateWithoutProductViewsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutProductViewsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutProductViewsInput, Prisma.UserUncheckedUpdateWithoutProductViewsInput>
+}
+
+export type UserUpdateWithoutProductViewsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  otpVerifications?: Prisma.OtpVerificationUpdateManyWithoutUserNestedInput
+  sellerProfile?: Prisma.SellerProfileUpdateOneWithoutUserNestedInput
+  deliveryProfile?: Prisma.DeliveryPartnerProfileUpdateOneWithoutUserNestedInput
+  customerOrders?: Prisma.OrderUpdateManyWithoutCustomerNestedInput
+  reviewedDeliveryApplications?: Prisma.DeliveryPartnerProfileUpdateManyWithoutReviewedByNestedInput
+  deliveryPartnerReviewHistory?: Prisma.DeliveryPartnerApplicationHistoryUpdateManyWithoutReviewedByNestedInput
+}
+
+export type UserUncheckedUpdateWithoutProductViewsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  otpVerifications?: Prisma.OtpVerificationUncheckedUpdateManyWithoutUserNestedInput
+  sellerProfile?: Prisma.SellerProfileUncheckedUpdateOneWithoutUserNestedInput
+  deliveryProfile?: Prisma.DeliveryPartnerProfileUncheckedUpdateOneWithoutUserNestedInput
+  customerOrders?: Prisma.OrderUncheckedUpdateManyWithoutCustomerNestedInput
+  reviewedDeliveryApplications?: Prisma.DeliveryPartnerProfileUncheckedUpdateManyWithoutReviewedByNestedInput
+  deliveryPartnerReviewHistory?: Prisma.DeliveryPartnerApplicationHistoryUncheckedUpdateManyWithoutReviewedByNestedInput
 }
 
 
@@ -711,10 +1201,18 @@ export type UserUncheckedUpdateWithoutDeliveryProfileInput = {
 
 export type UserCountOutputType = {
   otpVerifications: number
+  customerOrders: number
+  productViews: number
+  reviewedDeliveryApplications: number
+  deliveryPartnerReviewHistory: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   otpVerifications?: boolean | UserCountOutputTypeCountOtpVerificationsArgs
+  customerOrders?: boolean | UserCountOutputTypeCountCustomerOrdersArgs
+  productViews?: boolean | UserCountOutputTypeCountProductViewsArgs
+  reviewedDeliveryApplications?: boolean | UserCountOutputTypeCountReviewedDeliveryApplicationsArgs
+  deliveryPartnerReviewHistory?: boolean | UserCountOutputTypeCountDeliveryPartnerReviewHistoryArgs
 }
 
 /**
@@ -734,6 +1232,34 @@ export type UserCountOutputTypeCountOtpVerificationsArgs<ExtArgs extends runtime
   where?: Prisma.OtpVerificationWhereInput
 }
 
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountCustomerOrdersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.OrderWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountProductViewsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ProductViewWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountReviewedDeliveryApplicationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.DeliveryPartnerProfileWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountDeliveryPartnerReviewHistoryArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.DeliveryPartnerApplicationHistoryWhereInput
+}
+
 
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -748,6 +1274,10 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   otpVerifications?: boolean | Prisma.User$otpVerificationsArgs<ExtArgs>
   sellerProfile?: boolean | Prisma.User$sellerProfileArgs<ExtArgs>
   deliveryProfile?: boolean | Prisma.User$deliveryProfileArgs<ExtArgs>
+  customerOrders?: boolean | Prisma.User$customerOrdersArgs<ExtArgs>
+  productViews?: boolean | Prisma.User$productViewsArgs<ExtArgs>
+  reviewedDeliveryApplications?: boolean | Prisma.User$reviewedDeliveryApplicationsArgs<ExtArgs>
+  deliveryPartnerReviewHistory?: boolean | Prisma.User$deliveryPartnerReviewHistoryArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -792,6 +1322,10 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   otpVerifications?: boolean | Prisma.User$otpVerificationsArgs<ExtArgs>
   sellerProfile?: boolean | Prisma.User$sellerProfileArgs<ExtArgs>
   deliveryProfile?: boolean | Prisma.User$deliveryProfileArgs<ExtArgs>
+  customerOrders?: boolean | Prisma.User$customerOrdersArgs<ExtArgs>
+  productViews?: boolean | Prisma.User$productViewsArgs<ExtArgs>
+  reviewedDeliveryApplications?: boolean | Prisma.User$reviewedDeliveryApplicationsArgs<ExtArgs>
+  deliveryPartnerReviewHistory?: boolean | Prisma.User$deliveryPartnerReviewHistoryArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -803,6 +1337,10 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     otpVerifications: Prisma.$OtpVerificationPayload<ExtArgs>[]
     sellerProfile: Prisma.$SellerProfilePayload<ExtArgs> | null
     deliveryProfile: Prisma.$DeliveryPartnerProfilePayload<ExtArgs> | null
+    customerOrders: Prisma.$OrderPayload<ExtArgs>[]
+    productViews: Prisma.$ProductViewPayload<ExtArgs>[]
+    reviewedDeliveryApplications: Prisma.$DeliveryPartnerProfilePayload<ExtArgs>[]
+    deliveryPartnerReviewHistory: Prisma.$DeliveryPartnerApplicationHistoryPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1211,6 +1749,10 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   otpVerifications<T extends Prisma.User$otpVerificationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$otpVerificationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$OtpVerificationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   sellerProfile<T extends Prisma.User$sellerProfileArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$sellerProfileArgs<ExtArgs>>): Prisma.Prisma__SellerProfileClient<runtime.Types.Result.GetResult<Prisma.$SellerProfilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   deliveryProfile<T extends Prisma.User$deliveryProfileArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$deliveryProfileArgs<ExtArgs>>): Prisma.Prisma__DeliveryPartnerProfileClient<runtime.Types.Result.GetResult<Prisma.$DeliveryPartnerProfilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  customerOrders<T extends Prisma.User$customerOrdersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$customerOrdersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$OrderPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  productViews<T extends Prisma.User$productViewsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$productViewsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProductViewPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  reviewedDeliveryApplications<T extends Prisma.User$reviewedDeliveryApplicationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$reviewedDeliveryApplicationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DeliveryPartnerProfilePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  deliveryPartnerReviewHistory<T extends Prisma.User$deliveryPartnerReviewHistoryArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$deliveryPartnerReviewHistoryArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DeliveryPartnerApplicationHistoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1701,6 +2243,102 @@ export type User$deliveryProfileArgs<ExtArgs extends runtime.Types.Extensions.In
    */
   include?: Prisma.DeliveryPartnerProfileInclude<ExtArgs> | null
   where?: Prisma.DeliveryPartnerProfileWhereInput
+}
+
+/**
+ * User.customerOrders
+ */
+export type User$customerOrdersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Order
+   */
+  select?: Prisma.OrderSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Order
+   */
+  omit?: Prisma.OrderOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.OrderInclude<ExtArgs> | null
+  where?: Prisma.OrderWhereInput
+  orderBy?: Prisma.OrderOrderByWithRelationInput | Prisma.OrderOrderByWithRelationInput[]
+  cursor?: Prisma.OrderWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.OrderScalarFieldEnum | Prisma.OrderScalarFieldEnum[]
+}
+
+/**
+ * User.productViews
+ */
+export type User$productViewsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ProductView
+   */
+  select?: Prisma.ProductViewSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ProductView
+   */
+  omit?: Prisma.ProductViewOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ProductViewInclude<ExtArgs> | null
+  where?: Prisma.ProductViewWhereInput
+  orderBy?: Prisma.ProductViewOrderByWithRelationInput | Prisma.ProductViewOrderByWithRelationInput[]
+  cursor?: Prisma.ProductViewWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ProductViewScalarFieldEnum | Prisma.ProductViewScalarFieldEnum[]
+}
+
+/**
+ * User.reviewedDeliveryApplications
+ */
+export type User$reviewedDeliveryApplicationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the DeliveryPartnerProfile
+   */
+  select?: Prisma.DeliveryPartnerProfileSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the DeliveryPartnerProfile
+   */
+  omit?: Prisma.DeliveryPartnerProfileOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.DeliveryPartnerProfileInclude<ExtArgs> | null
+  where?: Prisma.DeliveryPartnerProfileWhereInput
+  orderBy?: Prisma.DeliveryPartnerProfileOrderByWithRelationInput | Prisma.DeliveryPartnerProfileOrderByWithRelationInput[]
+  cursor?: Prisma.DeliveryPartnerProfileWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.DeliveryPartnerProfileScalarFieldEnum | Prisma.DeliveryPartnerProfileScalarFieldEnum[]
+}
+
+/**
+ * User.deliveryPartnerReviewHistory
+ */
+export type User$deliveryPartnerReviewHistoryArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the DeliveryPartnerApplicationHistory
+   */
+  select?: Prisma.DeliveryPartnerApplicationHistorySelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the DeliveryPartnerApplicationHistory
+   */
+  omit?: Prisma.DeliveryPartnerApplicationHistoryOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.DeliveryPartnerApplicationHistoryInclude<ExtArgs> | null
+  where?: Prisma.DeliveryPartnerApplicationHistoryWhereInput
+  orderBy?: Prisma.DeliveryPartnerApplicationHistoryOrderByWithRelationInput | Prisma.DeliveryPartnerApplicationHistoryOrderByWithRelationInput[]
+  cursor?: Prisma.DeliveryPartnerApplicationHistoryWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.DeliveryPartnerApplicationHistoryScalarFieldEnum | Prisma.DeliveryPartnerApplicationHistoryScalarFieldEnum[]
 }
 
 /**

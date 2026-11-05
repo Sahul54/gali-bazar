@@ -26,7 +26,7 @@ export const sellerRepository = {
   },
 
   async findSellerById(userId) {
-    return prisma.user.findFirst({
+    return prisma.user.findUnique({
       where: {
         id: userId,
         role: "SELLER",

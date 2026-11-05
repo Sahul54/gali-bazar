@@ -50,6 +50,8 @@ export async function POST(request) {
         category: body.category,
         address: body.address,
         pincode: body.pincode,
+        latitude: body.latitude,
+        longitude: body.longitude,
       }
     );
 
@@ -78,7 +80,10 @@ export async function POST(request) {
       message.includes("characters") ||
       message.includes("exceed") ||
       message.includes("valid business category") ||
-      message.includes("PIN code")
+      message.includes("PIN code") ||
+      message.includes("latitude") ||
+      message.includes("longitude") ||
+      message.includes("coordinates")
     ) {
       return NextResponse.json(
         {

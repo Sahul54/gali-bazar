@@ -44,7 +44,7 @@ const navigation = [
   },
   {
     label: "Delivery Partners",
-    href: "/admin/riders",
+    href: "/admin/delivery-partners",
     Icon: Bike,
   },
 ];
