@@ -8,7 +8,9 @@ export default function CartSummary({
   subtotal = 0,
   deliveryFee = 0,
 }) {
-  const total = subtotal + deliveryFee;
+  const safeSubtotal = Number(subtotal) || 0;
+  const safeDeliveryFee = Number(deliveryFee) || 0;
+  const total = safeSubtotal + safeDeliveryFee;
 
   return (
     <div className="rounded-2xl border border-gray-100 bg-white p-5 shadow-sm">
@@ -19,7 +21,7 @@ export default function CartSummary({
       <div className="mt-5 space-y-4">
         <div className="flex justify-between text-sm text-gray-600">
           <span>Subtotal</span>
-          <span>₹{subtotal.toFixed(2)}</span>
+          <span>₹{safeSubtotal.toFixed(2)}</span>
         </div>
 
         <div className="flex justify-between text-sm text-gray-600">
@@ -27,10 +29,11 @@ export default function CartSummary({
             <Truck size={16} />
             Delivery Fee
           </span>
+
           <span>
-            {deliveryFee === 0
+            {safeDeliveryFee === 0
               ? "Free"
-              : `₹${deliveryFee.toFixed(2)}`}
+              : `₹${safeDeliveryFee.toFixed(2)}`}
           </span>
         </div>
 

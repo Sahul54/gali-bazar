@@ -7,14 +7,17 @@ import { ArrowLeft, ShieldCheck } from "lucide-react";
 
 export default function VerifyOtpPage() {
   const router = useRouter();
+
   const [phone, setPhone] = useState("");
   const [otp, setOtp] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [resending, setResending] = useState(false);
   const [seconds, setSeconds] = useState(30);
+
   const inputRef = useRef(null);
 
+  // Get saved phone number
   useEffect(() => {
     const savedPhone = sessionStorage.getItem("gali-bazar-phone");
 
@@ -26,6 +29,7 @@ export default function VerifyOtpPage() {
     setPhone(savedPhone);
   }, [router]);
 
+  // Resend OTP countdown
   useEffect(() => {
     if (seconds <= 0) return;
 
@@ -36,6 +40,7 @@ export default function VerifyOtpPage() {
     return () => clearTimeout(timer);
   }, [seconds]);
 
+  // Verify OTP
   async function handleVerify(e) {
     e.preventDefault();
     setError("");
@@ -45,28 +50,41 @@ export default function VerifyOtpPage() {
       return;
     }
 
+    if (!phone) {
+      setError("Mobile number not found. Please login again.");
+      return;
+    }
+
     setLoading(true);
 
     try {
-      const response = await fetch("/api/auth/verify-otp", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        credentials: "same-origin",
-        body: JSON.stringify({ phone, otp }),
-      });
+      const response = await fetch(
+        "/api/v1/auth/customer/verify-otp",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "same-origin",
+          body: JSON.stringify({ phone, otp }),
+        }
+      );
 
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.message || "OTP verification failed.");
+        throw new Error(
+          data.message || "OTP verification failed."
+        );
       }
 
+      // Clear saved phone after successful verification
       sessionStorage.removeItem("gali-bazar-phone");
 
-      router.replace("/dashboard");;
+      // Redirect after successful login
+      router.replace("/dashboard");
       router.refresh();
+
     } catch (err) {
       setError(err.message || "Something went wrong.");
     } finally {
@@ -74,28 +92,39 @@ export default function VerifyOtpPage() {
     }
   }
 
+  // Resend OTP
   async function handleResend() {
+    if (resending || seconds > 0 || !phone) return;
+
     setError("");
     setResending(true);
 
     try {
-      const response = await fetch("/api/auth/send-otp", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ phone }),
-      });
+      const response = await fetch(
+        "/api/v1/auth/customer/send-otp",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "same-origin",
+          body: JSON.stringify({ phone }),
+        }
+      );
 
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.message || "Unable to resend OTP.");
+        throw new Error(
+          data.message || "Unable to resend OTP."
+        );
       }
 
       setOtp("");
       setSeconds(30);
+
       inputRef.current?.focus();
+
     } catch (err) {
       setError(err.message || "Unable to resend OTP.");
     } finally {
@@ -106,6 +135,8 @@ export default function VerifyOtpPage() {
   return (
     <main className="flex min-h-screen items-center justify-center bg-orange-50/50 px-4 py-10">
       <div className="w-full max-w-md rounded-3xl border border-orange-100 bg-white p-8 shadow-xl shadow-orange-100/50 sm:p-10">
+
+        {/* Back Button */}
         <button
           type="button"
           onClick={() => router.push("/customer/login")}
@@ -115,10 +146,12 @@ export default function VerifyOtpPage() {
           Change mobile number
         </button>
 
+        {/* Icon */}
         <div className="mb-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-orange-100 text-orange-600">
           <ShieldCheck size={28} />
         </div>
 
+        {/* Heading */}
         <h1 className="text-2xl font-bold text-gray-900">
           Verify your number
         </h1>
@@ -127,12 +160,14 @@ export default function VerifyOtpPage() {
           Enter the 6-digit OTP sent to your mobile number.
         </p>
 
+        {/* Phone Number */}
         {phone && (
           <p className="mt-3 text-sm font-semibold text-gray-800">
             +91 {phone}
           </p>
         )}
 
+        {/* OTP Form */}
         <form onSubmit={handleVerify} className="mt-8 space-y-5">
           <div>
             <label
@@ -152,19 +187,27 @@ export default function VerifyOtpPage() {
               placeholder="Enter 6-digit OTP"
               value={otp}
               onChange={(e) =>
-                setOtp(e.target.value.replace(/\D/g, "").slice(0, 6))
+                setOtp(
+                  e.target.value.replace(/\D/g, "").slice(0, 6)
+                )
               }
               className="w-full rounded-xl border border-gray-200 px-4 py-4 text-center text-xl font-semibold tracking-[0.4em] text-gray-900 outline-none transition placeholder:text-sm placeholder:tracking-normal focus:border-orange-500 focus:ring-4 focus:ring-orange-100"
               required
             />
           </div>
 
+          {/* Error */}
           {error && (
-            <p role="alert" className="text-sm text-red-600">
+            <p
+              role="alert"
+              aria-live="polite"
+              className="text-sm text-red-600"
+            >
               {error}
             </p>
           )}
 
+          {/* Verify Button */}
           <button
             type="submit"
             disabled={loading || otp.length !== 6 || !phone}
@@ -174,21 +217,26 @@ export default function VerifyOtpPage() {
           </button>
         </form>
 
+        {/* Resend OTP */}
         <div className="mt-6 text-center text-sm text-gray-500">
           Didn't receive the OTP?{" "}
+
           {seconds > 0 ? (
-            <span>Resend in {seconds}s</span>
+            <span>
+              Resend in {seconds}s
+            </span>
           ) : (
             <button
               type="button"
               onClick={handleResend}
               disabled={resending || !phone}
-              className="font-semibold text-orange-600 hover:text-orange-700 disabled:opacity-50"
+              className="font-semibold text-orange-600 transition hover:text-orange-700 disabled:opacity-50"
             >
               {resending ? "Sending..." : "Resend OTP"}
             </button>
           )}
         </div>
+
       </div>
     </main>
   );

@@ -2,7 +2,12 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowLeft, ShoppingCart } from "lucide-react";
+import {
+  ArrowLeft,
+  ShoppingCart,
+  LoaderCircle,
+  RefreshCw,
+} from "lucide-react";
 
 import { useCartContext } from "@/context/customer/CartContext";
 import CartItem from "@/components/customer/cart/CartItem";
@@ -14,14 +19,19 @@ export default function CartPage() {
     cartItems,
     cartCount,
     cartTotal,
+    isLoading,
+    isSyncing,
+    error,
     updateQuantity,
     removeFromCart,
+    refreshCart,
   } = useCartContext();
 
   const deliveryFee = 0;
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+
       {/* Header */}
       <div className="mb-8">
         <Link
@@ -43,27 +53,76 @@ export default function CartPage() {
             </h1>
 
             <p className="mt-1 text-sm text-gray-500">
-              {cartCount} {cartCount === 1 ? "item" : "items"} in your cart
+              {isLoading
+                ? "Loading your cart..."
+                : `${cartCount} ${cartCount === 1 ? "item" : "items"} in your cart`}
             </p>
           </div>
         </div>
       </div>
 
-      {/* Empty Cart */}
-      {cartItems.length === 0 ? (
+      {/* Loading */}
+      {isLoading ? (
+        <div className="flex min-h-[300px] flex-col items-center justify-center gap-3">
+          <LoaderCircle
+            size={32}
+            className="animate-spin text-green-600"
+          />
+          <p className="text-sm font-medium text-gray-500">
+            Loading your cart...
+          </p>
+        </div>
+      ) : error && cartItems.length === 0 ? (
+        /* Error State */
+        <div className="flex min-h-[300px] flex-col items-center justify-center text-center">
+          <p className="font-semibold text-gray-800">
+            Unable to load your cart
+          </p>
+
+          <p className="mt-2 text-sm text-gray-500">
+            {error}
+          </p>
+
+          <button
+            type="button"
+            onClick={refreshCart}
+            className="mt-5 inline-flex items-center gap-2 rounded-lg bg-green-700 px-4 py-2.5 text-sm font-semibold text-white hover:bg-green-800"
+          >
+            <RefreshCw size={15} />
+            Try Again
+          </button>
+        </div>
+      ) : cartItems.length === 0 ? (
+        /* Empty Cart */
         <EmptyCart />
       ) : (
+        /* Cart Content */
         <div className="grid gap-8 lg:grid-cols-3">
+
           {/* Cart Items */}
           <div className="space-y-4 lg:col-span-2">
+
+            {error && (
+              <div className="rounded-lg border border-red-100 bg-red-50 p-3 text-sm text-red-600">
+                {error}
+              </div>
+            )}
+
             {cartItems.map((item) => (
               <CartItem
-                key={item.variantId}
+                key={item.id || item.variantId}
                 item={item}
                 onUpdateQuantity={updateQuantity}
                 onRemove={removeFromCart}
               />
             ))}
+
+            {isSyncing && (
+              <p className="flex items-center gap-2 text-xs font-medium text-gray-500">
+                <LoaderCircle size={13} className="animate-spin" />
+                Updating your cart...
+              </p>
+            )}
           </div>
 
           {/* Cart Summary */}

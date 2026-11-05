@@ -111,6 +111,8 @@ model User {
   deliveryProfile  DeliveryPartnerProfile?
   customerOrders   Order[]
   productViews ProductView[]
+  addresses Address[]
+  cart Cart?
 
   // Delivery partner review relations
   reviewedDeliveryApplications DeliveryPartnerProfile[]            @relation("DeliveryPartnerReviewer")
@@ -468,6 +470,7 @@ model ProductVariant {
   inventory      Inventory?
   bulkPriceTiers BulkPriceTier[]
   orderItems     OrderItem[]
+  cartItems      CartItem[]
 
   @@index([productId, isActive])
   @@index([barcode])
@@ -590,4 +593,59 @@ model ProductView {
   @@index([productId, viewedAt])
   @@index([userId, viewedAt])
   @@index([sessionId, viewedAt])
+}
+
+model Address {
+  id        String   @id @default(cuid())
+  fullName  String
+  phone     String
+  address   String
+  landmark  String?
+  city      String
+  state     String
+  pincode   String
+  latitude  Float?
+  longitude Float?
+  label     String   @default("HOME")
+  isDefault Boolean  @default(false)
+
+  userId String
+  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId])
+}
+
+
+// ==================== CUSTOMER CART ====================
+
+model Cart {
+  id        String   @id @default(cuid())
+  userId    String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user  User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  items CartItem[]
+}
+
+// ==================== CART ITEMS ====================
+
+model CartItem {
+  id        String   @id @default(cuid())
+  quantity  Int      @default(1)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  cartId    String
+  variantId String
+
+  cart    Cart          @relation(fields: [cartId], references: [id], onDelete: Cascade)
+  variant ProductVariant @relation(fields: [variantId], references: [id], onDelete: Cascade)
+
+  @@unique([cartId, variantId])
+  @@index([cartId])
+  @@index([variantId])
 }

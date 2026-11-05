@@ -10,27 +10,52 @@ export async function GET(request) {
     const categoryId = searchParams.get("categoryId") || undefined;
     const shopId = searchParams.get("shopId") || undefined;
 
-    const skip = searchParams.has("skip")
-      ? Number(searchParams.get("skip"))
-      : 0;
+    const hasPage = searchParams.has("page");
+    const hasLimit = searchParams.has("limit");
 
-    const take = searchParams.has("take")
-      ? Number(searchParams.get("take"))
-      : 20;
+    const page = hasPage ? Number(searchParams.get("page")) : 1;
+    const limit = hasLimit ? Number(searchParams.get("limit")) : 20;
+
+    if (
+      !Number.isSafeInteger(page) ||
+      page < 1 ||
+      !Number.isSafeInteger(limit) ||
+      limit < 1 ||
+      limit > 50
+    ) {
+      return NextResponse.json(
+        {
+          success: false,
+          message: "Invalid pagination parameters.",
+        },
+        { status: 400 }
+      );
+    }
+
+    const skip = (page - 1) * limit;
 
     const result = await productService.getProducts({
       search,
       categoryId,
       shopId,
       skip,
-      take,
+      take: limit,
     });
+
+    const { total, take } = result.pagination;
 
     return NextResponse.json(
       {
         success: true,
         message: "Products fetched successfully.",
-        data: result,
+        data: {
+          products: result.products,
+          total,
+          page,
+          limit: take,
+          totalPages: Math.ceil(total / take),
+          hasMore: result.pagination.hasMore,
+        },
       },
       { status: 200 }
     );

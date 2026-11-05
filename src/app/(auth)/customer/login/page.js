@@ -23,8 +23,10 @@ export default function CustomerLoginPage() {
 
     setLoading(true);
 
+    
+
     try {
-      const response = await fetch("/api/auth/send-otp", {
+      const response = await fetch("/api/v1/auth/customer/send-otp", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -21,6 +21,57 @@ import ProductGallery from "@/components/customer/product/ProductGallery";
 import VariantSelector from "@/components/customer/product/VariantSelector";
 import { useCartContext } from "@/context/customer/CartContext";
 
+const GUEST_SESSION_KEY = "gali_bazar_guest_session";
+
+// Get or create guest session ID
+function getGuestSessionId() {
+  let sessionId = localStorage.getItem(GUEST_SESSION_KEY);
+
+  if (!sessionId) {
+    sessionId = crypto.randomUUID();
+
+    localStorage.setItem(GUEST_SESSION_KEY, sessionId);
+  }
+
+  return sessionId;
+}
+
+// Save recently viewed product
+async function saveRecentlyViewed(productId) {
+  try {
+    const sessionId = getGuestSessionId();
+
+    const response = await fetch(
+      "/api/v1/products/recently-viewed",
+      {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          productId,
+          sessionId,
+        }),
+      }
+    );
+
+    const result = await response.json();
+
+    if (!response.ok) {
+      console.error(
+        "Recently viewed save failed:",
+        result.message
+      );
+      return;
+    }
+
+    console.log("Recently viewed saved:", productId);
+  } catch (error) {
+    console.error("Recently viewed error:", error);
+  }
+}
+
 export default function ProductDetailsPage() {
   const params = useParams();
   const productId = params.productId;
@@ -34,6 +85,7 @@ export default function ProductDetailsPage() {
   const [error, setError] = useState("");
   const [added, setAdded] = useState(false);
 
+  // Fetch product details
   useEffect(() => {
     if (!productId) return;
 
@@ -46,7 +98,9 @@ export default function ProductDetailsPage() {
 
         const response = await fetch(
           `/api/v1/products/${productId}`,
-          { signal: controller.signal }
+          {
+            signal: controller.signal,
+          }
         );
 
         const result = await response.json();
@@ -58,13 +112,21 @@ export default function ProductDetailsPage() {
         }
 
         const productData =
-          result.data?.product || result.product || result.data;
+          result.data?.product ||
+          result.product ||
+          result.data;
 
         if (!productData?.id) {
           throw new Error("Product not found.");
         }
 
+        if (controller.signal.aborted) return;
+
         setProduct(productData);
+
+        // Save product in Recently Viewed
+        // This should not block product page rendering.
+        void saveRecentlyViewed(productData.id);
 
         const firstAvailableVariant =
           productData.variants?.find((variant) => {
@@ -72,7 +134,9 @@ export default function ProductDetailsPage() {
 
             const stock =
               Number(variant.inventory?.quantity || 0) -
-              Number(variant.inventory?.reservedQuantity || 0);
+              Number(
+                variant.inventory?.reservedQuantity || 0
+              );
 
             return stock > 0;
           }) || null;
@@ -80,7 +144,9 @@ export default function ProductDetailsPage() {
         setSelectedVariant(firstAvailableVariant);
       } catch (err) {
         if (err.name !== "AbortError") {
-          setError(err.message || "Something went wrong.");
+          setError(
+            err.message || "Something went wrong."
+          );
         }
       } finally {
         if (!controller.signal.aborted) {
@@ -94,22 +160,18 @@ export default function ProductDetailsPage() {
     return () => controller.abort();
   }, [productId]);
 
-  const activeVariants = useMemo(
-    () =>
-      product?.variants?.filter(
-        (variant) => variant.isActive !== false
-      ) || [],
-    [product]
-  );
-
+  // Available stock
   const availableStock = selectedVariant
     ? Math.max(
         0,
         Number(selectedVariant.inventory?.quantity || 0) -
-          Number(selectedVariant.inventory?.reservedQuantity || 0)
+          Number(
+            selectedVariant.inventory?.reservedQuantity || 0
+          )
       )
     : 0;
 
+  // Product pricing
   const pricing = useMemo(() => {
     if (!selectedVariant) {
       return {
@@ -124,57 +186,77 @@ export default function ProductDetailsPage() {
 
     const comparePrice =
       selectedVariant.compareAtPrice != null &&
-      Number.isFinite(Number(selectedVariant.compareAtPrice))
+      Number.isFinite(
+        Number(selectedVariant.compareAtPrice)
+      )
         ? Number(selectedVariant.compareAtPrice)
         : null;
 
     const hasDiscount =
-      comparePrice !== null && comparePrice > sellingPrice;
+      comparePrice !== null &&
+      comparePrice > sellingPrice;
 
     return {
       sellingPrice,
       mrp: hasDiscount ? comparePrice : null,
       discount: hasDiscount
         ? Math.round(
-            ((comparePrice - sellingPrice) / comparePrice) * 100
+            ((comparePrice - sellingPrice) /
+              comparePrice) *
+              100
           )
         : 0,
-      saving: hasDiscount ? comparePrice - sellingPrice : 0,
+      saving: hasDiscount
+        ? comparePrice - sellingPrice
+        : 0,
     };
   }, [selectedVariant]);
 
+  // Variant selection
   function handleVariantChange(variant) {
     setSelectedVariant(variant);
     setQuantity(1);
     setAdded(false);
   }
 
+  // Add to cart
   function handleAddToCart() {
-    if (!product || !selectedVariant || availableStock <= 0) return;
+    if (!product || !selectedVariant || availableStock <= 0) {
+      return;
+    }
 
     addToCart(product, selectedVariant, quantity);
     setAdded(true);
   }
 
+  // Loading state
   if (loading) {
     return (
       <div className="flex min-h-[60vh] items-center justify-center">
-        <Loader2 className="animate-spin text-green-600" size={36} />
+        <Loader2
+          className="animate-spin text-green-600"
+          size={36}
+        />
       </div>
     );
   }
 
+  // Error state
   if (error || !product) {
     return (
       <div className="mx-auto max-w-7xl px-4 py-20 text-center">
-        <Package size={48} className="mx-auto text-gray-300" />
+        <Package
+          size={48}
+          className="mx-auto text-gray-300"
+        />
 
         <h2 className="mt-4 text-xl font-bold text-gray-900">
           Product not found
         </h2>
 
         <p className="mt-2 text-sm text-gray-500">
-          {error || "This product may no longer be available."}
+          {error ||
+            "This product may no longer be available."}
         </p>
 
         <Link
@@ -264,9 +346,9 @@ export default function ProductDetailsPage() {
           {/* Variants */}
           <div className="mt-7">
             <VariantSelector
-            variants={product.variants || []}
-            selectedVariantId={selectedVariant?.id || ""}
-            onVariantChange={handleVariantChange}
+              variants={product.variants || []}
+              selectedVariantId={selectedVariant?.id || ""}
+              onVariantChange={handleVariantChange}
             />
           </div>
 
@@ -321,7 +403,10 @@ export default function ProductDetailsPage() {
                   type="button"
                   onClick={() =>
                     setQuantity((previous) =>
-                      Math.min(availableStock, previous + 1)
+                      Math.min(
+                        availableStock,
+                        previous + 1
+                      )
                     )
                   }
                   disabled={quantity >= availableStock}
@@ -360,10 +445,12 @@ export default function ProductDetailsPage() {
           <div className="mt-8 space-y-4 border-t border-gray-100 pt-6">
             <div className="flex items-center gap-3">
               <Truck size={20} className="text-green-600" />
+
               <div>
                 <p className="text-sm font-semibold text-gray-900">
                   Local Delivery
                 </p>
+
                 <p className="text-xs text-gray-500">
                   Delivery availability depends on your location.
                 </p>
@@ -371,11 +458,16 @@ export default function ProductDetailsPage() {
             </div>
 
             <div className="flex items-center gap-3">
-              <ShieldCheck size={20} className="text-green-600" />
+              <ShieldCheck
+                size={20}
+                className="text-green-600"
+              />
+
               <div>
                 <p className="text-sm font-semibold text-gray-900">
                   Trusted Local Seller
                 </p>
+
                 <p className="text-xs text-gray-500">
                   Shop from your neighbourhood.
                 </p>
@@ -385,10 +477,12 @@ export default function ProductDetailsPage() {
             {product.sellerProfile?.businessName && (
               <div className="flex items-center gap-3">
                 <Store size={20} className="text-green-600" />
+
                 <div>
                   <p className="text-sm font-semibold text-gray-900">
                     {product.sellerProfile.businessName}
                   </p>
+
                   <p className="text-xs text-gray-500">
                     {product.sellerProfile.address}
                   </p>

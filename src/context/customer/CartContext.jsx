@@ -7,92 +7,190 @@ import {
   useState,
   useCallback,
   useMemo,
+  useEffect,
 } from "react";
 
 const CartContext = createContext(null);
 
+const CART_API = "/api/v1/cart";
+
+function normalizeCartItems(items = []) {
+  return items.map((item) => ({
+    id: item.id,
+    productId: item.productId,
+    variantId: item.variantId,
+    name: item.productName,
+    image: item.image || null,
+    variantTitle: item.variantTitle || item.sku || "Standard",
+    price: Number(item.unitPrice),
+    quantity: item.quantity,
+    availableStock: item.availableStock,
+    shopId: item.seller?.id || null,
+    shopName: item.seller?.businessName || "",
+  }));
+}
+
+async function apiRequest(url, options = {}) {
+  const response = await fetch(url, {
+    ...options,
+    credentials: "same-origin",
+    headers: {
+      "Content-Type": "application/json",
+      ...options.headers,
+    },
+  });
+
+  const result = await response.json();
+
+  if (!response.ok || !result.success) {
+    throw new Error(result.message || "Something went wrong.");
+  }
+
+  return result;
+}
+
 export function CartProvider({ children }) {
   const [cartItems, setCartItems] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isSyncing, setIsSyncing] = useState(false);
+  const [error, setError] = useState(null);
 
-  const addToCart = useCallback((product, variant, quantity = 1) => {
-    if (!product?.id || !variant?.id) return;
+  // Fetch cart from database
+  const refreshCart = useCallback(async () => {
+    try {
+      setIsLoading(true);
+      setError(null);
 
-    const availableStock = Math.max(
-      0,
-      Number(variant.inventory?.quantity || 0) -
-        Number(variant.inventory?.reservedQuantity || 0)
-    );
+      const result = await apiRequest(CART_API);
 
-    if (availableStock <= 0) return;
+      setCartItems(normalizeCartItems(result.data?.items));
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setIsLoading(false);
+    }
+  }, []);
 
-    setCartItems((previousItems) => {
-      const existingItem = previousItems.find(
-        (item) =>
-          item.productId === product.id &&
-          item.variantId === variant.id
-      );
+  useEffect(() => {
+    refreshCart();
+  }, [refreshCart]);
 
-      if (existingItem) {
-        return previousItems.map((item) =>
-          item.variantId === variant.id &&
-          item.productId === product.id
-            ? {
-                ...item,
-                quantity: Math.min(
-                  item.quantity + quantity,
-                  availableStock
-                ),
-                availableStock,
-              }
-            : item
-        );
+  // Add item to cart
+  const addToCart = useCallback(
+    async (product, variant, quantity = 1) => {
+      if (!product?.id || !variant?.id) {
+        return false;
       }
 
-      return [
-        ...previousItems,
-        {
-          productId: product.id,
-          variantId: variant.id,
-          name: product.name,
-          image: product.images?.[0]?.imageUrl || null,
-          variantTitle: variant.title || variant.sku || "Standard",
-          price: Number(variant.price),
-          quantity: Math.min(quantity, availableStock),
-          availableStock,
-          shopId: product.sellerProfileId,
-          shopName: product.sellerProfile?.businessName || "",
-        },
-      ];
-    });
-  }, []);
+      try {
+        setIsSyncing(true);
+        setError(null);
 
-  const updateQuantity = useCallback((variantId, quantity) => {
-    setCartItems((previousItems) =>
-      previousItems
-        .map((item) =>
-          item.variantId === variantId
-            ? {
-                ...item,
-                quantity: Math.min(
-                  Math.max(1, quantity),
-                  item.availableStock
-                ),
-              }
-            : item
-        )
-    );
-  }, []);
+        const result = await apiRequest(`${CART_API}/items`, {
+          method: "POST",
+          body: JSON.stringify({
+            variantId: variant.id,
+            quantity,
+          }),
+        });
 
-  const removeFromCart = useCallback((variantId) => {
-    setCartItems((previousItems) =>
-      previousItems.filter(
-        (item) => item.variantId !== variantId
-      )
-    );
-  }, []);
+        setCartItems(normalizeCartItems(result.data?.items));
 
-  const clearCart = useCallback(() => {
-    setCartItems([]);
+        return true;
+      } catch (err) {
+        setError(err.message);
+        return false;
+      } finally {
+        setIsSyncing(false);
+      }
+    },
+    []
+  );
+
+  // Update item quantity
+  const updateQuantity = useCallback(
+    async (variantId, quantity) => {
+      const item = cartItems.find(
+        (cartItem) => cartItem.variantId === variantId
+      );
+
+      if (!item?.id) return false;
+
+      try {
+        setIsSyncing(true);
+        setError(null);
+
+        const result = await apiRequest(
+          `${CART_API}/items/${item.id}`,
+          {
+            method: "PATCH",
+            body: JSON.stringify({ quantity }),
+          }
+        );
+
+        setCartItems(normalizeCartItems(result.data?.items));
+
+        return true;
+      } catch (err) {
+        setError(err.message);
+        return false;
+      } finally {
+        setIsSyncing(false);
+      }
+    },
+    [cartItems]
+  );
+
+  // Remove item from cart
+  const removeFromCart = useCallback(
+    async (variantId) => {
+      const item = cartItems.find(
+        (cartItem) => cartItem.variantId === variantId
+      );
+
+      if (!item?.id) return false;
+
+      try {
+        setIsSyncing(true);
+        setError(null);
+
+        const result = await apiRequest(
+          `${CART_API}/items/${item.id}`,
+          { method: "DELETE" }
+        );
+
+        setCartItems(normalizeCartItems(result.data?.items));
+
+        return true;
+      } catch (err) {
+        setError(err.message);
+        return false;
+      } finally {
+        setIsSyncing(false);
+      }
+    },
+    [cartItems]
+  );
+
+  // Clear entire cart
+  const clearCart = useCallback(async () => {
+    try {
+      setIsSyncing(true);
+      setError(null);
+
+      await apiRequest(CART_API, {
+        method: "DELETE",
+      });
+
+      setCartItems([]);
+
+      return true;
+    } catch (err) {
+      setError(err.message);
+      return false;
+    } finally {
+      setIsSyncing(false);
+    }
   }, []);
 
   const cartCount = useMemo(
@@ -117,10 +215,14 @@ export function CartProvider({ children }) {
     cartItems,
     cartCount,
     cartTotal,
+    isLoading,
+    isSyncing,
+    error,
     addToCart,
     updateQuantity,
     removeFromCart,
     clearCart,
+    refreshCart,
   };
 
   return (

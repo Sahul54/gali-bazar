@@ -2,12 +2,14 @@
 "use client";
 
 import Image from "next/image";
+import { useState } from "react";
 import {
   Minus,
   Plus,
   Trash2,
   Store,
   Package,
+  LoaderCircle,
 } from "lucide-react";
 
 export default function CartItem({
@@ -15,12 +17,39 @@ export default function CartItem({
   onUpdateQuantity,
   onRemove,
 }) {
+  const [isUpdating, setIsUpdating] = useState(false);
+
   if (!item) return null;
 
-  const subtotal = item.price * item.quantity;
+  const subtotal = Number(item.price) * item.quantity;
+
+  async function handleUpdate(quantity) {
+    if (isUpdating) return;
+
+    setIsUpdating(true);
+
+    try {
+      await onUpdateQuantity?.(item.variantId, quantity);
+    } finally {
+      setIsUpdating(false);
+    }
+  }
+
+  async function handleRemove() {
+    if (isUpdating) return;
+
+    setIsUpdating(true);
+
+    try {
+      await onRemove?.(item.variantId);
+    } finally {
+      setIsUpdating(false);
+    }
+  }
 
   return (
     <div className="flex gap-4 rounded-2xl border border-gray-100 bg-white p-4 shadow-sm">
+
       {/* Product Image */}
       <div className="relative flex h-24 w-24 shrink-0 items-center justify-center overflow-hidden rounded-xl bg-gray-50">
         {item.image ? (
@@ -51,11 +80,16 @@ export default function CartItem({
 
           <button
             type="button"
-            onClick={() => onRemove?.(item.variantId)}
+            onClick={handleRemove}
+            disabled={isUpdating}
             aria-label="Remove product"
-            className="h-fit rounded-lg p-2 text-gray-400 transition hover:bg-red-50 hover:text-red-500"
+            className="h-fit rounded-lg p-2 text-gray-400 transition hover:bg-red-50 hover:text-red-500 disabled:cursor-not-allowed disabled:opacity-50"
           >
-            <Trash2 size={17} />
+            {isUpdating ? (
+              <LoaderCircle size={17} className="animate-spin" />
+            ) : (
+              <Trash2 size={17} />
+            )}
           </button>
         </div>
 
@@ -82,13 +116,8 @@ export default function CartItem({
           <div className="flex items-center rounded-lg border border-gray-200">
             <button
               type="button"
-              onClick={() =>
-                onUpdateQuantity?.(
-                  item.variantId,
-                  item.quantity - 1
-                )
-              }
-              disabled={item.quantity <= 1}
+              onClick={() => handleUpdate(item.quantity - 1)}
+              disabled={isUpdating || item.quantity <= 1}
               className="p-2 text-gray-600 hover:text-green-600 disabled:cursor-not-allowed disabled:opacity-40"
               aria-label="Decrease quantity"
             >
@@ -96,18 +125,23 @@ export default function CartItem({
             </button>
 
             <span className="min-w-8 text-center text-sm font-semibold">
-              {item.quantity}
+              {isUpdating ? (
+                <LoaderCircle
+                  size={14}
+                  className="mx-auto animate-spin text-green-600"
+                />
+              ) : (
+                item.quantity
+              )}
             </span>
 
             <button
               type="button"
-              onClick={() =>
-                onUpdateQuantity?.(
-                  item.variantId,
-                  item.quantity + 1
-                )
+              onClick={() => handleUpdate(item.quantity + 1)}
+              disabled={
+                isUpdating ||
+                item.quantity >= item.availableStock
               }
-              disabled={item.quantity >= item.availableStock}
               className="p-2 text-gray-600 hover:text-green-600 disabled:cursor-not-allowed disabled:opacity-40"
               aria-label="Increase quantity"
             >
@@ -115,6 +149,12 @@ export default function CartItem({
             </button>
           </div>
         </div>
+
+        {item.quantity >= item.availableStock && (
+          <p className="mt-2 text-[11px] text-orange-600">
+            Maximum available stock reached.
+          </p>
+        )}
       </div>
     </div>
   );

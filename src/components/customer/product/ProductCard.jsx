@@ -10,7 +10,9 @@ import {
   Plus,
   Minus,
   Check,
+  LoaderCircle,
 } from "lucide-react";
+
 import { useCartContext } from "@/context/customer/CartContext";
 
 export default function ProductCard({ product }) {
@@ -22,28 +24,43 @@ export default function ProductCard({ product }) {
   } = useCartContext();
 
   const [selectedVariantId, setSelectedVariantId] = useState("");
+  const [isBusy, setIsBusy] = useState(false);
+  const [actionError, setActionError] = useState("");
 
   if (!product) return null;
 
   const imageUrl = product.images?.[0]?.imageUrl;
 
   const activeVariants =
-    product.variants?.filter((variant) => variant.isActive) || [];
+    product.variants?.filter(
+      (variant) => variant.isActive !== false
+    ) || [];
 
-  const availableVariants = activeVariants.filter((variant) => {
-    const stock =
+  function getAvailableStock(variant) {
+    if (variant.availableStock !== undefined) {
+      return Math.max(0, Number(variant.availableStock) || 0);
+    }
+
+    return Math.max(
+      0,
       Number(variant.inventory?.quantity || 0) -
-      Number(variant.inventory?.reservedQuantity || 0);
+        Number(variant.inventory?.reservedQuantity || 0)
+    );
+  }
 
-    return stock > 0;
-  });
+  const availableVariants = activeVariants.filter(
+    (variant) =>
+      variant.inStock !== undefined
+        ? variant.inStock && getAvailableStock(variant) > 0
+        : getAvailableStock(variant) > 0
+  );
+
+  const validPrices = activeVariants
+    .map((variant) => Number(variant.price))
+    .filter(Number.isFinite);
 
   const lowestPrice =
-    activeVariants.length > 0
-      ? Math.min(
-          ...activeVariants.map((variant) => Number(variant.price))
-        )
-      : null;
+    validPrices.length > 0 ? Math.min(...validPrices) : null;
 
   const selectedVariant =
     availableVariants.find(
@@ -53,9 +70,7 @@ export default function ProductCard({ product }) {
 
   const cartItem = selectedVariant
     ? cartItems.find(
-        (item) =>
-          item.productId === product.id &&
-          item.variantId === selectedVariant.id
+        (item) => item.variantId === selectedVariant.id
       )
     : null;
 
@@ -66,35 +81,70 @@ export default function ProductCard({ product }) {
     : lowestPrice;
 
   const availableStock = selectedVariant
-    ? Math.max(
-        0,
-        Number(selectedVariant.inventory?.quantity || 0) -
-          Number(selectedVariant.inventory?.reservedQuantity || 0)
-      )
+    ? getAvailableStock(selectedVariant)
     : 0;
 
-  function handleAddToBag() {
-    if (!selectedVariant || quantity > 0) return;
-    addToCart(product, selectedVariant, 1);
+  async function handleAddToBag() {
+    if (!selectedVariant || isBusy || availableStock <= 0) return;
+
+    setIsBusy(true);
+    setActionError("");
+
+    try {
+      const success = await addToCart(product, selectedVariant, 1);
+
+      if (!success) {
+        setActionError("Unable to add product. Please try again.");
+      }
+    } finally {
+      setIsBusy(false);
+    }
   }
 
-  function handleDecrease() {
-    if (!cartItem || !selectedVariant) return;
+  async function handleDecrease() {
+    if (!cartItem || isBusy) return;
 
-    if (quantity <= 1) {
-      removeFromCart(selectedVariant.id);
+    setIsBusy(true);
+    setActionError("");
+
+    try {
+      const success =
+        quantity <= 1
+          ? await removeFromCart(selectedVariant.id)
+          : await updateQuantity(selectedVariant.id, quantity - 1);
+
+      if (!success) {
+        setActionError("Unable to update cart. Please try again.");
+      }
+    } finally {
+      setIsBusy(false);
+    }
+  }
+
+  async function handleIncrease() {
+    if (
+      !cartItem ||
+      isBusy ||
+      quantity >= availableStock
+    ) {
       return;
     }
 
-    updateQuantity(selectedVariant.id, quantity - 1);
-  }
+    setIsBusy(true);
+    setActionError("");
 
-  function handleIncrease() {
-    if (!cartItem || !selectedVariant || quantity >= availableStock) {
-      return;
+    try {
+      const success = await updateQuantity(
+        selectedVariant.id,
+        quantity + 1
+      );
+
+      if (!success) {
+        setActionError("Unable to update cart. Please try again.");
+      }
+    } finally {
+      setIsBusy(false);
     }
-
-    updateQuantity(selectedVariant.id, quantity + 1);
   }
 
   return (
@@ -149,7 +199,10 @@ export default function ProductCard({ product }) {
           <div className="mt-2.5">
             <select
               value={selectedVariantId}
-              onChange={(e) => setSelectedVariantId(e.target.value)}
+              onChange={(event) => {
+                setSelectedVariantId(event.target.value);
+                setActionError("");
+              }}
               className="h-8 w-full rounded-lg border border-gray-200 bg-gray-50 px-2 text-[11px] font-medium text-gray-600 outline-none transition focus:border-green-500 focus:bg-white"
             >
               <option value="">Choose variant</option>
@@ -171,7 +224,9 @@ export default function ProductCard({ product }) {
             {/* Price */}
             <div className="min-w-0">
               <p className="text-base font-extrabold tracking-tight text-gray-900">
-                {price !== null ? `₹${price.toFixed(0)}` : "N/A"}
+                {price !== null && Number.isFinite(price)
+                  ? `₹${price.toFixed(0)}`
+                  : "N/A"}
               </p>
 
               {availableVariants.length > 0 && (
@@ -182,44 +237,56 @@ export default function ProductCard({ product }) {
               )}
             </div>
 
-            {/* Add Button */}
+            {/* Add Button / Quantity Stepper */}
             {quantity === 0 ? (
               <button
                 type="button"
                 onClick={handleAddToBag}
                 disabled={
-                  availableVariants.length === 0 || !selectedVariant
+                  availableVariants.length === 0 ||
+                  !selectedVariant ||
+                  isBusy
                 }
                 className="flex h-9 min-w-[68px] shrink-0 items-center justify-center gap-1 rounded-lg border border-green-600 bg-white px-3 text-xs font-bold text-green-700 transition hover:bg-green-700 hover:text-white active:scale-95 disabled:cursor-not-allowed disabled:border-gray-200 disabled:bg-gray-100 disabled:text-gray-400"
               >
-                <ShoppingBag size={13} />
+                {isBusy ? (
+                  <LoaderCircle size={14} className="animate-spin" />
+                ) : (
+                  <ShoppingBag size={13} />
+                )}
 
-                {availableVariants.length === 0
-                  ? "SOLD"
-                  : availableVariants.length > 1 && !selectedVariant
-                    ? "SELECT"
-                    : "ADD"}
+                {isBusy
+                  ? "WAIT"
+                  : availableVariants.length === 0
+                    ? "SOLD"
+                    : availableVariants.length > 1 && !selectedVariant
+                      ? "SELECT"
+                      : "ADD"}
               </button>
             ) : (
-              /* Quantity Stepper */
               <div className="flex h-9 shrink-0 items-center gap-2 rounded-lg bg-green-700 px-2 text-white shadow-sm">
                 <button
                   type="button"
                   onClick={handleDecrease}
-                  className="flex h-7 w-5 items-center justify-center rounded hover:bg-green-600 active:scale-90"
+                  disabled={isBusy}
+                  className="flex h-7 w-5 items-center justify-center rounded hover:bg-green-600 active:scale-90 disabled:opacity-50"
                   aria-label="Decrease quantity"
                 >
                   <Minus size={14} strokeWidth={2.5} />
                 </button>
 
                 <span className="min-w-3 text-center text-xs font-bold">
-                  {quantity}
+                  {isBusy ? (
+                    <LoaderCircle size={13} className="animate-spin" />
+                  ) : (
+                    quantity
+                  )}
                 </span>
 
                 <button
                   type="button"
                   onClick={handleIncrease}
-                  disabled={quantity >= availableStock}
+                  disabled={isBusy || quantity >= availableStock}
                   className="flex h-7 w-5 items-center justify-center rounded hover:bg-green-600 active:scale-90 disabled:cursor-not-allowed disabled:opacity-40"
                   aria-label="Increase quantity"
                 >
@@ -228,6 +295,12 @@ export default function ProductCard({ product }) {
               </div>
             )}
           </div>
+
+          {actionError && (
+            <p className="mt-2 text-[10px] font-medium text-red-600">
+              {actionError}
+            </p>
+          )}
         </div>
 
         {/* Seller */}

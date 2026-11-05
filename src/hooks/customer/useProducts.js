@@ -16,8 +16,13 @@ export default function useProducts({
   const [error, setError] = useState("");
   const [total, setTotal] = useState(0);
 
-  const fetchProducts = useCallback(async () => {
-    if (!enabled) return;
+  const fetchProducts = useCallback(async (signal) => {
+    if (!enabled) {
+      setProducts([]);
+      setTotal(0);
+      setLoading(false);
+      return;
+    }
 
     try {
       setLoading(true);
@@ -28,12 +33,18 @@ export default function useProducts({
         limit: String(limit),
       });
 
-      if (search.trim()) params.set("search", search.trim());
+      const trimmedSearch = search.trim();
+
+      if (trimmedSearch.length >= 2) {
+        params.set("search", trimmedSearch);
+      }
+
       if (categoryId) params.set("categoryId", categoryId);
       if (shopId) params.set("shopId", shopId);
 
       const response = await fetch(
-        `/api/v1/products?${params.toString()}`
+        `/api/v1/products?${params.toString()}`,
+        { signal }
       );
 
       const result = await response.json();
@@ -44,6 +55,8 @@ export default function useProducts({
         );
       }
 
+      if (signal?.aborted) return;
+
       const productData =
         result.data?.products || result.products || [];
 
@@ -52,16 +65,26 @@ export default function useProducts({
         result.data?.total ?? result.total ?? productData.length
       );
     } catch (err) {
+      if (err.name === "AbortError") return;
+
       setError(err.message || "Something went wrong.");
       setProducts([]);
       setTotal(0);
     } finally {
-      setLoading(false);
+      if (!signal?.aborted) {
+        setLoading(false);
+      }
     }
   }, [search, categoryId, shopId, page, limit, enabled]);
 
   useEffect(() => {
-    fetchProducts();
+    const controller = new AbortController();
+
+    fetchProducts(controller.signal);
+
+    return () => {
+      controller.abort();
+    };
   }, [fetchProducts]);
 
   return {
@@ -69,6 +92,6 @@ export default function useProducts({
     loading,
     error,
     total,
-    refetch: fetchProducts,
+    refetch: () => fetchProducts(),
   };
 }

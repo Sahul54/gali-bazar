@@ -21,6 +21,8 @@ export async function getRecentlyViewedProducts({
     MAX_RECENT_PRODUCTS
   );
 
+  // Logged-in user takes priority.
+  // Do not force the other identity field to null.
   const identityFilter = userId
     ? { userId }
     : { sessionId };
@@ -30,17 +32,8 @@ export async function getRecentlyViewedProducts({
       ...identityFilter,
 
       product: {
-        status: "ACTIVE",
-
-        sellerProfile: {
-          status: "APPROVED",
-          user: {
-            isActive: true,
-          },
-        },
-
-        category: {
-          isActive: true,
+        is: {
+          status: "ACTIVE",
         },
       },
     },
@@ -49,16 +42,25 @@ export async function getRecentlyViewedProducts({
       viewedAt: "desc",
     },
 
-    // Fetch extra records because duplicate product views
-    // will be removed before applying the final limit.
     take: MAX_RECENT_PRODUCTS,
 
     select: {
       id: true,
+      userId: true,
+      sessionId: true,
+      productId: true,
       viewedAt: true,
 
       product: {
-        include: {
+        select: {
+          id: true,
+          name: true,
+          slug: true,
+          brand: true,
+          description: true,
+          status: true,
+          sellerProfileId: true,
+
           category: {
             select: {
               id: true,
@@ -71,6 +73,7 @@ export async function getRecentlyViewedProducts({
             select: {
               id: true,
               businessName: true,
+              status: true,
             },
           },
 
@@ -85,7 +88,6 @@ export async function getRecentlyViewedProducts({
             where: {
               isActive: true,
             },
-
             include: {
               inventory: true,
             },
@@ -95,14 +97,14 @@ export async function getRecentlyViewedProducts({
     },
   });
 
-  // Keep only the latest view of each unique product.
+  // Remove duplicate products while preserving latest viewed order.
   const uniqueProducts = [];
   const seenProductIds = new Set();
 
   for (const view of views) {
     const product = view.product;
 
-    if (seenProductIds.has(product.id)) {
+    if (!product || seenProductIds.has(product.id)) {
       continue;
     }
 
