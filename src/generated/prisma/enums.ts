@@ -97,6 +97,21 @@ export const DeliveryType = {
 export type DeliveryType = (typeof DeliveryType)[keyof typeof DeliveryType]
 
 
+export const PaymentMethod = {
+  COD: 'COD'
+} as const
+
+export type PaymentMethod = (typeof PaymentMethod)[keyof typeof PaymentMethod]
+
+
+export const PaymentStatus = {
+  PENDING: 'PENDING',
+  PAID: 'PAID'
+} as const
+
+export type PaymentStatus = (typeof PaymentStatus)[keyof typeof PaymentStatus]
+
+
 export const DeliveryAssignmentStatus = {
   PENDING: 'PENDING',
   ACCEPTED: 'ACCEPTED',

@@ -127,3 +127,13 @@ export type Cart = Prisma.CartModel
  * 
  */
 export type CartItem = Prisma.CartItemModel
+/**
+ * Model DeliveryZone
+ * 
+ */
+export type DeliveryZone = Prisma.DeliveryZoneModel
+/**
+ * Model DeliveryZonePincode
+ * 
+ */
+export type DeliveryZonePincode = Prisma.DeliveryZonePincodeModel

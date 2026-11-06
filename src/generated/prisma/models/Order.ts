@@ -51,6 +51,16 @@ export type OrderMinAggregateOutputType = {
   orderNumber: string | null
   status: $Enums.OrderStatus | null
   customerId: string | null
+  sellerProfileId: string | null
+  checkoutGroupId: string | null
+  paymentMethod: $Enums.PaymentMethod | null
+  paymentStatus: $Enums.PaymentStatus | null
+  deliveryName: string | null
+  deliveryPhone: string | null
+  deliveryPincode: string | null
+  deliveryLandmark: string | null
+  cancellationReason: string | null
+  cancelledAt: Date | null
   deliveryType: $Enums.DeliveryType | null
   scheduledDate: Date | null
   scheduledSlot: string | null
@@ -74,6 +84,16 @@ export type OrderMaxAggregateOutputType = {
   orderNumber: string | null
   status: $Enums.OrderStatus | null
   customerId: string | null
+  sellerProfileId: string | null
+  checkoutGroupId: string | null
+  paymentMethod: $Enums.PaymentMethod | null
+  paymentStatus: $Enums.PaymentStatus | null
+  deliveryName: string | null
+  deliveryPhone: string | null
+  deliveryPincode: string | null
+  deliveryLandmark: string | null
+  cancellationReason: string | null
+  cancelledAt: Date | null
   deliveryType: $Enums.DeliveryType | null
   scheduledDate: Date | null
   scheduledSlot: string | null
@@ -97,6 +117,16 @@ export type OrderCountAggregateOutputType = {
   orderNumber: number
   status: number
   customerId: number
+  sellerProfileId: number
+  checkoutGroupId: number
+  paymentMethod: number
+  paymentStatus: number
+  deliveryName: number
+  deliveryPhone: number
+  deliveryPincode: number
+  deliveryLandmark: number
+  cancellationReason: number
+  cancelledAt: number
   deliveryType: number
   scheduledDate: number
   scheduledSlot: number
@@ -142,6 +172,16 @@ export type OrderMinAggregateInputType = {
   orderNumber?: true
   status?: true
   customerId?: true
+  sellerProfileId?: true
+  checkoutGroupId?: true
+  paymentMethod?: true
+  paymentStatus?: true
+  deliveryName?: true
+  deliveryPhone?: true
+  deliveryPincode?: true
+  deliveryLandmark?: true
+  cancellationReason?: true
+  cancelledAt?: true
   deliveryType?: true
   scheduledDate?: true
   scheduledSlot?: true
@@ -165,6 +205,16 @@ export type OrderMaxAggregateInputType = {
   orderNumber?: true
   status?: true
   customerId?: true
+  sellerProfileId?: true
+  checkoutGroupId?: true
+  paymentMethod?: true
+  paymentStatus?: true
+  deliveryName?: true
+  deliveryPhone?: true
+  deliveryPincode?: true
+  deliveryLandmark?: true
+  cancellationReason?: true
+  cancelledAt?: true
   deliveryType?: true
   scheduledDate?: true
   scheduledSlot?: true
@@ -188,6 +238,16 @@ export type OrderCountAggregateInputType = {
   orderNumber?: true
   status?: true
   customerId?: true
+  sellerProfileId?: true
+  checkoutGroupId?: true
+  paymentMethod?: true
+  paymentStatus?: true
+  deliveryName?: true
+  deliveryPhone?: true
+  deliveryPincode?: true
+  deliveryLandmark?: true
+  cancellationReason?: true
+  cancelledAt?: true
   deliveryType?: true
   scheduledDate?: true
   scheduledSlot?: true
@@ -298,6 +358,16 @@ export type OrderGroupByOutputType = {
   orderNumber: string
   status: $Enums.OrderStatus
   customerId: string
+  sellerProfileId: string | null
+  checkoutGroupId: string | null
+  paymentMethod: $Enums.PaymentMethod
+  paymentStatus: $Enums.PaymentStatus
+  deliveryName: string | null
+  deliveryPhone: string | null
+  deliveryPincode: string | null
+  deliveryLandmark: string | null
+  cancellationReason: string | null
+  cancelledAt: Date | null
   deliveryType: $Enums.DeliveryType
   scheduledDate: Date | null
   scheduledSlot: string | null
@@ -344,6 +414,16 @@ export type OrderWhereInput = {
   orderNumber?: Prisma.StringFilter<"Order"> | string
   status?: Prisma.EnumOrderStatusFilter<"Order"> | $Enums.OrderStatus
   customerId?: Prisma.StringFilter<"Order"> | string
+  sellerProfileId?: Prisma.StringNullableFilter<"Order"> | string | null
+  checkoutGroupId?: Prisma.StringNullableFilter<"Order"> | string | null
+  paymentMethod?: Prisma.EnumPaymentMethodFilter<"Order"> | $Enums.PaymentMethod
+  paymentStatus?: Prisma.EnumPaymentStatusFilter<"Order"> | $Enums.PaymentStatus
+  deliveryName?: Prisma.StringNullableFilter<"Order"> | string | null
+  deliveryPhone?: Prisma.StringNullableFilter<"Order"> | string | null
+  deliveryPincode?: Prisma.StringNullableFilter<"Order"> | string | null
+  deliveryLandmark?: Prisma.StringNullableFilter<"Order"> | string | null
+  cancellationReason?: Prisma.StringNullableFilter<"Order"> | string | null
+  cancelledAt?: Prisma.DateTimeNullableFilter<"Order"> | Date | string | null
   deliveryType?: Prisma.EnumDeliveryTypeFilter<"Order"> | $Enums.DeliveryType
   scheduledDate?: Prisma.DateTimeNullableFilter<"Order"> | Date | string | null
   scheduledSlot?: Prisma.StringNullableFilter<"Order"> | string | null
@@ -361,6 +441,7 @@ export type OrderWhereInput = {
   createdAt?: Prisma.DateTimeFilter<"Order"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Order"> | Date | string
   customer?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
+  sellerProfile?: Prisma.XOR<Prisma.SellerProfileNullableScalarRelationFilter, Prisma.SellerProfileWhereInput> | null
   assignedDeliveryPartner?: Prisma.XOR<Prisma.DeliveryPartnerProfileNullableScalarRelationFilter, Prisma.DeliveryPartnerProfileWhereInput> | null
   items?: Prisma.OrderItemListRelationFilter
   assignments?: Prisma.DeliveryAssignmentListRelationFilter
@@ -372,6 +453,16 @@ export type OrderOrderByWithRelationInput = {
   orderNumber?: Prisma.SortOrder
   status?: Prisma.SortOrder
   customerId?: Prisma.SortOrder
+  sellerProfileId?: Prisma.SortOrderInput | Prisma.SortOrder
+  checkoutGroupId?: Prisma.SortOrderInput | Prisma.SortOrder
+  paymentMethod?: Prisma.SortOrder
+  paymentStatus?: Prisma.SortOrder
+  deliveryName?: Prisma.SortOrderInput | Prisma.SortOrder
+  deliveryPhone?: Prisma.SortOrderInput | Prisma.SortOrder
+  deliveryPincode?: Prisma.SortOrderInput | Prisma.SortOrder
+  deliveryLandmark?: Prisma.SortOrderInput | Prisma.SortOrder
+  cancellationReason?: Prisma.SortOrderInput | Prisma.SortOrder
+  cancelledAt?: Prisma.SortOrderInput | Prisma.SortOrder
   deliveryType?: Prisma.SortOrder
   scheduledDate?: Prisma.SortOrderInput | Prisma.SortOrder
   scheduledSlot?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -389,6 +480,7 @@ export type OrderOrderByWithRelationInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   customer?: Prisma.UserOrderByWithRelationInput
+  sellerProfile?: Prisma.SellerProfileOrderByWithRelationInput
   assignedDeliveryPartner?: Prisma.DeliveryPartnerProfileOrderByWithRelationInput
   items?: Prisma.OrderItemOrderByRelationAggregateInput
   assignments?: Prisma.DeliveryAssignmentOrderByRelationAggregateInput
@@ -403,6 +495,16 @@ export type OrderWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.OrderWhereInput | Prisma.OrderWhereInput[]
   status?: Prisma.EnumOrderStatusFilter<"Order"> | $Enums.OrderStatus
   customerId?: Prisma.StringFilter<"Order"> | string
+  sellerProfileId?: Prisma.StringNullableFilter<"Order"> | string | null
+  checkoutGroupId?: Prisma.StringNullableFilter<"Order"> | string | null
+  paymentMethod?: Prisma.EnumPaymentMethodFilter<"Order"> | $Enums.PaymentMethod
+  paymentStatus?: Prisma.EnumPaymentStatusFilter<"Order"> | $Enums.PaymentStatus
+  deliveryName?: Prisma.StringNullableFilter<"Order"> | string | null
+  deliveryPhone?: Prisma.StringNullableFilter<"Order"> | string | null
+  deliveryPincode?: Prisma.StringNullableFilter<"Order"> | string | null
+  deliveryLandmark?: Prisma.StringNullableFilter<"Order"> | string | null
+  cancellationReason?: Prisma.StringNullableFilter<"Order"> | string | null
+  cancelledAt?: Prisma.DateTimeNullableFilter<"Order"> | Date | string | null
   deliveryType?: Prisma.EnumDeliveryTypeFilter<"Order"> | $Enums.DeliveryType
   scheduledDate?: Prisma.DateTimeNullableFilter<"Order"> | Date | string | null
   scheduledSlot?: Prisma.StringNullableFilter<"Order"> | string | null
@@ -420,6 +522,7 @@ export type OrderWhereUniqueInput = Prisma.AtLeast<{
   createdAt?: Prisma.DateTimeFilter<"Order"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Order"> | Date | string
   customer?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
+  sellerProfile?: Prisma.XOR<Prisma.SellerProfileNullableScalarRelationFilter, Prisma.SellerProfileWhereInput> | null
   assignedDeliveryPartner?: Prisma.XOR<Prisma.DeliveryPartnerProfileNullableScalarRelationFilter, Prisma.DeliveryPartnerProfileWhereInput> | null
   items?: Prisma.OrderItemListRelationFilter
   assignments?: Prisma.DeliveryAssignmentListRelationFilter
@@ -431,6 +534,16 @@ export type OrderOrderByWithAggregationInput = {
   orderNumber?: Prisma.SortOrder
   status?: Prisma.SortOrder
   customerId?: Prisma.SortOrder
+  sellerProfileId?: Prisma.SortOrderInput | Prisma.SortOrder
+  checkoutGroupId?: Prisma.SortOrderInput | Prisma.SortOrder
+  paymentMethod?: Prisma.SortOrder
+  paymentStatus?: Prisma.SortOrder
+  deliveryName?: Prisma.SortOrderInput | Prisma.SortOrder
+  deliveryPhone?: Prisma.SortOrderInput | Prisma.SortOrder
+  deliveryPincode?: Prisma.SortOrderInput | Prisma.SortOrder
+  deliveryLandmark?: Prisma.SortOrderInput | Prisma.SortOrder
+  cancellationReason?: Prisma.SortOrderInput | Prisma.SortOrder
+  cancelledAt?: Prisma.SortOrderInput | Prisma.SortOrder
   deliveryType?: Prisma.SortOrder
   scheduledDate?: Prisma.SortOrderInput | Prisma.SortOrder
   scheduledSlot?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -462,6 +575,16 @@ export type OrderScalarWhereWithAggregatesInput = {
   orderNumber?: Prisma.StringWithAggregatesFilter<"Order"> | string
   status?: Prisma.EnumOrderStatusWithAggregatesFilter<"Order"> | $Enums.OrderStatus
   customerId?: Prisma.StringWithAggregatesFilter<"Order"> | string
+  sellerProfileId?: Prisma.StringNullableWithAggregatesFilter<"Order"> | string | null
+  checkoutGroupId?: Prisma.StringNullableWithAggregatesFilter<"Order"> | string | null
+  paymentMethod?: Prisma.EnumPaymentMethodWithAggregatesFilter<"Order"> | $Enums.PaymentMethod
+  paymentStatus?: Prisma.EnumPaymentStatusWithAggregatesFilter<"Order"> | $Enums.PaymentStatus
+  deliveryName?: Prisma.StringNullableWithAggregatesFilter<"Order"> | string | null
+  deliveryPhone?: Prisma.StringNullableWithAggregatesFilter<"Order"> | string | null
+  deliveryPincode?: Prisma.StringNullableWithAggregatesFilter<"Order"> | string | null
+  deliveryLandmark?: Prisma.StringNullableWithAggregatesFilter<"Order"> | string | null
+  cancellationReason?: Prisma.StringNullableWithAggregatesFilter<"Order"> | string | null
+  cancelledAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Order"> | Date | string | null
   deliveryType?: Prisma.EnumDeliveryTypeWithAggregatesFilter<"Order"> | $Enums.DeliveryType
   scheduledDate?: Prisma.DateTimeNullableWithAggregatesFilter<"Order"> | Date | string | null
   scheduledSlot?: Prisma.StringNullableWithAggregatesFilter<"Order"> | string | null
@@ -484,6 +607,15 @@ export type OrderCreateInput = {
   id?: string
   orderNumber: string
   status?: $Enums.OrderStatus
+  checkoutGroupId?: string | null
+  paymentMethod?: $Enums.PaymentMethod
+  paymentStatus?: $Enums.PaymentStatus
+  deliveryName?: string | null
+  deliveryPhone?: string | null
+  deliveryPincode?: string | null
+  deliveryLandmark?: string | null
+  cancellationReason?: string | null
+  cancelledAt?: Date | string | null
   deliveryType?: $Enums.DeliveryType
   scheduledDate?: Date | string | null
   scheduledSlot?: string | null
@@ -499,6 +631,7 @@ export type OrderCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   customer: Prisma.UserCreateNestedOneWithoutCustomerOrdersInput
+  sellerProfile?: Prisma.SellerProfileCreateNestedOneWithoutOrdersInput
   assignedDeliveryPartner?: Prisma.DeliveryPartnerProfileCreateNestedOneWithoutCurrentOrdersInput
   items?: Prisma.OrderItemCreateNestedManyWithoutOrderInput
   assignments?: Prisma.DeliveryAssignmentCreateNestedManyWithoutOrderInput
@@ -510,6 +643,16 @@ export type OrderUncheckedCreateInput = {
   orderNumber: string
   status?: $Enums.OrderStatus
   customerId: string
+  sellerProfileId?: string | null
+  checkoutGroupId?: string | null
+  paymentMethod?: $Enums.PaymentMethod
+  paymentStatus?: $Enums.PaymentStatus
+  deliveryName?: string | null
+  deliveryPhone?: string | null
+  deliveryPincode?: string | null
+  deliveryLandmark?: string | null
+  cancellationReason?: string | null
+  cancelledAt?: Date | string | null
   deliveryType?: $Enums.DeliveryType
   scheduledDate?: Date | string | null
   scheduledSlot?: string | null
@@ -534,6 +677,15 @@ export type OrderUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   orderNumber?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
+  checkoutGroupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paymentMethod?: Prisma.EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
+  paymentStatus?: Prisma.EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
+  deliveryName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deliveryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deliveryPincode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deliveryLandmark?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancellationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deliveryType?: Prisma.EnumDeliveryTypeFieldUpdateOperationsInput | $Enums.DeliveryType
   scheduledDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   scheduledSlot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -549,6 +701,7 @@ export type OrderUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   customer?: Prisma.UserUpdateOneRequiredWithoutCustomerOrdersNestedInput
+  sellerProfile?: Prisma.SellerProfileUpdateOneWithoutOrdersNestedInput
   assignedDeliveryPartner?: Prisma.DeliveryPartnerProfileUpdateOneWithoutCurrentOrdersNestedInput
   items?: Prisma.OrderItemUpdateManyWithoutOrderNestedInput
   assignments?: Prisma.DeliveryAssignmentUpdateManyWithoutOrderNestedInput
@@ -560,6 +713,16 @@ export type OrderUncheckedUpdateInput = {
   orderNumber?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
   customerId?: Prisma.StringFieldUpdateOperationsInput | string
+  sellerProfileId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  checkoutGroupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paymentMethod?: Prisma.EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
+  paymentStatus?: Prisma.EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
+  deliveryName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deliveryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deliveryPincode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deliveryLandmark?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancellationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deliveryType?: Prisma.EnumDeliveryTypeFieldUpdateOperationsInput | $Enums.DeliveryType
   scheduledDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   scheduledSlot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -585,6 +748,16 @@ export type OrderCreateManyInput = {
   orderNumber: string
   status?: $Enums.OrderStatus
   customerId: string
+  sellerProfileId?: string | null
+  checkoutGroupId?: string | null
+  paymentMethod?: $Enums.PaymentMethod
+  paymentStatus?: $Enums.PaymentStatus
+  deliveryName?: string | null
+  deliveryPhone?: string | null
+  deliveryPincode?: string | null
+  deliveryLandmark?: string | null
+  cancellationReason?: string | null
+  cancelledAt?: Date | string | null
   deliveryType?: $Enums.DeliveryType
   scheduledDate?: Date | string | null
   scheduledSlot?: string | null
@@ -607,6 +780,15 @@ export type OrderUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   orderNumber?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
+  checkoutGroupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paymentMethod?: Prisma.EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
+  paymentStatus?: Prisma.EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
+  deliveryName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deliveryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deliveryPincode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deliveryLandmark?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancellationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deliveryType?: Prisma.EnumDeliveryTypeFieldUpdateOperationsInput | $Enums.DeliveryType
   scheduledDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   scheduledSlot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -628,6 +810,16 @@ export type OrderUncheckedUpdateManyInput = {
   orderNumber?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
   customerId?: Prisma.StringFieldUpdateOperationsInput | string
+  sellerProfileId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  checkoutGroupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paymentMethod?: Prisma.EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
+  paymentStatus?: Prisma.EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
+  deliveryName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deliveryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deliveryPincode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deliveryLandmark?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancellationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deliveryType?: Prisma.EnumDeliveryTypeFieldUpdateOperationsInput | $Enums.DeliveryType
   scheduledDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   scheduledSlot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -661,6 +853,16 @@ export type OrderCountOrderByAggregateInput = {
   orderNumber?: Prisma.SortOrder
   status?: Prisma.SortOrder
   customerId?: Prisma.SortOrder
+  sellerProfileId?: Prisma.SortOrder
+  checkoutGroupId?: Prisma.SortOrder
+  paymentMethod?: Prisma.SortOrder
+  paymentStatus?: Prisma.SortOrder
+  deliveryName?: Prisma.SortOrder
+  deliveryPhone?: Prisma.SortOrder
+  deliveryPincode?: Prisma.SortOrder
+  deliveryLandmark?: Prisma.SortOrder
+  cancellationReason?: Prisma.SortOrder
+  cancelledAt?: Prisma.SortOrder
   deliveryType?: Prisma.SortOrder
   scheduledDate?: Prisma.SortOrder
   scheduledSlot?: Prisma.SortOrder
@@ -694,6 +896,16 @@ export type OrderMaxOrderByAggregateInput = {
   orderNumber?: Prisma.SortOrder
   status?: Prisma.SortOrder
   customerId?: Prisma.SortOrder
+  sellerProfileId?: Prisma.SortOrder
+  checkoutGroupId?: Prisma.SortOrder
+  paymentMethod?: Prisma.SortOrder
+  paymentStatus?: Prisma.SortOrder
+  deliveryName?: Prisma.SortOrder
+  deliveryPhone?: Prisma.SortOrder
+  deliveryPincode?: Prisma.SortOrder
+  deliveryLandmark?: Prisma.SortOrder
+  cancellationReason?: Prisma.SortOrder
+  cancelledAt?: Prisma.SortOrder
   deliveryType?: Prisma.SortOrder
   scheduledDate?: Prisma.SortOrder
   scheduledSlot?: Prisma.SortOrder
@@ -717,6 +929,16 @@ export type OrderMinOrderByAggregateInput = {
   orderNumber?: Prisma.SortOrder
   status?: Prisma.SortOrder
   customerId?: Prisma.SortOrder
+  sellerProfileId?: Prisma.SortOrder
+  checkoutGroupId?: Prisma.SortOrder
+  paymentMethod?: Prisma.SortOrder
+  paymentStatus?: Prisma.SortOrder
+  deliveryName?: Prisma.SortOrder
+  deliveryPhone?: Prisma.SortOrder
+  deliveryPincode?: Prisma.SortOrder
+  deliveryLandmark?: Prisma.SortOrder
+  cancellationReason?: Prisma.SortOrder
+  cancelledAt?: Prisma.SortOrder
   deliveryType?: Prisma.SortOrder
   scheduledDate?: Prisma.SortOrder
   scheduledSlot?: Prisma.SortOrder
@@ -792,6 +1014,48 @@ export type OrderUncheckedUpdateManyWithoutCustomerNestedInput = {
   deleteMany?: Prisma.OrderScalarWhereInput | Prisma.OrderScalarWhereInput[]
 }
 
+export type OrderCreateNestedManyWithoutSellerProfileInput = {
+  create?: Prisma.XOR<Prisma.OrderCreateWithoutSellerProfileInput, Prisma.OrderUncheckedCreateWithoutSellerProfileInput> | Prisma.OrderCreateWithoutSellerProfileInput[] | Prisma.OrderUncheckedCreateWithoutSellerProfileInput[]
+  connectOrCreate?: Prisma.OrderCreateOrConnectWithoutSellerProfileInput | Prisma.OrderCreateOrConnectWithoutSellerProfileInput[]
+  createMany?: Prisma.OrderCreateManySellerProfileInputEnvelope
+  connect?: Prisma.OrderWhereUniqueInput | Prisma.OrderWhereUniqueInput[]
+}
+
+export type OrderUncheckedCreateNestedManyWithoutSellerProfileInput = {
+  create?: Prisma.XOR<Prisma.OrderCreateWithoutSellerProfileInput, Prisma.OrderUncheckedCreateWithoutSellerProfileInput> | Prisma.OrderCreateWithoutSellerProfileInput[] | Prisma.OrderUncheckedCreateWithoutSellerProfileInput[]
+  connectOrCreate?: Prisma.OrderCreateOrConnectWithoutSellerProfileInput | Prisma.OrderCreateOrConnectWithoutSellerProfileInput[]
+  createMany?: Prisma.OrderCreateManySellerProfileInputEnvelope
+  connect?: Prisma.OrderWhereUniqueInput | Prisma.OrderWhereUniqueInput[]
+}
+
+export type OrderUpdateManyWithoutSellerProfileNestedInput = {
+  create?: Prisma.XOR<Prisma.OrderCreateWithoutSellerProfileInput, Prisma.OrderUncheckedCreateWithoutSellerProfileInput> | Prisma.OrderCreateWithoutSellerProfileInput[] | Prisma.OrderUncheckedCreateWithoutSellerProfileInput[]
+  connectOrCreate?: Prisma.OrderCreateOrConnectWithoutSellerProfileInput | Prisma.OrderCreateOrConnectWithoutSellerProfileInput[]
+  upsert?: Prisma.OrderUpsertWithWhereUniqueWithoutSellerProfileInput | Prisma.OrderUpsertWithWhereUniqueWithoutSellerProfileInput[]
+  createMany?: Prisma.OrderCreateManySellerProfileInputEnvelope
+  set?: Prisma.OrderWhereUniqueInput | Prisma.OrderWhereUniqueInput[]
+  disconnect?: Prisma.OrderWhereUniqueInput | Prisma.OrderWhereUniqueInput[]
+  delete?: Prisma.OrderWhereUniqueInput | Prisma.OrderWhereUniqueInput[]
+  connect?: Prisma.OrderWhereUniqueInput | Prisma.OrderWhereUniqueInput[]
+  update?: Prisma.OrderUpdateWithWhereUniqueWithoutSellerProfileInput | Prisma.OrderUpdateWithWhereUniqueWithoutSellerProfileInput[]
+  updateMany?: Prisma.OrderUpdateManyWithWhereWithoutSellerProfileInput | Prisma.OrderUpdateManyWithWhereWithoutSellerProfileInput[]
+  deleteMany?: Prisma.OrderScalarWhereInput | Prisma.OrderScalarWhereInput[]
+}
+
+export type OrderUncheckedUpdateManyWithoutSellerProfileNestedInput = {
+  create?: Prisma.XOR<Prisma.OrderCreateWithoutSellerProfileInput, Prisma.OrderUncheckedCreateWithoutSellerProfileInput> | Prisma.OrderCreateWithoutSellerProfileInput[] | Prisma.OrderUncheckedCreateWithoutSellerProfileInput[]
+  connectOrCreate?: Prisma.OrderCreateOrConnectWithoutSellerProfileInput | Prisma.OrderCreateOrConnectWithoutSellerProfileInput[]
+  upsert?: Prisma.OrderUpsertWithWhereUniqueWithoutSellerProfileInput | Prisma.OrderUpsertWithWhereUniqueWithoutSellerProfileInput[]
+  createMany?: Prisma.OrderCreateManySellerProfileInputEnvelope
+  set?: Prisma.OrderWhereUniqueInput | Prisma.OrderWhereUniqueInput[]
+  disconnect?: Prisma.OrderWhereUniqueInput | Prisma.OrderWhereUniqueInput[]
+  delete?: Prisma.OrderWhereUniqueInput | Prisma.OrderWhereUniqueInput[]
+  connect?: Prisma.OrderWhereUniqueInput | Prisma.OrderWhereUniqueInput[]
+  update?: Prisma.OrderUpdateWithWhereUniqueWithoutSellerProfileInput | Prisma.OrderUpdateWithWhereUniqueWithoutSellerProfileInput[]
+  updateMany?: Prisma.OrderUpdateManyWithWhereWithoutSellerProfileInput | Prisma.OrderUpdateManyWithWhereWithoutSellerProfileInput[]
+  deleteMany?: Prisma.OrderScalarWhereInput | Prisma.OrderScalarWhereInput[]
+}
+
 export type OrderCreateNestedManyWithoutAssignedDeliveryPartnerInput = {
   create?: Prisma.XOR<Prisma.OrderCreateWithoutAssignedDeliveryPartnerInput, Prisma.OrderUncheckedCreateWithoutAssignedDeliveryPartnerInput> | Prisma.OrderCreateWithoutAssignedDeliveryPartnerInput[] | Prisma.OrderUncheckedCreateWithoutAssignedDeliveryPartnerInput[]
   connectOrCreate?: Prisma.OrderCreateOrConnectWithoutAssignedDeliveryPartnerInput | Prisma.OrderCreateOrConnectWithoutAssignedDeliveryPartnerInput[]
@@ -836,6 +1100,14 @@ export type OrderUncheckedUpdateManyWithoutAssignedDeliveryPartnerNestedInput = 
 
 export type EnumOrderStatusFieldUpdateOperationsInput = {
   set?: $Enums.OrderStatus
+}
+
+export type EnumPaymentMethodFieldUpdateOperationsInput = {
+  set?: $Enums.PaymentMethod
+}
+
+export type EnumPaymentStatusFieldUpdateOperationsInput = {
+  set?: $Enums.PaymentStatus
 }
 
 export type EnumDeliveryTypeFieldUpdateOperationsInput = {
@@ -924,6 +1196,15 @@ export type OrderCreateWithoutCustomerInput = {
   id?: string
   orderNumber: string
   status?: $Enums.OrderStatus
+  checkoutGroupId?: string | null
+  paymentMethod?: $Enums.PaymentMethod
+  paymentStatus?: $Enums.PaymentStatus
+  deliveryName?: string | null
+  deliveryPhone?: string | null
+  deliveryPincode?: string | null
+  deliveryLandmark?: string | null
+  cancellationReason?: string | null
+  cancelledAt?: Date | string | null
   deliveryType?: $Enums.DeliveryType
   scheduledDate?: Date | string | null
   scheduledSlot?: string | null
@@ -938,6 +1219,7 @@ export type OrderCreateWithoutCustomerInput = {
   totalAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Date | string
   updatedAt?: Date | string
+  sellerProfile?: Prisma.SellerProfileCreateNestedOneWithoutOrdersInput
   assignedDeliveryPartner?: Prisma.DeliveryPartnerProfileCreateNestedOneWithoutCurrentOrdersInput
   items?: Prisma.OrderItemCreateNestedManyWithoutOrderInput
   assignments?: Prisma.DeliveryAssignmentCreateNestedManyWithoutOrderInput
@@ -948,6 +1230,16 @@ export type OrderUncheckedCreateWithoutCustomerInput = {
   id?: string
   orderNumber: string
   status?: $Enums.OrderStatus
+  sellerProfileId?: string | null
+  checkoutGroupId?: string | null
+  paymentMethod?: $Enums.PaymentMethod
+  paymentStatus?: $Enums.PaymentStatus
+  deliveryName?: string | null
+  deliveryPhone?: string | null
+  deliveryPincode?: string | null
+  deliveryLandmark?: string | null
+  cancellationReason?: string | null
+  cancelledAt?: Date | string | null
   deliveryType?: $Enums.DeliveryType
   scheduledDate?: Date | string | null
   scheduledSlot?: string | null
@@ -1002,6 +1294,16 @@ export type OrderScalarWhereInput = {
   orderNumber?: Prisma.StringFilter<"Order"> | string
   status?: Prisma.EnumOrderStatusFilter<"Order"> | $Enums.OrderStatus
   customerId?: Prisma.StringFilter<"Order"> | string
+  sellerProfileId?: Prisma.StringNullableFilter<"Order"> | string | null
+  checkoutGroupId?: Prisma.StringNullableFilter<"Order"> | string | null
+  paymentMethod?: Prisma.EnumPaymentMethodFilter<"Order"> | $Enums.PaymentMethod
+  paymentStatus?: Prisma.EnumPaymentStatusFilter<"Order"> | $Enums.PaymentStatus
+  deliveryName?: Prisma.StringNullableFilter<"Order"> | string | null
+  deliveryPhone?: Prisma.StringNullableFilter<"Order"> | string | null
+  deliveryPincode?: Prisma.StringNullableFilter<"Order"> | string | null
+  deliveryLandmark?: Prisma.StringNullableFilter<"Order"> | string | null
+  cancellationReason?: Prisma.StringNullableFilter<"Order"> | string | null
+  cancelledAt?: Prisma.DateTimeNullableFilter<"Order"> | Date | string | null
   deliveryType?: Prisma.EnumDeliveryTypeFilter<"Order"> | $Enums.DeliveryType
   scheduledDate?: Prisma.DateTimeNullableFilter<"Order"> | Date | string | null
   scheduledSlot?: Prisma.StringNullableFilter<"Order"> | string | null
@@ -1020,10 +1322,19 @@ export type OrderScalarWhereInput = {
   updatedAt?: Prisma.DateTimeFilter<"Order"> | Date | string
 }
 
-export type OrderCreateWithoutAssignedDeliveryPartnerInput = {
+export type OrderCreateWithoutSellerProfileInput = {
   id?: string
   orderNumber: string
   status?: $Enums.OrderStatus
+  checkoutGroupId?: string | null
+  paymentMethod?: $Enums.PaymentMethod
+  paymentStatus?: $Enums.PaymentStatus
+  deliveryName?: string | null
+  deliveryPhone?: string | null
+  deliveryPincode?: string | null
+  deliveryLandmark?: string | null
+  cancellationReason?: string | null
+  cancelledAt?: Date | string | null
   deliveryType?: $Enums.DeliveryType
   scheduledDate?: Date | string | null
   scheduledSlot?: string | null
@@ -1039,6 +1350,101 @@ export type OrderCreateWithoutAssignedDeliveryPartnerInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   customer: Prisma.UserCreateNestedOneWithoutCustomerOrdersInput
+  assignedDeliveryPartner?: Prisma.DeliveryPartnerProfileCreateNestedOneWithoutCurrentOrdersInput
+  items?: Prisma.OrderItemCreateNestedManyWithoutOrderInput
+  assignments?: Prisma.DeliveryAssignmentCreateNestedManyWithoutOrderInput
+  deliveryBatch?: Prisma.DeliveryBatchCreateNestedOneWithoutOrdersInput
+}
+
+export type OrderUncheckedCreateWithoutSellerProfileInput = {
+  id?: string
+  orderNumber: string
+  status?: $Enums.OrderStatus
+  customerId: string
+  checkoutGroupId?: string | null
+  paymentMethod?: $Enums.PaymentMethod
+  paymentStatus?: $Enums.PaymentStatus
+  deliveryName?: string | null
+  deliveryPhone?: string | null
+  deliveryPincode?: string | null
+  deliveryLandmark?: string | null
+  cancellationReason?: string | null
+  cancelledAt?: Date | string | null
+  deliveryType?: $Enums.DeliveryType
+  scheduledDate?: Date | string | null
+  scheduledSlot?: string | null
+  pickupAddress?: string | null
+  pickupLatitude?: number | null
+  pickupLongitude?: number | null
+  deliveryAddress: string
+  deliveryLatitude?: number | null
+  deliveryLongitude?: number | null
+  subtotal?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  deliveryFee?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  assignedDeliveryPartnerId?: string | null
+  deliveryBatchId?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  items?: Prisma.OrderItemUncheckedCreateNestedManyWithoutOrderInput
+  assignments?: Prisma.DeliveryAssignmentUncheckedCreateNestedManyWithoutOrderInput
+}
+
+export type OrderCreateOrConnectWithoutSellerProfileInput = {
+  where: Prisma.OrderWhereUniqueInput
+  create: Prisma.XOR<Prisma.OrderCreateWithoutSellerProfileInput, Prisma.OrderUncheckedCreateWithoutSellerProfileInput>
+}
+
+export type OrderCreateManySellerProfileInputEnvelope = {
+  data: Prisma.OrderCreateManySellerProfileInput | Prisma.OrderCreateManySellerProfileInput[]
+  skipDuplicates?: boolean
+}
+
+export type OrderUpsertWithWhereUniqueWithoutSellerProfileInput = {
+  where: Prisma.OrderWhereUniqueInput
+  update: Prisma.XOR<Prisma.OrderUpdateWithoutSellerProfileInput, Prisma.OrderUncheckedUpdateWithoutSellerProfileInput>
+  create: Prisma.XOR<Prisma.OrderCreateWithoutSellerProfileInput, Prisma.OrderUncheckedCreateWithoutSellerProfileInput>
+}
+
+export type OrderUpdateWithWhereUniqueWithoutSellerProfileInput = {
+  where: Prisma.OrderWhereUniqueInput
+  data: Prisma.XOR<Prisma.OrderUpdateWithoutSellerProfileInput, Prisma.OrderUncheckedUpdateWithoutSellerProfileInput>
+}
+
+export type OrderUpdateManyWithWhereWithoutSellerProfileInput = {
+  where: Prisma.OrderScalarWhereInput
+  data: Prisma.XOR<Prisma.OrderUpdateManyMutationInput, Prisma.OrderUncheckedUpdateManyWithoutSellerProfileInput>
+}
+
+export type OrderCreateWithoutAssignedDeliveryPartnerInput = {
+  id?: string
+  orderNumber: string
+  status?: $Enums.OrderStatus
+  checkoutGroupId?: string | null
+  paymentMethod?: $Enums.PaymentMethod
+  paymentStatus?: $Enums.PaymentStatus
+  deliveryName?: string | null
+  deliveryPhone?: string | null
+  deliveryPincode?: string | null
+  deliveryLandmark?: string | null
+  cancellationReason?: string | null
+  cancelledAt?: Date | string | null
+  deliveryType?: $Enums.DeliveryType
+  scheduledDate?: Date | string | null
+  scheduledSlot?: string | null
+  pickupAddress?: string | null
+  pickupLatitude?: number | null
+  pickupLongitude?: number | null
+  deliveryAddress: string
+  deliveryLatitude?: number | null
+  deliveryLongitude?: number | null
+  subtotal?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  deliveryFee?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  customer: Prisma.UserCreateNestedOneWithoutCustomerOrdersInput
+  sellerProfile?: Prisma.SellerProfileCreateNestedOneWithoutOrdersInput
   items?: Prisma.OrderItemCreateNestedManyWithoutOrderInput
   assignments?: Prisma.DeliveryAssignmentCreateNestedManyWithoutOrderInput
   deliveryBatch?: Prisma.DeliveryBatchCreateNestedOneWithoutOrdersInput
@@ -1049,6 +1455,16 @@ export type OrderUncheckedCreateWithoutAssignedDeliveryPartnerInput = {
   orderNumber: string
   status?: $Enums.OrderStatus
   customerId: string
+  sellerProfileId?: string | null
+  checkoutGroupId?: string | null
+  paymentMethod?: $Enums.PaymentMethod
+  paymentStatus?: $Enums.PaymentStatus
+  deliveryName?: string | null
+  deliveryPhone?: string | null
+  deliveryPincode?: string | null
+  deliveryLandmark?: string | null
+  cancellationReason?: string | null
+  cancelledAt?: Date | string | null
   deliveryType?: $Enums.DeliveryType
   scheduledDate?: Date | string | null
   scheduledSlot?: string | null
@@ -1098,6 +1514,15 @@ export type OrderCreateWithoutAssignmentsInput = {
   id?: string
   orderNumber: string
   status?: $Enums.OrderStatus
+  checkoutGroupId?: string | null
+  paymentMethod?: $Enums.PaymentMethod
+  paymentStatus?: $Enums.PaymentStatus
+  deliveryName?: string | null
+  deliveryPhone?: string | null
+  deliveryPincode?: string | null
+  deliveryLandmark?: string | null
+  cancellationReason?: string | null
+  cancelledAt?: Date | string | null
   deliveryType?: $Enums.DeliveryType
   scheduledDate?: Date | string | null
   scheduledSlot?: string | null
@@ -1113,6 +1538,7 @@ export type OrderCreateWithoutAssignmentsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   customer: Prisma.UserCreateNestedOneWithoutCustomerOrdersInput
+  sellerProfile?: Prisma.SellerProfileCreateNestedOneWithoutOrdersInput
   assignedDeliveryPartner?: Prisma.DeliveryPartnerProfileCreateNestedOneWithoutCurrentOrdersInput
   items?: Prisma.OrderItemCreateNestedManyWithoutOrderInput
   deliveryBatch?: Prisma.DeliveryBatchCreateNestedOneWithoutOrdersInput
@@ -1123,6 +1549,16 @@ export type OrderUncheckedCreateWithoutAssignmentsInput = {
   orderNumber: string
   status?: $Enums.OrderStatus
   customerId: string
+  sellerProfileId?: string | null
+  checkoutGroupId?: string | null
+  paymentMethod?: $Enums.PaymentMethod
+  paymentStatus?: $Enums.PaymentStatus
+  deliveryName?: string | null
+  deliveryPhone?: string | null
+  deliveryPincode?: string | null
+  deliveryLandmark?: string | null
+  cancellationReason?: string | null
+  cancelledAt?: Date | string | null
   deliveryType?: $Enums.DeliveryType
   scheduledDate?: Date | string | null
   scheduledSlot?: string | null
@@ -1162,6 +1598,15 @@ export type OrderUpdateWithoutAssignmentsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   orderNumber?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
+  checkoutGroupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paymentMethod?: Prisma.EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
+  paymentStatus?: Prisma.EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
+  deliveryName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deliveryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deliveryPincode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deliveryLandmark?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancellationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deliveryType?: Prisma.EnumDeliveryTypeFieldUpdateOperationsInput | $Enums.DeliveryType
   scheduledDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   scheduledSlot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1177,6 +1622,7 @@ export type OrderUpdateWithoutAssignmentsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   customer?: Prisma.UserUpdateOneRequiredWithoutCustomerOrdersNestedInput
+  sellerProfile?: Prisma.SellerProfileUpdateOneWithoutOrdersNestedInput
   assignedDeliveryPartner?: Prisma.DeliveryPartnerProfileUpdateOneWithoutCurrentOrdersNestedInput
   items?: Prisma.OrderItemUpdateManyWithoutOrderNestedInput
   deliveryBatch?: Prisma.DeliveryBatchUpdateOneWithoutOrdersNestedInput
@@ -1187,6 +1633,16 @@ export type OrderUncheckedUpdateWithoutAssignmentsInput = {
   orderNumber?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
   customerId?: Prisma.StringFieldUpdateOperationsInput | string
+  sellerProfileId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  checkoutGroupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paymentMethod?: Prisma.EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
+  paymentStatus?: Prisma.EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
+  deliveryName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deliveryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deliveryPincode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deliveryLandmark?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancellationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deliveryType?: Prisma.EnumDeliveryTypeFieldUpdateOperationsInput | $Enums.DeliveryType
   scheduledDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   scheduledSlot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1210,6 +1666,15 @@ export type OrderCreateWithoutDeliveryBatchInput = {
   id?: string
   orderNumber: string
   status?: $Enums.OrderStatus
+  checkoutGroupId?: string | null
+  paymentMethod?: $Enums.PaymentMethod
+  paymentStatus?: $Enums.PaymentStatus
+  deliveryName?: string | null
+  deliveryPhone?: string | null
+  deliveryPincode?: string | null
+  deliveryLandmark?: string | null
+  cancellationReason?: string | null
+  cancelledAt?: Date | string | null
   deliveryType?: $Enums.DeliveryType
   scheduledDate?: Date | string | null
   scheduledSlot?: string | null
@@ -1225,6 +1690,7 @@ export type OrderCreateWithoutDeliveryBatchInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   customer: Prisma.UserCreateNestedOneWithoutCustomerOrdersInput
+  sellerProfile?: Prisma.SellerProfileCreateNestedOneWithoutOrdersInput
   assignedDeliveryPartner?: Prisma.DeliveryPartnerProfileCreateNestedOneWithoutCurrentOrdersInput
   items?: Prisma.OrderItemCreateNestedManyWithoutOrderInput
   assignments?: Prisma.DeliveryAssignmentCreateNestedManyWithoutOrderInput
@@ -1235,6 +1701,16 @@ export type OrderUncheckedCreateWithoutDeliveryBatchInput = {
   orderNumber: string
   status?: $Enums.OrderStatus
   customerId: string
+  sellerProfileId?: string | null
+  checkoutGroupId?: string | null
+  paymentMethod?: $Enums.PaymentMethod
+  paymentStatus?: $Enums.PaymentStatus
+  deliveryName?: string | null
+  deliveryPhone?: string | null
+  deliveryPincode?: string | null
+  deliveryLandmark?: string | null
+  cancellationReason?: string | null
+  cancelledAt?: Date | string | null
   deliveryType?: $Enums.DeliveryType
   scheduledDate?: Date | string | null
   scheduledSlot?: string | null
@@ -1284,6 +1760,15 @@ export type OrderCreateWithoutItemsInput = {
   id?: string
   orderNumber: string
   status?: $Enums.OrderStatus
+  checkoutGroupId?: string | null
+  paymentMethod?: $Enums.PaymentMethod
+  paymentStatus?: $Enums.PaymentStatus
+  deliveryName?: string | null
+  deliveryPhone?: string | null
+  deliveryPincode?: string | null
+  deliveryLandmark?: string | null
+  cancellationReason?: string | null
+  cancelledAt?: Date | string | null
   deliveryType?: $Enums.DeliveryType
   scheduledDate?: Date | string | null
   scheduledSlot?: string | null
@@ -1299,6 +1784,7 @@ export type OrderCreateWithoutItemsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   customer: Prisma.UserCreateNestedOneWithoutCustomerOrdersInput
+  sellerProfile?: Prisma.SellerProfileCreateNestedOneWithoutOrdersInput
   assignedDeliveryPartner?: Prisma.DeliveryPartnerProfileCreateNestedOneWithoutCurrentOrdersInput
   assignments?: Prisma.DeliveryAssignmentCreateNestedManyWithoutOrderInput
   deliveryBatch?: Prisma.DeliveryBatchCreateNestedOneWithoutOrdersInput
@@ -1309,6 +1795,16 @@ export type OrderUncheckedCreateWithoutItemsInput = {
   orderNumber: string
   status?: $Enums.OrderStatus
   customerId: string
+  sellerProfileId?: string | null
+  checkoutGroupId?: string | null
+  paymentMethod?: $Enums.PaymentMethod
+  paymentStatus?: $Enums.PaymentStatus
+  deliveryName?: string | null
+  deliveryPhone?: string | null
+  deliveryPincode?: string | null
+  deliveryLandmark?: string | null
+  cancellationReason?: string | null
+  cancelledAt?: Date | string | null
   deliveryType?: $Enums.DeliveryType
   scheduledDate?: Date | string | null
   scheduledSlot?: string | null
@@ -1348,6 +1844,15 @@ export type OrderUpdateWithoutItemsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   orderNumber?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
+  checkoutGroupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paymentMethod?: Prisma.EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
+  paymentStatus?: Prisma.EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
+  deliveryName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deliveryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deliveryPincode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deliveryLandmark?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancellationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deliveryType?: Prisma.EnumDeliveryTypeFieldUpdateOperationsInput | $Enums.DeliveryType
   scheduledDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   scheduledSlot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1363,6 +1868,7 @@ export type OrderUpdateWithoutItemsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   customer?: Prisma.UserUpdateOneRequiredWithoutCustomerOrdersNestedInput
+  sellerProfile?: Prisma.SellerProfileUpdateOneWithoutOrdersNestedInput
   assignedDeliveryPartner?: Prisma.DeliveryPartnerProfileUpdateOneWithoutCurrentOrdersNestedInput
   assignments?: Prisma.DeliveryAssignmentUpdateManyWithoutOrderNestedInput
   deliveryBatch?: Prisma.DeliveryBatchUpdateOneWithoutOrdersNestedInput
@@ -1373,6 +1879,16 @@ export type OrderUncheckedUpdateWithoutItemsInput = {
   orderNumber?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
   customerId?: Prisma.StringFieldUpdateOperationsInput | string
+  sellerProfileId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  checkoutGroupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paymentMethod?: Prisma.EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
+  paymentStatus?: Prisma.EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
+  deliveryName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deliveryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deliveryPincode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deliveryLandmark?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancellationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deliveryType?: Prisma.EnumDeliveryTypeFieldUpdateOperationsInput | $Enums.DeliveryType
   scheduledDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   scheduledSlot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1396,6 +1912,16 @@ export type OrderCreateManyCustomerInput = {
   id?: string
   orderNumber: string
   status?: $Enums.OrderStatus
+  sellerProfileId?: string | null
+  checkoutGroupId?: string | null
+  paymentMethod?: $Enums.PaymentMethod
+  paymentStatus?: $Enums.PaymentStatus
+  deliveryName?: string | null
+  deliveryPhone?: string | null
+  deliveryPincode?: string | null
+  deliveryLandmark?: string | null
+  cancellationReason?: string | null
+  cancelledAt?: Date | string | null
   deliveryType?: $Enums.DeliveryType
   scheduledDate?: Date | string | null
   scheduledSlot?: string | null
@@ -1418,6 +1944,15 @@ export type OrderUpdateWithoutCustomerInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   orderNumber?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
+  checkoutGroupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paymentMethod?: Prisma.EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
+  paymentStatus?: Prisma.EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
+  deliveryName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deliveryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deliveryPincode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deliveryLandmark?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancellationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deliveryType?: Prisma.EnumDeliveryTypeFieldUpdateOperationsInput | $Enums.DeliveryType
   scheduledDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   scheduledSlot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1432,6 +1967,7 @@ export type OrderUpdateWithoutCustomerInput = {
   totalAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sellerProfile?: Prisma.SellerProfileUpdateOneWithoutOrdersNestedInput
   assignedDeliveryPartner?: Prisma.DeliveryPartnerProfileUpdateOneWithoutCurrentOrdersNestedInput
   items?: Prisma.OrderItemUpdateManyWithoutOrderNestedInput
   assignments?: Prisma.DeliveryAssignmentUpdateManyWithoutOrderNestedInput
@@ -1442,6 +1978,16 @@ export type OrderUncheckedUpdateWithoutCustomerInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   orderNumber?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
+  sellerProfileId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  checkoutGroupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paymentMethod?: Prisma.EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
+  paymentStatus?: Prisma.EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
+  deliveryName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deliveryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deliveryPincode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deliveryLandmark?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancellationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deliveryType?: Prisma.EnumDeliveryTypeFieldUpdateOperationsInput | $Enums.DeliveryType
   scheduledDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   scheduledSlot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1466,6 +2012,148 @@ export type OrderUncheckedUpdateManyWithoutCustomerInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   orderNumber?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
+  sellerProfileId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  checkoutGroupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paymentMethod?: Prisma.EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
+  paymentStatus?: Prisma.EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
+  deliveryName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deliveryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deliveryPincode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deliveryLandmark?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancellationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deliveryType?: Prisma.EnumDeliveryTypeFieldUpdateOperationsInput | $Enums.DeliveryType
+  scheduledDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  scheduledSlot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pickupAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pickupLatitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  pickupLongitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  deliveryAddress?: Prisma.StringFieldUpdateOperationsInput | string
+  deliveryLatitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  deliveryLongitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  deliveryFee?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  assignedDeliveryPartnerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deliveryBatchId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type OrderCreateManySellerProfileInput = {
+  id?: string
+  orderNumber: string
+  status?: $Enums.OrderStatus
+  customerId: string
+  checkoutGroupId?: string | null
+  paymentMethod?: $Enums.PaymentMethod
+  paymentStatus?: $Enums.PaymentStatus
+  deliveryName?: string | null
+  deliveryPhone?: string | null
+  deliveryPincode?: string | null
+  deliveryLandmark?: string | null
+  cancellationReason?: string | null
+  cancelledAt?: Date | string | null
+  deliveryType?: $Enums.DeliveryType
+  scheduledDate?: Date | string | null
+  scheduledSlot?: string | null
+  pickupAddress?: string | null
+  pickupLatitude?: number | null
+  pickupLongitude?: number | null
+  deliveryAddress: string
+  deliveryLatitude?: number | null
+  deliveryLongitude?: number | null
+  subtotal?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  deliveryFee?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  assignedDeliveryPartnerId?: string | null
+  deliveryBatchId?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type OrderUpdateWithoutSellerProfileInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  orderNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
+  checkoutGroupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paymentMethod?: Prisma.EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
+  paymentStatus?: Prisma.EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
+  deliveryName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deliveryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deliveryPincode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deliveryLandmark?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancellationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deliveryType?: Prisma.EnumDeliveryTypeFieldUpdateOperationsInput | $Enums.DeliveryType
+  scheduledDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  scheduledSlot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pickupAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pickupLatitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  pickupLongitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  deliveryAddress?: Prisma.StringFieldUpdateOperationsInput | string
+  deliveryLatitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  deliveryLongitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  deliveryFee?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  customer?: Prisma.UserUpdateOneRequiredWithoutCustomerOrdersNestedInput
+  assignedDeliveryPartner?: Prisma.DeliveryPartnerProfileUpdateOneWithoutCurrentOrdersNestedInput
+  items?: Prisma.OrderItemUpdateManyWithoutOrderNestedInput
+  assignments?: Prisma.DeliveryAssignmentUpdateManyWithoutOrderNestedInput
+  deliveryBatch?: Prisma.DeliveryBatchUpdateOneWithoutOrdersNestedInput
+}
+
+export type OrderUncheckedUpdateWithoutSellerProfileInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  orderNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
+  customerId?: Prisma.StringFieldUpdateOperationsInput | string
+  checkoutGroupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paymentMethod?: Prisma.EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
+  paymentStatus?: Prisma.EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
+  deliveryName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deliveryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deliveryPincode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deliveryLandmark?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancellationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deliveryType?: Prisma.EnumDeliveryTypeFieldUpdateOperationsInput | $Enums.DeliveryType
+  scheduledDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  scheduledSlot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pickupAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pickupLatitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  pickupLongitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  deliveryAddress?: Prisma.StringFieldUpdateOperationsInput | string
+  deliveryLatitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  deliveryLongitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  deliveryFee?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  assignedDeliveryPartnerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deliveryBatchId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  items?: Prisma.OrderItemUncheckedUpdateManyWithoutOrderNestedInput
+  assignments?: Prisma.DeliveryAssignmentUncheckedUpdateManyWithoutOrderNestedInput
+}
+
+export type OrderUncheckedUpdateManyWithoutSellerProfileInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  orderNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
+  customerId?: Prisma.StringFieldUpdateOperationsInput | string
+  checkoutGroupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paymentMethod?: Prisma.EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
+  paymentStatus?: Prisma.EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
+  deliveryName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deliveryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deliveryPincode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deliveryLandmark?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancellationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deliveryType?: Prisma.EnumDeliveryTypeFieldUpdateOperationsInput | $Enums.DeliveryType
   scheduledDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   scheduledSlot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1489,6 +2177,16 @@ export type OrderCreateManyAssignedDeliveryPartnerInput = {
   orderNumber: string
   status?: $Enums.OrderStatus
   customerId: string
+  sellerProfileId?: string | null
+  checkoutGroupId?: string | null
+  paymentMethod?: $Enums.PaymentMethod
+  paymentStatus?: $Enums.PaymentStatus
+  deliveryName?: string | null
+  deliveryPhone?: string | null
+  deliveryPincode?: string | null
+  deliveryLandmark?: string | null
+  cancellationReason?: string | null
+  cancelledAt?: Date | string | null
   deliveryType?: $Enums.DeliveryType
   scheduledDate?: Date | string | null
   scheduledSlot?: string | null
@@ -1510,6 +2208,15 @@ export type OrderUpdateWithoutAssignedDeliveryPartnerInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   orderNumber?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
+  checkoutGroupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paymentMethod?: Prisma.EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
+  paymentStatus?: Prisma.EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
+  deliveryName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deliveryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deliveryPincode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deliveryLandmark?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancellationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deliveryType?: Prisma.EnumDeliveryTypeFieldUpdateOperationsInput | $Enums.DeliveryType
   scheduledDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   scheduledSlot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1525,6 +2232,7 @@ export type OrderUpdateWithoutAssignedDeliveryPartnerInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   customer?: Prisma.UserUpdateOneRequiredWithoutCustomerOrdersNestedInput
+  sellerProfile?: Prisma.SellerProfileUpdateOneWithoutOrdersNestedInput
   items?: Prisma.OrderItemUpdateManyWithoutOrderNestedInput
   assignments?: Prisma.DeliveryAssignmentUpdateManyWithoutOrderNestedInput
   deliveryBatch?: Prisma.DeliveryBatchUpdateOneWithoutOrdersNestedInput
@@ -1535,6 +2243,16 @@ export type OrderUncheckedUpdateWithoutAssignedDeliveryPartnerInput = {
   orderNumber?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
   customerId?: Prisma.StringFieldUpdateOperationsInput | string
+  sellerProfileId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  checkoutGroupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paymentMethod?: Prisma.EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
+  paymentStatus?: Prisma.EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
+  deliveryName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deliveryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deliveryPincode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deliveryLandmark?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancellationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deliveryType?: Prisma.EnumDeliveryTypeFieldUpdateOperationsInput | $Enums.DeliveryType
   scheduledDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   scheduledSlot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1559,6 +2277,16 @@ export type OrderUncheckedUpdateManyWithoutAssignedDeliveryPartnerInput = {
   orderNumber?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
   customerId?: Prisma.StringFieldUpdateOperationsInput | string
+  sellerProfileId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  checkoutGroupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paymentMethod?: Prisma.EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
+  paymentStatus?: Prisma.EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
+  deliveryName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deliveryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deliveryPincode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deliveryLandmark?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancellationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deliveryType?: Prisma.EnumDeliveryTypeFieldUpdateOperationsInput | $Enums.DeliveryType
   scheduledDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   scheduledSlot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1581,6 +2309,16 @@ export type OrderCreateManyDeliveryBatchInput = {
   orderNumber: string
   status?: $Enums.OrderStatus
   customerId: string
+  sellerProfileId?: string | null
+  checkoutGroupId?: string | null
+  paymentMethod?: $Enums.PaymentMethod
+  paymentStatus?: $Enums.PaymentStatus
+  deliveryName?: string | null
+  deliveryPhone?: string | null
+  deliveryPincode?: string | null
+  deliveryLandmark?: string | null
+  cancellationReason?: string | null
+  cancelledAt?: Date | string | null
   deliveryType?: $Enums.DeliveryType
   scheduledDate?: Date | string | null
   scheduledSlot?: string | null
@@ -1602,6 +2340,15 @@ export type OrderUpdateWithoutDeliveryBatchInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   orderNumber?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
+  checkoutGroupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paymentMethod?: Prisma.EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
+  paymentStatus?: Prisma.EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
+  deliveryName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deliveryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deliveryPincode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deliveryLandmark?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancellationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deliveryType?: Prisma.EnumDeliveryTypeFieldUpdateOperationsInput | $Enums.DeliveryType
   scheduledDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   scheduledSlot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1617,6 +2364,7 @@ export type OrderUpdateWithoutDeliveryBatchInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   customer?: Prisma.UserUpdateOneRequiredWithoutCustomerOrdersNestedInput
+  sellerProfile?: Prisma.SellerProfileUpdateOneWithoutOrdersNestedInput
   assignedDeliveryPartner?: Prisma.DeliveryPartnerProfileUpdateOneWithoutCurrentOrdersNestedInput
   items?: Prisma.OrderItemUpdateManyWithoutOrderNestedInput
   assignments?: Prisma.DeliveryAssignmentUpdateManyWithoutOrderNestedInput
@@ -1627,6 +2375,16 @@ export type OrderUncheckedUpdateWithoutDeliveryBatchInput = {
   orderNumber?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
   customerId?: Prisma.StringFieldUpdateOperationsInput | string
+  sellerProfileId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  checkoutGroupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paymentMethod?: Prisma.EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
+  paymentStatus?: Prisma.EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
+  deliveryName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deliveryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deliveryPincode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deliveryLandmark?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancellationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deliveryType?: Prisma.EnumDeliveryTypeFieldUpdateOperationsInput | $Enums.DeliveryType
   scheduledDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   scheduledSlot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1651,6 +2409,16 @@ export type OrderUncheckedUpdateManyWithoutDeliveryBatchInput = {
   orderNumber?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
   customerId?: Prisma.StringFieldUpdateOperationsInput | string
+  sellerProfileId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  checkoutGroupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paymentMethod?: Prisma.EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
+  paymentStatus?: Prisma.EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
+  deliveryName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deliveryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deliveryPincode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deliveryLandmark?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancellationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deliveryType?: Prisma.EnumDeliveryTypeFieldUpdateOperationsInput | $Enums.DeliveryType
   scheduledDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   scheduledSlot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1713,6 +2481,16 @@ export type OrderSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   orderNumber?: boolean
   status?: boolean
   customerId?: boolean
+  sellerProfileId?: boolean
+  checkoutGroupId?: boolean
+  paymentMethod?: boolean
+  paymentStatus?: boolean
+  deliveryName?: boolean
+  deliveryPhone?: boolean
+  deliveryPincode?: boolean
+  deliveryLandmark?: boolean
+  cancellationReason?: boolean
+  cancelledAt?: boolean
   deliveryType?: boolean
   scheduledDate?: boolean
   scheduledSlot?: boolean
@@ -1730,6 +2508,7 @@ export type OrderSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   createdAt?: boolean
   updatedAt?: boolean
   customer?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  sellerProfile?: boolean | Prisma.Order$sellerProfileArgs<ExtArgs>
   assignedDeliveryPartner?: boolean | Prisma.Order$assignedDeliveryPartnerArgs<ExtArgs>
   items?: boolean | Prisma.Order$itemsArgs<ExtArgs>
   assignments?: boolean | Prisma.Order$assignmentsArgs<ExtArgs>
@@ -1742,6 +2521,16 @@ export type OrderSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   orderNumber?: boolean
   status?: boolean
   customerId?: boolean
+  sellerProfileId?: boolean
+  checkoutGroupId?: boolean
+  paymentMethod?: boolean
+  paymentStatus?: boolean
+  deliveryName?: boolean
+  deliveryPhone?: boolean
+  deliveryPincode?: boolean
+  deliveryLandmark?: boolean
+  cancellationReason?: boolean
+  cancelledAt?: boolean
   deliveryType?: boolean
   scheduledDate?: boolean
   scheduledSlot?: boolean
@@ -1759,6 +2548,7 @@ export type OrderSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   createdAt?: boolean
   updatedAt?: boolean
   customer?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  sellerProfile?: boolean | Prisma.Order$sellerProfileArgs<ExtArgs>
   assignedDeliveryPartner?: boolean | Prisma.Order$assignedDeliveryPartnerArgs<ExtArgs>
   deliveryBatch?: boolean | Prisma.Order$deliveryBatchArgs<ExtArgs>
 }, ExtArgs["result"]["order"]>
@@ -1768,6 +2558,16 @@ export type OrderSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   orderNumber?: boolean
   status?: boolean
   customerId?: boolean
+  sellerProfileId?: boolean
+  checkoutGroupId?: boolean
+  paymentMethod?: boolean
+  paymentStatus?: boolean
+  deliveryName?: boolean
+  deliveryPhone?: boolean
+  deliveryPincode?: boolean
+  deliveryLandmark?: boolean
+  cancellationReason?: boolean
+  cancelledAt?: boolean
   deliveryType?: boolean
   scheduledDate?: boolean
   scheduledSlot?: boolean
@@ -1785,6 +2585,7 @@ export type OrderSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   createdAt?: boolean
   updatedAt?: boolean
   customer?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  sellerProfile?: boolean | Prisma.Order$sellerProfileArgs<ExtArgs>
   assignedDeliveryPartner?: boolean | Prisma.Order$assignedDeliveryPartnerArgs<ExtArgs>
   deliveryBatch?: boolean | Prisma.Order$deliveryBatchArgs<ExtArgs>
 }, ExtArgs["result"]["order"]>
@@ -1794,6 +2595,16 @@ export type OrderSelectScalar = {
   orderNumber?: boolean
   status?: boolean
   customerId?: boolean
+  sellerProfileId?: boolean
+  checkoutGroupId?: boolean
+  paymentMethod?: boolean
+  paymentStatus?: boolean
+  deliveryName?: boolean
+  deliveryPhone?: boolean
+  deliveryPincode?: boolean
+  deliveryLandmark?: boolean
+  cancellationReason?: boolean
+  cancelledAt?: boolean
   deliveryType?: boolean
   scheduledDate?: boolean
   scheduledSlot?: boolean
@@ -1812,9 +2623,10 @@ export type OrderSelectScalar = {
   updatedAt?: boolean
 }
 
-export type OrderOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "orderNumber" | "status" | "customerId" | "deliveryType" | "scheduledDate" | "scheduledSlot" | "pickupAddress" | "pickupLatitude" | "pickupLongitude" | "deliveryAddress" | "deliveryLatitude" | "deliveryLongitude" | "subtotal" | "deliveryFee" | "totalAmount" | "assignedDeliveryPartnerId" | "deliveryBatchId" | "createdAt" | "updatedAt", ExtArgs["result"]["order"]>
+export type OrderOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "orderNumber" | "status" | "customerId" | "sellerProfileId" | "checkoutGroupId" | "paymentMethod" | "paymentStatus" | "deliveryName" | "deliveryPhone" | "deliveryPincode" | "deliveryLandmark" | "cancellationReason" | "cancelledAt" | "deliveryType" | "scheduledDate" | "scheduledSlot" | "pickupAddress" | "pickupLatitude" | "pickupLongitude" | "deliveryAddress" | "deliveryLatitude" | "deliveryLongitude" | "subtotal" | "deliveryFee" | "totalAmount" | "assignedDeliveryPartnerId" | "deliveryBatchId" | "createdAt" | "updatedAt", ExtArgs["result"]["order"]>
 export type OrderInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   customer?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  sellerProfile?: boolean | Prisma.Order$sellerProfileArgs<ExtArgs>
   assignedDeliveryPartner?: boolean | Prisma.Order$assignedDeliveryPartnerArgs<ExtArgs>
   items?: boolean | Prisma.Order$itemsArgs<ExtArgs>
   assignments?: boolean | Prisma.Order$assignmentsArgs<ExtArgs>
@@ -1823,11 +2635,13 @@ export type OrderInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs =
 }
 export type OrderIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   customer?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  sellerProfile?: boolean | Prisma.Order$sellerProfileArgs<ExtArgs>
   assignedDeliveryPartner?: boolean | Prisma.Order$assignedDeliveryPartnerArgs<ExtArgs>
   deliveryBatch?: boolean | Prisma.Order$deliveryBatchArgs<ExtArgs>
 }
 export type OrderIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   customer?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  sellerProfile?: boolean | Prisma.Order$sellerProfileArgs<ExtArgs>
   assignedDeliveryPartner?: boolean | Prisma.Order$assignedDeliveryPartnerArgs<ExtArgs>
   deliveryBatch?: boolean | Prisma.Order$deliveryBatchArgs<ExtArgs>
 }
@@ -1836,6 +2650,7 @@ export type $OrderPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   name: "Order"
   objects: {
     customer: Prisma.$UserPayload<ExtArgs>
+    sellerProfile: Prisma.$SellerProfilePayload<ExtArgs> | null
     assignedDeliveryPartner: Prisma.$DeliveryPartnerProfilePayload<ExtArgs> | null
     items: Prisma.$OrderItemPayload<ExtArgs>[]
     assignments: Prisma.$DeliveryAssignmentPayload<ExtArgs>[]
@@ -1846,6 +2661,16 @@ export type $OrderPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     orderNumber: string
     status: $Enums.OrderStatus
     customerId: string
+    sellerProfileId: string | null
+    checkoutGroupId: string | null
+    paymentMethod: $Enums.PaymentMethod
+    paymentStatus: $Enums.PaymentStatus
+    deliveryName: string | null
+    deliveryPhone: string | null
+    deliveryPincode: string | null
+    deliveryLandmark: string | null
+    cancellationReason: string | null
+    cancelledAt: Date | null
     deliveryType: $Enums.DeliveryType
     scheduledDate: Date | null
     scheduledSlot: string | null
@@ -2257,6 +3082,7 @@ readonly fields: OrderFieldRefs;
 export interface Prisma__OrderClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   customer<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  sellerProfile<T extends Prisma.Order$sellerProfileArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Order$sellerProfileArgs<ExtArgs>>): Prisma.Prisma__SellerProfileClient<runtime.Types.Result.GetResult<Prisma.$SellerProfilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   assignedDeliveryPartner<T extends Prisma.Order$assignedDeliveryPartnerArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Order$assignedDeliveryPartnerArgs<ExtArgs>>): Prisma.Prisma__DeliveryPartnerProfileClient<runtime.Types.Result.GetResult<Prisma.$DeliveryPartnerProfilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   items<T extends Prisma.Order$itemsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Order$itemsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$OrderItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   assignments<T extends Prisma.Order$assignmentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Order$assignmentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DeliveryAssignmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -2294,6 +3120,16 @@ export interface OrderFieldRefs {
   readonly orderNumber: Prisma.FieldRef<"Order", 'String'>
   readonly status: Prisma.FieldRef<"Order", 'OrderStatus'>
   readonly customerId: Prisma.FieldRef<"Order", 'String'>
+  readonly sellerProfileId: Prisma.FieldRef<"Order", 'String'>
+  readonly checkoutGroupId: Prisma.FieldRef<"Order", 'String'>
+  readonly paymentMethod: Prisma.FieldRef<"Order", 'PaymentMethod'>
+  readonly paymentStatus: Prisma.FieldRef<"Order", 'PaymentStatus'>
+  readonly deliveryName: Prisma.FieldRef<"Order", 'String'>
+  readonly deliveryPhone: Prisma.FieldRef<"Order", 'String'>
+  readonly deliveryPincode: Prisma.FieldRef<"Order", 'String'>
+  readonly deliveryLandmark: Prisma.FieldRef<"Order", 'String'>
+  readonly cancellationReason: Prisma.FieldRef<"Order", 'String'>
+  readonly cancelledAt: Prisma.FieldRef<"Order", 'DateTime'>
   readonly deliveryType: Prisma.FieldRef<"Order", 'DeliveryType'>
   readonly scheduledDate: Prisma.FieldRef<"Order", 'DateTime'>
   readonly scheduledSlot: Prisma.FieldRef<"Order", 'String'>
@@ -2708,6 +3544,25 @@ export type OrderDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Interna
    * Limit how many Orders to delete.
    */
   limit?: number
+}
+
+/**
+ * Order.sellerProfile
+ */
+export type Order$sellerProfileArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the SellerProfile
+   */
+  select?: Prisma.SellerProfileSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the SellerProfile
+   */
+  omit?: Prisma.SellerProfileOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SellerProfileInclude<ExtArgs> | null
+  where?: Prisma.SellerProfileWhereInput
 }
 
 /**

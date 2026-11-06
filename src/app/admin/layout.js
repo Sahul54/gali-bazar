@@ -1,3 +1,4 @@
+
 "use client";
 
 import Link from "next/link";
@@ -10,6 +11,7 @@ import {
   ShoppingCart,
   Tags,
   Bike,
+  MapPin,
   LogOut,
   Menu,
   X,
@@ -46,6 +48,11 @@ const navigation = [
     label: "Delivery Partners",
     href: "/admin/delivery-partners",
     Icon: Bike,
+  },
+  {
+    label: "Delivery Zones",
+    href: "/admin/delivery-zones",
+    Icon: MapPin,
   },
 ];
 

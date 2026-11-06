@@ -1,8 +1,13 @@
 
 "use client";
 
+import { useEffect, useState } from "react";
 import Link from "next/link";
-import { ArrowLeft, ShoppingBag } from "lucide-react";
+import {
+  ArrowLeft,
+  ShoppingBag,
+  LoaderCircle,
+} from "lucide-react";
 
 import { useCartContext } from "@/context/customer/CartContext";
 import { useCheckoutContext } from "@/context/customer/CheckoutContext";
@@ -12,7 +17,7 @@ import DeliveryOptions from "@/components/customer/checkout/DeliveryOptions";
 import OrderSummary from "@/components/customer/checkout/OrderSummary";
 
 export default function CheckoutPage() {
-  const { cartItems, cartTotal } = useCartContext();
+  const { cartItems, cartTotal, isLoading } = useCartContext();
 
   const {
     selectedAddressId,
@@ -25,7 +30,95 @@ export default function CheckoutPage() {
     setScheduledSlot,
   } = useCheckoutContext();
 
-  const deliveryFee = 0;
+  const [deliveryCheck, setDeliveryCheck] = useState(null);
+  const [deliveryLoading, setDeliveryLoading] = useState(false);
+  const [deliveryError, setDeliveryError] = useState("");
+
+  // Check delivery availability whenever address changes
+  useEffect(() => {
+    if (!selectedAddressId) {
+      setDeliveryCheck(null);
+      setDeliveryError("");
+      setDeliveryLoading(false);
+      return;
+    }
+
+    const controller = new AbortController();
+
+    async function checkDelivery() {
+      try {
+        setDeliveryLoading(true);
+        setDeliveryCheck(null);
+        setDeliveryError("");
+
+        const addressResponse = await fetch(
+          `/api/v1/addresses/${selectedAddressId}`,
+          { signal: controller.signal }
+        );
+
+        const addressResult = await addressResponse.json();
+
+        if (!addressResponse.ok || !addressResult.success) {
+          throw new Error(
+            addressResult.message || "Unable to fetch delivery address."
+          );
+        }
+
+        const address = addressResult.data;
+        const pincode = address?.pincode;
+
+        if (!pincode) {
+          throw new Error("Selected address does not have a valid pincode.");
+        }
+
+        const response = await fetch("/api/v1/delivery/check", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ pincode }),
+          signal: controller.signal,
+        });
+
+        const result = await response.json();
+
+        if (!response.ok || !result.success) {
+          throw new Error(
+            result.message || "Unable to check delivery availability."
+          );
+        }
+
+        setDeliveryCheck(result.data);
+
+        if (!result.data.available) {
+          setDeliveryError(result.data.message);
+        }
+      } catch (error) {
+        if (error.name === "AbortError") return;
+
+        console.error("DELIVERY CHECK ERROR:", error);
+        setDeliveryCheck(null);
+        setDeliveryError(
+          error.message || "Unable to check delivery availability."
+        );
+      } finally {
+        if (!controller.signal.aborted) {
+          setDeliveryLoading(false);
+        }
+      }
+    }
+
+    checkDelivery();
+
+    return () => controller.abort();
+  }, [selectedAddressId]);
+
+  // Calculate delivery fee
+  const deliveryFee = deliveryCheck?.available
+    ? deliveryType === "EXPRESS"
+      ? Number(deliveryCheck.fees?.express || 0)
+      : Number(deliveryCheck.fees?.scheduled || 0)
+    : 0;
 
   const totalAmount = Number(cartTotal || 0) + deliveryFee;
 
@@ -35,12 +128,31 @@ export default function CheckoutPage() {
 
   const canContinue =
     Boolean(selectedAddressId) &&
+    Boolean(deliveryCheck?.available) &&
+    !deliveryLoading &&
+    !deliveryError &&
     isDeliveryValid &&
+    !isLoading &&
     cartItems.length > 0;
 
   function handleContinue() {
+    if (!cartItems.length) {
+      alert("Your cart is empty.");
+      return;
+    }
+
     if (!selectedAddressId) {
       alert("Please select a delivery address.");
+      return;
+    }
+
+    if (deliveryLoading) {
+      alert("Please wait while we check delivery availability.");
+      return;
+    }
+
+    if (!deliveryCheck?.available) {
+      alert(deliveryError || "Delivery is not available at this address.");
       return;
     }
 
@@ -49,7 +161,6 @@ export default function CheckoutPage() {
       return;
     }
 
-    // Order creation will be implemented next.
     console.log({
       addressId: selectedAddressId,
       deliveryType,
@@ -57,10 +168,33 @@ export default function CheckoutPage() {
         deliveryType === "SCHEDULED" ? scheduledDate : null,
       scheduledSlot:
         deliveryType === "SCHEDULED" ? scheduledSlot : null,
+      deliveryZoneId: deliveryCheck.zone.id,
+      deliveryFee,
       totalAmount,
     });
   }
 
+  // Loading State - Check this BEFORE empty cart
+  if (isLoading) {
+    return (
+      <main className="flex min-h-[70vh] flex-col items-center justify-center px-4 text-center">
+        <LoaderCircle
+          size={36}
+          className="mb-4 animate-spin text-green-600"
+        />
+
+        <h1 className="text-lg font-semibold text-gray-900">
+          Loading your cart...
+        </h1>
+
+        <p className="mt-2 text-sm text-gray-500">
+          Please wait while we prepare your checkout.
+        </p>
+      </main>
+    );
+  }
+
+  // Empty Cart State
   if (!cartItems.length) {
     return (
       <main className="flex min-h-[70vh] flex-col items-center justify-center px-4 text-center">
@@ -111,6 +245,30 @@ export default function CheckoutPage() {
               selectedAddressId={selectedAddressId}
               onAddressSelect={setSelectedAddressId}
             />
+
+            {selectedAddressId && (
+              <div className="rounded-xl border border-gray-200 bg-white p-4">
+                {deliveryLoading ? (
+                  <p className="text-sm text-gray-500">
+                    Checking delivery availability...
+                  </p>
+                ) : deliveryError ? (
+                  <p className="text-sm text-red-600">
+                    {deliveryError}
+                  </p>
+                ) : deliveryCheck?.available ? (
+                  <div>
+                    <p className="text-sm font-semibold text-green-700">
+                      Delivery available!
+                    </p>
+
+                    <p className="mt-1 text-sm text-gray-600">
+                      Delivery Zone: {deliveryCheck.zone.name}
+                    </p>
+                  </div>
+                ) : null}
+              </div>
+            )}
 
             <DeliveryOptions
               deliveryType={deliveryType}

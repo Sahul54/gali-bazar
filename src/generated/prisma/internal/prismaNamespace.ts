@@ -418,7 +418,9 @@ export const ModelName = {
   ProductView: 'ProductView',
   Address: 'Address',
   Cart: 'Cart',
-  CartItem: 'CartItem'
+  CartItem: 'CartItem',
+  DeliveryZone: 'DeliveryZone',
+  DeliveryZonePincode: 'DeliveryZonePincode'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -434,7 +436,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "otpVerification" | "sellerProfile" | "bulkUpload" | "bulkUploadRow" | "deliveryPartnerProfile" | "deliveryPartnerApplicationHistory" | "order" | "deliveryAssignment" | "deliveryBatch" | "category" | "product" | "productVariant" | "productImage" | "inventory" | "inventoryMovement" | "bulkPriceTier" | "orderItem" | "productView" | "address" | "cart" | "cartItem"
+    modelProps: "user" | "otpVerification" | "sellerProfile" | "bulkUpload" | "bulkUploadRow" | "deliveryPartnerProfile" | "deliveryPartnerApplicationHistory" | "order" | "deliveryAssignment" | "deliveryBatch" | "category" | "product" | "productVariant" | "productImage" | "inventory" | "inventoryMovement" | "bulkPriceTier" | "orderItem" | "productView" | "address" | "cart" | "cartItem" | "deliveryZone" | "deliveryZonePincode"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -2066,6 +2068,154 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    DeliveryZone: {
+      payload: Prisma.$DeliveryZonePayload<ExtArgs>
+      fields: Prisma.DeliveryZoneFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.DeliveryZoneFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DeliveryZonePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.DeliveryZoneFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DeliveryZonePayload>
+        }
+        findFirst: {
+          args: Prisma.DeliveryZoneFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DeliveryZonePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.DeliveryZoneFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DeliveryZonePayload>
+        }
+        findMany: {
+          args: Prisma.DeliveryZoneFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DeliveryZonePayload>[]
+        }
+        create: {
+          args: Prisma.DeliveryZoneCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DeliveryZonePayload>
+        }
+        createMany: {
+          args: Prisma.DeliveryZoneCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.DeliveryZoneCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DeliveryZonePayload>[]
+        }
+        delete: {
+          args: Prisma.DeliveryZoneDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DeliveryZonePayload>
+        }
+        update: {
+          args: Prisma.DeliveryZoneUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DeliveryZonePayload>
+        }
+        deleteMany: {
+          args: Prisma.DeliveryZoneDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.DeliveryZoneUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.DeliveryZoneUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DeliveryZonePayload>[]
+        }
+        upsert: {
+          args: Prisma.DeliveryZoneUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DeliveryZonePayload>
+        }
+        aggregate: {
+          args: Prisma.DeliveryZoneAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateDeliveryZone>
+        }
+        groupBy: {
+          args: Prisma.DeliveryZoneGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.DeliveryZoneGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.DeliveryZoneCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.DeliveryZoneCountAggregateOutputType> | number
+        }
+      }
+    }
+    DeliveryZonePincode: {
+      payload: Prisma.$DeliveryZonePincodePayload<ExtArgs>
+      fields: Prisma.DeliveryZonePincodeFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.DeliveryZonePincodeFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DeliveryZonePincodePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.DeliveryZonePincodeFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DeliveryZonePincodePayload>
+        }
+        findFirst: {
+          args: Prisma.DeliveryZonePincodeFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DeliveryZonePincodePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.DeliveryZonePincodeFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DeliveryZonePincodePayload>
+        }
+        findMany: {
+          args: Prisma.DeliveryZonePincodeFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DeliveryZonePincodePayload>[]
+        }
+        create: {
+          args: Prisma.DeliveryZonePincodeCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DeliveryZonePincodePayload>
+        }
+        createMany: {
+          args: Prisma.DeliveryZonePincodeCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.DeliveryZonePincodeCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DeliveryZonePincodePayload>[]
+        }
+        delete: {
+          args: Prisma.DeliveryZonePincodeDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DeliveryZonePincodePayload>
+        }
+        update: {
+          args: Prisma.DeliveryZonePincodeUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DeliveryZonePincodePayload>
+        }
+        deleteMany: {
+          args: Prisma.DeliveryZonePincodeDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.DeliveryZonePincodeUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.DeliveryZonePincodeUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DeliveryZonePincodePayload>[]
+        }
+        upsert: {
+          args: Prisma.DeliveryZonePincodeUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DeliveryZonePincodePayload>
+        }
+        aggregate: {
+          args: Prisma.DeliveryZonePincodeAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateDeliveryZonePincode>
+        }
+        groupBy: {
+          args: Prisma.DeliveryZonePincodeGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.DeliveryZonePincodeGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.DeliveryZonePincodeCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.DeliveryZonePincodeCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -2226,6 +2376,16 @@ export const OrderScalarFieldEnum = {
   orderNumber: 'orderNumber',
   status: 'status',
   customerId: 'customerId',
+  sellerProfileId: 'sellerProfileId',
+  checkoutGroupId: 'checkoutGroupId',
+  paymentMethod: 'paymentMethod',
+  paymentStatus: 'paymentStatus',
+  deliveryName: 'deliveryName',
+  deliveryPhone: 'deliveryPhone',
+  deliveryPincode: 'deliveryPincode',
+  deliveryLandmark: 'deliveryLandmark',
+  cancellationReason: 'cancellationReason',
+  cancelledAt: 'cancelledAt',
   deliveryType: 'deliveryType',
   scheduledDate: 'scheduledDate',
   scheduledSlot: 'scheduledSlot',
@@ -2455,6 +2615,32 @@ export const CartItemScalarFieldEnum = {
 export type CartItemScalarFieldEnum = (typeof CartItemScalarFieldEnum)[keyof typeof CartItemScalarFieldEnum]
 
 
+export const DeliveryZoneScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  code: 'code',
+  expressFee: 'expressFee',
+  scheduledFee: 'scheduledFee',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type DeliveryZoneScalarFieldEnum = (typeof DeliveryZoneScalarFieldEnum)[keyof typeof DeliveryZoneScalarFieldEnum]
+
+
+export const DeliveryZonePincodeScalarFieldEnum = {
+  id: 'id',
+  pincode: 'pincode',
+  isActive: 'isActive',
+  deliveryZoneId: 'deliveryZoneId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type DeliveryZonePincodeScalarFieldEnum = (typeof DeliveryZonePincodeScalarFieldEnum)[keyof typeof DeliveryZonePincodeScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -2653,6 +2839,34 @@ export type EnumOrderStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$Pris
  * Reference to a field of type 'OrderStatus[]'
  */
 export type ListEnumOrderStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'OrderStatus[]'>
+    
+
+
+/**
+ * Reference to a field of type 'PaymentMethod'
+ */
+export type EnumPaymentMethodFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PaymentMethod'>
+    
+
+
+/**
+ * Reference to a field of type 'PaymentMethod[]'
+ */
+export type ListEnumPaymentMethodFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PaymentMethod[]'>
+    
+
+
+/**
+ * Reference to a field of type 'PaymentStatus'
+ */
+export type EnumPaymentStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PaymentStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'PaymentStatus[]'
+ */
+export type ListEnumPaymentStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PaymentStatus[]'>
     
 
 
@@ -2912,6 +3126,8 @@ export type GlobalOmitConfig = {
   address?: Prisma.AddressOmit
   cart?: Prisma.CartOmit
   cartItem?: Prisma.CartItemOmit
+  deliveryZone?: Prisma.DeliveryZoneOmit
+  deliveryZonePincode?: Prisma.DeliveryZonePincodeOmit
 }
 
 /* Types for Logging */

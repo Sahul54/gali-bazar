@@ -279,6 +279,7 @@ export type SellerProfileWhereInput = {
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   products?: Prisma.ProductListRelationFilter
   bulkUploads?: Prisma.BulkUploadListRelationFilter
+  orders?: Prisma.OrderListRelationFilter
 }
 
 export type SellerProfileOrderByWithRelationInput = {
@@ -297,6 +298,7 @@ export type SellerProfileOrderByWithRelationInput = {
   user?: Prisma.UserOrderByWithRelationInput
   products?: Prisma.ProductOrderByRelationAggregateInput
   bulkUploads?: Prisma.BulkUploadOrderByRelationAggregateInput
+  orders?: Prisma.OrderOrderByRelationAggregateInput
 }
 
 export type SellerProfileWhereUniqueInput = Prisma.AtLeast<{
@@ -318,6 +320,7 @@ export type SellerProfileWhereUniqueInput = Prisma.AtLeast<{
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   products?: Prisma.ProductListRelationFilter
   bulkUploads?: Prisma.BulkUploadListRelationFilter
+  orders?: Prisma.OrderListRelationFilter
 }, "id" | "userId">
 
 export type SellerProfileOrderByWithAggregationInput = {
@@ -373,6 +376,7 @@ export type SellerProfileCreateInput = {
   user: Prisma.UserCreateNestedOneWithoutSellerProfileInput
   products?: Prisma.ProductCreateNestedManyWithoutSellerProfileInput
   bulkUploads?: Prisma.BulkUploadCreateNestedManyWithoutSellerProfileInput
+  orders?: Prisma.OrderCreateNestedManyWithoutSellerProfileInput
 }
 
 export type SellerProfileUncheckedCreateInput = {
@@ -390,6 +394,7 @@ export type SellerProfileUncheckedCreateInput = {
   userId: string
   products?: Prisma.ProductUncheckedCreateNestedManyWithoutSellerProfileInput
   bulkUploads?: Prisma.BulkUploadUncheckedCreateNestedManyWithoutSellerProfileInput
+  orders?: Prisma.OrderUncheckedCreateNestedManyWithoutSellerProfileInput
 }
 
 export type SellerProfileUpdateInput = {
@@ -407,6 +412,7 @@ export type SellerProfileUpdateInput = {
   user?: Prisma.UserUpdateOneRequiredWithoutSellerProfileNestedInput
   products?: Prisma.ProductUpdateManyWithoutSellerProfileNestedInput
   bulkUploads?: Prisma.BulkUploadUpdateManyWithoutSellerProfileNestedInput
+  orders?: Prisma.OrderUpdateManyWithoutSellerProfileNestedInput
 }
 
 export type SellerProfileUncheckedUpdateInput = {
@@ -424,6 +430,7 @@ export type SellerProfileUncheckedUpdateInput = {
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   products?: Prisma.ProductUncheckedUpdateManyWithoutSellerProfileNestedInput
   bulkUploads?: Prisma.BulkUploadUncheckedUpdateManyWithoutSellerProfileNestedInput
+  orders?: Prisma.OrderUncheckedUpdateManyWithoutSellerProfileNestedInput
 }
 
 export type SellerProfileCreateManyInput = {
@@ -593,6 +600,22 @@ export type SellerProfileUpdateOneRequiredWithoutBulkUploadsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.SellerProfileUpdateToOneWithWhereWithoutBulkUploadsInput, Prisma.SellerProfileUpdateWithoutBulkUploadsInput>, Prisma.SellerProfileUncheckedUpdateWithoutBulkUploadsInput>
 }
 
+export type SellerProfileCreateNestedOneWithoutOrdersInput = {
+  create?: Prisma.XOR<Prisma.SellerProfileCreateWithoutOrdersInput, Prisma.SellerProfileUncheckedCreateWithoutOrdersInput>
+  connectOrCreate?: Prisma.SellerProfileCreateOrConnectWithoutOrdersInput
+  connect?: Prisma.SellerProfileWhereUniqueInput
+}
+
+export type SellerProfileUpdateOneWithoutOrdersNestedInput = {
+  create?: Prisma.XOR<Prisma.SellerProfileCreateWithoutOrdersInput, Prisma.SellerProfileUncheckedCreateWithoutOrdersInput>
+  connectOrCreate?: Prisma.SellerProfileCreateOrConnectWithoutOrdersInput
+  upsert?: Prisma.SellerProfileUpsertWithoutOrdersInput
+  disconnect?: Prisma.SellerProfileWhereInput | boolean
+  delete?: Prisma.SellerProfileWhereInput | boolean
+  connect?: Prisma.SellerProfileWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.SellerProfileUpdateToOneWithWhereWithoutOrdersInput, Prisma.SellerProfileUpdateWithoutOrdersInput>, Prisma.SellerProfileUncheckedUpdateWithoutOrdersInput>
+}
+
 export type SellerProfileCreateNestedOneWithoutProductsInput = {
   create?: Prisma.XOR<Prisma.SellerProfileCreateWithoutProductsInput, Prisma.SellerProfileUncheckedCreateWithoutProductsInput>
   connectOrCreate?: Prisma.SellerProfileCreateOrConnectWithoutProductsInput
@@ -621,6 +644,7 @@ export type SellerProfileCreateWithoutUserInput = {
   updatedAt?: Date | string
   products?: Prisma.ProductCreateNestedManyWithoutSellerProfileInput
   bulkUploads?: Prisma.BulkUploadCreateNestedManyWithoutSellerProfileInput
+  orders?: Prisma.OrderCreateNestedManyWithoutSellerProfileInput
 }
 
 export type SellerProfileUncheckedCreateWithoutUserInput = {
@@ -637,6 +661,7 @@ export type SellerProfileUncheckedCreateWithoutUserInput = {
   updatedAt?: Date | string
   products?: Prisma.ProductUncheckedCreateNestedManyWithoutSellerProfileInput
   bulkUploads?: Prisma.BulkUploadUncheckedCreateNestedManyWithoutSellerProfileInput
+  orders?: Prisma.OrderUncheckedCreateNestedManyWithoutSellerProfileInput
 }
 
 export type SellerProfileCreateOrConnectWithoutUserInput = {
@@ -669,6 +694,7 @@ export type SellerProfileUpdateWithoutUserInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   products?: Prisma.ProductUpdateManyWithoutSellerProfileNestedInput
   bulkUploads?: Prisma.BulkUploadUpdateManyWithoutSellerProfileNestedInput
+  orders?: Prisma.OrderUpdateManyWithoutSellerProfileNestedInput
 }
 
 export type SellerProfileUncheckedUpdateWithoutUserInput = {
@@ -685,6 +711,7 @@ export type SellerProfileUncheckedUpdateWithoutUserInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   products?: Prisma.ProductUncheckedUpdateManyWithoutSellerProfileNestedInput
   bulkUploads?: Prisma.BulkUploadUncheckedUpdateManyWithoutSellerProfileNestedInput
+  orders?: Prisma.OrderUncheckedUpdateManyWithoutSellerProfileNestedInput
 }
 
 export type SellerProfileCreateWithoutBulkUploadsInput = {
@@ -701,6 +728,7 @@ export type SellerProfileCreateWithoutBulkUploadsInput = {
   updatedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutSellerProfileInput
   products?: Prisma.ProductCreateNestedManyWithoutSellerProfileInput
+  orders?: Prisma.OrderCreateNestedManyWithoutSellerProfileInput
 }
 
 export type SellerProfileUncheckedCreateWithoutBulkUploadsInput = {
@@ -717,6 +745,7 @@ export type SellerProfileUncheckedCreateWithoutBulkUploadsInput = {
   updatedAt?: Date | string
   userId: string
   products?: Prisma.ProductUncheckedCreateNestedManyWithoutSellerProfileInput
+  orders?: Prisma.OrderUncheckedCreateNestedManyWithoutSellerProfileInput
 }
 
 export type SellerProfileCreateOrConnectWithoutBulkUploadsInput = {
@@ -749,6 +778,7 @@ export type SellerProfileUpdateWithoutBulkUploadsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutSellerProfileNestedInput
   products?: Prisma.ProductUpdateManyWithoutSellerProfileNestedInput
+  orders?: Prisma.OrderUpdateManyWithoutSellerProfileNestedInput
 }
 
 export type SellerProfileUncheckedUpdateWithoutBulkUploadsInput = {
@@ -765,6 +795,91 @@ export type SellerProfileUncheckedUpdateWithoutBulkUploadsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   products?: Prisma.ProductUncheckedUpdateManyWithoutSellerProfileNestedInput
+  orders?: Prisma.OrderUncheckedUpdateManyWithoutSellerProfileNestedInput
+}
+
+export type SellerProfileCreateWithoutOrdersInput = {
+  id?: string
+  businessName: string
+  ownerName: string
+  category: string
+  address: string
+  pincode: string
+  latitude?: number | null
+  longitude?: number | null
+  status?: $Enums.ApplicationStatus
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  user: Prisma.UserCreateNestedOneWithoutSellerProfileInput
+  products?: Prisma.ProductCreateNestedManyWithoutSellerProfileInput
+  bulkUploads?: Prisma.BulkUploadCreateNestedManyWithoutSellerProfileInput
+}
+
+export type SellerProfileUncheckedCreateWithoutOrdersInput = {
+  id?: string
+  businessName: string
+  ownerName: string
+  category: string
+  address: string
+  pincode: string
+  latitude?: number | null
+  longitude?: number | null
+  status?: $Enums.ApplicationStatus
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  userId: string
+  products?: Prisma.ProductUncheckedCreateNestedManyWithoutSellerProfileInput
+  bulkUploads?: Prisma.BulkUploadUncheckedCreateNestedManyWithoutSellerProfileInput
+}
+
+export type SellerProfileCreateOrConnectWithoutOrdersInput = {
+  where: Prisma.SellerProfileWhereUniqueInput
+  create: Prisma.XOR<Prisma.SellerProfileCreateWithoutOrdersInput, Prisma.SellerProfileUncheckedCreateWithoutOrdersInput>
+}
+
+export type SellerProfileUpsertWithoutOrdersInput = {
+  update: Prisma.XOR<Prisma.SellerProfileUpdateWithoutOrdersInput, Prisma.SellerProfileUncheckedUpdateWithoutOrdersInput>
+  create: Prisma.XOR<Prisma.SellerProfileCreateWithoutOrdersInput, Prisma.SellerProfileUncheckedCreateWithoutOrdersInput>
+  where?: Prisma.SellerProfileWhereInput
+}
+
+export type SellerProfileUpdateToOneWithWhereWithoutOrdersInput = {
+  where?: Prisma.SellerProfileWhereInput
+  data: Prisma.XOR<Prisma.SellerProfileUpdateWithoutOrdersInput, Prisma.SellerProfileUncheckedUpdateWithoutOrdersInput>
+}
+
+export type SellerProfileUpdateWithoutOrdersInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  businessName?: Prisma.StringFieldUpdateOperationsInput | string
+  ownerName?: Prisma.StringFieldUpdateOperationsInput | string
+  category?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.StringFieldUpdateOperationsInput | string
+  pincode?: Prisma.StringFieldUpdateOperationsInput | string
+  latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  status?: Prisma.EnumApplicationStatusFieldUpdateOperationsInput | $Enums.ApplicationStatus
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  user?: Prisma.UserUpdateOneRequiredWithoutSellerProfileNestedInput
+  products?: Prisma.ProductUpdateManyWithoutSellerProfileNestedInput
+  bulkUploads?: Prisma.BulkUploadUpdateManyWithoutSellerProfileNestedInput
+}
+
+export type SellerProfileUncheckedUpdateWithoutOrdersInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  businessName?: Prisma.StringFieldUpdateOperationsInput | string
+  ownerName?: Prisma.StringFieldUpdateOperationsInput | string
+  category?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.StringFieldUpdateOperationsInput | string
+  pincode?: Prisma.StringFieldUpdateOperationsInput | string
+  latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  status?: Prisma.EnumApplicationStatusFieldUpdateOperationsInput | $Enums.ApplicationStatus
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  products?: Prisma.ProductUncheckedUpdateManyWithoutSellerProfileNestedInput
+  bulkUploads?: Prisma.BulkUploadUncheckedUpdateManyWithoutSellerProfileNestedInput
 }
 
 export type SellerProfileCreateWithoutProductsInput = {
@@ -781,6 +896,7 @@ export type SellerProfileCreateWithoutProductsInput = {
   updatedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutSellerProfileInput
   bulkUploads?: Prisma.BulkUploadCreateNestedManyWithoutSellerProfileInput
+  orders?: Prisma.OrderCreateNestedManyWithoutSellerProfileInput
 }
 
 export type SellerProfileUncheckedCreateWithoutProductsInput = {
@@ -797,6 +913,7 @@ export type SellerProfileUncheckedCreateWithoutProductsInput = {
   updatedAt?: Date | string
   userId: string
   bulkUploads?: Prisma.BulkUploadUncheckedCreateNestedManyWithoutSellerProfileInput
+  orders?: Prisma.OrderUncheckedCreateNestedManyWithoutSellerProfileInput
 }
 
 export type SellerProfileCreateOrConnectWithoutProductsInput = {
@@ -829,6 +946,7 @@ export type SellerProfileUpdateWithoutProductsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutSellerProfileNestedInput
   bulkUploads?: Prisma.BulkUploadUpdateManyWithoutSellerProfileNestedInput
+  orders?: Prisma.OrderUpdateManyWithoutSellerProfileNestedInput
 }
 
 export type SellerProfileUncheckedUpdateWithoutProductsInput = {
@@ -845,6 +963,7 @@ export type SellerProfileUncheckedUpdateWithoutProductsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   bulkUploads?: Prisma.BulkUploadUncheckedUpdateManyWithoutSellerProfileNestedInput
+  orders?: Prisma.OrderUncheckedUpdateManyWithoutSellerProfileNestedInput
 }
 
 
@@ -855,11 +974,13 @@ export type SellerProfileUncheckedUpdateWithoutProductsInput = {
 export type SellerProfileCountOutputType = {
   products: number
   bulkUploads: number
+  orders: number
 }
 
 export type SellerProfileCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   products?: boolean | SellerProfileCountOutputTypeCountProductsArgs
   bulkUploads?: boolean | SellerProfileCountOutputTypeCountBulkUploadsArgs
+  orders?: boolean | SellerProfileCountOutputTypeCountOrdersArgs
 }
 
 /**
@@ -886,6 +1007,13 @@ export type SellerProfileCountOutputTypeCountBulkUploadsArgs<ExtArgs extends run
   where?: Prisma.BulkUploadWhereInput
 }
 
+/**
+ * SellerProfileCountOutputType without action
+ */
+export type SellerProfileCountOutputTypeCountOrdersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.OrderWhereInput
+}
+
 
 export type SellerProfileSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -903,6 +1031,7 @@ export type SellerProfileSelect<ExtArgs extends runtime.Types.Extensions.Interna
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   products?: boolean | Prisma.SellerProfile$productsArgs<ExtArgs>
   bulkUploads?: boolean | Prisma.SellerProfile$bulkUploadsArgs<ExtArgs>
+  orders?: boolean | Prisma.SellerProfile$ordersArgs<ExtArgs>
   _count?: boolean | Prisma.SellerProfileCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["sellerProfile"]>
 
@@ -958,6 +1087,7 @@ export type SellerProfileInclude<ExtArgs extends runtime.Types.Extensions.Intern
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   products?: boolean | Prisma.SellerProfile$productsArgs<ExtArgs>
   bulkUploads?: boolean | Prisma.SellerProfile$bulkUploadsArgs<ExtArgs>
+  orders?: boolean | Prisma.SellerProfile$ordersArgs<ExtArgs>
   _count?: boolean | Prisma.SellerProfileCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type SellerProfileIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -973,6 +1103,7 @@ export type $SellerProfilePayload<ExtArgs extends runtime.Types.Extensions.Inter
     user: Prisma.$UserPayload<ExtArgs>
     products: Prisma.$ProductPayload<ExtArgs>[]
     bulkUploads: Prisma.$BulkUploadPayload<ExtArgs>[]
+    orders: Prisma.$OrderPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1384,6 +1515,7 @@ export interface Prisma__SellerProfileClient<T, Null = never, ExtArgs extends ru
   user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   products<T extends Prisma.SellerProfile$productsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.SellerProfile$productsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProductPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   bulkUploads<T extends Prisma.SellerProfile$bulkUploadsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.SellerProfile$bulkUploadsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$BulkUploadPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  orders<T extends Prisma.SellerProfile$ordersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.SellerProfile$ordersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$OrderPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1871,6 +2003,30 @@ export type SellerProfile$bulkUploadsArgs<ExtArgs extends runtime.Types.Extensio
   take?: number
   skip?: number
   distinct?: Prisma.BulkUploadScalarFieldEnum | Prisma.BulkUploadScalarFieldEnum[]
+}
+
+/**
+ * SellerProfile.orders
+ */
+export type SellerProfile$ordersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Order
+   */
+  select?: Prisma.OrderSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Order
+   */
+  omit?: Prisma.OrderOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.OrderInclude<ExtArgs> | null
+  where?: Prisma.OrderWhereInput
+  orderBy?: Prisma.OrderOrderByWithRelationInput | Prisma.OrderOrderByWithRelationInput[]
+  cursor?: Prisma.OrderWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.OrderScalarFieldEnum | Prisma.OrderScalarFieldEnum[]
 }
 
 /**

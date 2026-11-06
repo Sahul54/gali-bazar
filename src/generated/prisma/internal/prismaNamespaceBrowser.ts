@@ -72,7 +72,9 @@ export const ModelName = {
   ProductView: 'ProductView',
   Address: 'Address',
   Cart: 'Cart',
-  CartItem: 'CartItem'
+  CartItem: 'CartItem',
+  DeliveryZone: 'DeliveryZone',
+  DeliveryZonePincode: 'DeliveryZonePincode'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -212,6 +214,16 @@ export const OrderScalarFieldEnum = {
   orderNumber: 'orderNumber',
   status: 'status',
   customerId: 'customerId',
+  sellerProfileId: 'sellerProfileId',
+  checkoutGroupId: 'checkoutGroupId',
+  paymentMethod: 'paymentMethod',
+  paymentStatus: 'paymentStatus',
+  deliveryName: 'deliveryName',
+  deliveryPhone: 'deliveryPhone',
+  deliveryPincode: 'deliveryPincode',
+  deliveryLandmark: 'deliveryLandmark',
+  cancellationReason: 'cancellationReason',
+  cancelledAt: 'cancelledAt',
   deliveryType: 'deliveryType',
   scheduledDate: 'scheduledDate',
   scheduledSlot: 'scheduledSlot',
@@ -439,6 +451,32 @@ export const CartItemScalarFieldEnum = {
 } as const
 
 export type CartItemScalarFieldEnum = (typeof CartItemScalarFieldEnum)[keyof typeof CartItemScalarFieldEnum]
+
+
+export const DeliveryZoneScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  code: 'code',
+  expressFee: 'expressFee',
+  scheduledFee: 'scheduledFee',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type DeliveryZoneScalarFieldEnum = (typeof DeliveryZoneScalarFieldEnum)[keyof typeof DeliveryZoneScalarFieldEnum]
+
+
+export const DeliveryZonePincodeScalarFieldEnum = {
+  id: 'id',
+  pincode: 'pincode',
+  isActive: 'isActive',
+  deliveryZoneId: 'deliveryZoneId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type DeliveryZonePincodeScalarFieldEnum = (typeof DeliveryZonePincodeScalarFieldEnum)[keyof typeof DeliveryZonePincodeScalarFieldEnum]
 
 
 export const SortOrder = {

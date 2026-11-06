@@ -127,10 +127,7 @@ export default function CartPage() {
 
           {/* Cart Summary */}
           <div className="lg:sticky lg:top-24 lg:h-fit">
-            <CartSummary
-              subtotal={cartTotal}
-              deliveryFee={deliveryFee}
-            />
+            <CartSummary subtotal={cartTotal} />
           </div>
         </div>
       )}
