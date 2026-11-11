@@ -126,6 +126,7 @@ model User {
   // Delivery partner review relations
   reviewedDeliveryApplications DeliveryPartnerProfile[]            @relation("DeliveryPartnerReviewer")
   deliveryPartnerReviewHistory DeliveryPartnerApplicationHistory[] @relation("DeliveryPartnerHistoryReviewer")
+  supportTickets               SupportTicket[]
 }
 
 // ==================== OTP ====================
@@ -362,8 +363,9 @@ model Order {
   deliveryBatchId String?
   deliveryBatch   DeliveryBatch? @relation(fields: [deliveryBatchId], references: [id], onDelete: SetNull)
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+  supportTickets SupportTicket[]
 
   @@index([status, createdAt])
   @@index([assignedDeliveryPartnerId, status])
@@ -429,6 +431,21 @@ model DeliveryBatch {
 
   @@index([partnerProfileId, status])
   @@index([status, expiresAt])
+}
+
+enum SupportTicketStatus {
+  OPEN
+  IN_PROGRESS
+  RESOLVED
+}
+
+enum SupportTicketCategory {
+  ORDER_ISSUE
+  PAYMENT_REFUND
+  DELIVERY_ISSUE
+  PRODUCT_ISSUE
+  ACCOUNT_ISSUE
+  OTHER
 }
 
 // ==================== CATEGORY ====================
@@ -722,4 +739,29 @@ model DeliveryZonePincode {
   updatedAt DateTime @updatedAt
 
   @@index([deliveryZoneId, isActive])
+}
+
+// ==================== CUSTOMER SUPPORT ====================
+
+model SupportTicket {
+  id       String                @id @default(cuid())
+  category SupportTicketCategory
+  subject  String
+  message  String                @db.Text
+  status   SupportTicketStatus   @default(OPEN)
+
+  // Customer relation
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  // Optional order relation
+  orderId String?
+  order   Order?  @relation(fields: [orderId], references: [id], onDelete: SetNull)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId, createdAt])
+  @@index([status, createdAt])
+  @@index([orderId])
 }

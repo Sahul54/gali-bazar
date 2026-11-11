@@ -1,4 +1,3 @@
-
 import { productRepository } from "./product.repository.js";
 
 const createError = (message, statusCode = 400) => {
@@ -23,7 +22,26 @@ const normalizePagination = ({ skip = 0, take = 20 } = {}) => {
   };
 };
 
-// Convert Prisma Decimal values and calculate available stock.
+const calculateDistance = (lat1, lon1, lat2, lon2) => {
+  const toRadians = (degrees) => (degrees * Math.PI) / 180;
+  const earthRadiusKm = 6371;
+
+  const dLat = toRadians(lat2 - lat1);
+  const dLon = toRadians(lon2 - lon1);
+
+  const a =
+    Math.sin(dLat / 2) ** 2 +
+    Math.cos(toRadians(lat1)) *
+      Math.cos(toRadians(lat2)) *
+      Math.sin(dLon / 2) ** 2;
+
+  return (
+    2 *
+    earthRadiusKm *
+    Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
+  );
+};
+
 const formatProduct = (product) => {
   return {
     ...product,
@@ -32,28 +50,20 @@ const formatProduct = (product) => {
       const inventory = variant.inventory;
 
       const availableStock = inventory
-        ? Math.max(
-            0,
-            inventory.quantity - inventory.reservedQuantity
-          )
+        ? Math.max(0, inventory.quantity - inventory.reservedQuantity)
         : 0;
 
       return {
         id: variant.id,
         sku: variant.sku,
         title: variant.title,
-
         price: Number(variant.price),
-
         compareAtPrice:
           variant.compareAtPrice !== null
             ? Number(variant.compareAtPrice)
             : null,
-
         availableStock,
         inStock: availableStock > 0,
-
-        // Quantity-based bulk pricing.
         bulkPriceTiers: (variant.bulkPriceTiers || []).map((tier) => ({
           id: tier.id,
           minQuantity: tier.minQuantity,
@@ -66,13 +76,15 @@ const formatProduct = (product) => {
 };
 
 export const productService = {
-  // Get products with optional search, category and shop filters.
   async getProducts({
     skip = 0,
     take = 20,
     search,
     categoryId,
     shopId,
+    latitude,
+    longitude,
+    radiusKm = 5,
   } = {}) {
     if (search !== undefined && typeof search !== "string") {
       throw createError("Invalid search query.");
@@ -94,28 +106,106 @@ export const productService = {
       shopId: shopId?.trim() || undefined,
     };
 
-    const [products, total] = await Promise.all([
-      productRepository.findActiveProducts({
-        ...pagination,
-        ...filters,
-      }),
+    const hasLatitude = latitude !== undefined && latitude !== "";
+    const hasLongitude = longitude !== undefined && longitude !== "";
 
-      productRepository.countActiveProducts(filters),
-    ]);
+    if (hasLatitude !== hasLongitude) {
+      throw createError("Both latitude and longitude are required.");
+    }
+
+    // Without browsing location, retain existing product listing.
+    if (!hasLatitude) {
+      const [products, total] = await Promise.all([
+        productRepository.findActiveProducts({
+          ...pagination,
+          ...filters,
+        }),
+        productRepository.countActiveProducts(filters),
+      ]);
+
+      return {
+        products: products.map(formatProduct),
+        pagination: {
+          total,
+          skip: pagination.skip,
+          take: pagination.take,
+          hasMore: pagination.skip + pagination.take < total,
+        },
+      };
+    }
+
+    const lat = Number(latitude);
+    const lng = Number(longitude);
+    const radius = Number(radiusKm);
+
+    if (
+      !Number.isFinite(lat) ||
+      !Number.isFinite(lng) ||
+      lat < -90 ||
+      lat > 90 ||
+      lng < -180 ||
+      lng > 180
+    ) {
+      throw createError("Invalid location coordinates.");
+    }
+
+    if (!Number.isFinite(radius) || radius <= 0 || radius > 100) {
+      throw createError("Radius must be between 0 and 100 km.");
+    }
+
+    const nearbyProducts =
+      await productRepository.findNearbyActiveProducts({
+        ...filters,
+        latitude: lat,
+        longitude: lng,
+        radiusKm: radius,
+      });
+
+    const filteredProducts = nearbyProducts
+      .map((product) => {
+        const sellerLat = Number(product.sellerProfile.latitude);
+        const sellerLng = Number(product.sellerProfile.longitude);
+
+        const distanceKm = calculateDistance(
+          lat,
+          lng,
+          sellerLat,
+          sellerLng
+        );
+
+        return {
+          ...product,
+          distanceKm: Number(distanceKm.toFixed(2)),
+        };
+      })
+      .filter((product) => product.distanceKm <= radius)
+      .sort((a, b) => a.distanceKm - b.distanceKm);
+
+    const total = filteredProducts.length;
+
+    const products = filteredProducts
+      .slice(
+        pagination.skip,
+        pagination.skip + pagination.take
+      )
+      .map(formatProduct);
 
     return {
-      products: products.map(formatProduct),
-
+      products,
       pagination: {
         total,
         skip: pagination.skip,
         take: pagination.take,
         hasMore: pagination.skip + pagination.take < total,
       },
+      location: {
+        latitude: lat,
+        longitude: lng,
+        radiusKm: radius,
+      },
     };
   },
 
-  // Get one product's details.
   async getProductById(productId) {
     if (!productId || typeof productId !== "string") {
       throw createError("Valid product ID is required.");

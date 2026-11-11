@@ -1,8 +1,8 @@
 
 "use client";
 
-import Link from "next/link";
 import { useState } from "react";
+import Link from "next/link";
 import {
   ShoppingBag,
   Store,
@@ -14,6 +14,8 @@ import {
 } from "lucide-react";
 
 import { useCartContext } from "@/context/customer/CartContext";
+import { useAuthContext } from "@/context/customer/AuthContext";
+import CustomerLoginModal from "@/components/auth/CustomerLoginModal";
 
 export default function ProductCard({ product }) {
   const {
@@ -23,22 +25,34 @@ export default function ProductCard({ product }) {
     removeFromCart,
   } = useCartContext();
 
+  const {
+    user,
+    loading: authLoading,
+    refreshUser,
+  } = useAuthContext();
+
   const [selectedVariantId, setSelectedVariantId] = useState("");
   const [isBusy, setIsBusy] = useState(false);
   const [actionError, setActionError] = useState("");
+  const [showLogin, setShowLogin] = useState(false);
 
   if (!product) return null;
 
   const imageUrl = product.images?.[0]?.imageUrl;
 
+  // Active variants
   const activeVariants =
     product.variants?.filter(
       (variant) => variant.isActive !== false
     ) || [];
 
+  // Available stock
   function getAvailableStock(variant) {
     if (variant.availableStock !== undefined) {
-      return Math.max(0, Number(variant.availableStock) || 0);
+      return Math.max(
+        0,
+        Number(variant.availableStock) || 0
+      );
     }
 
     return Math.max(
@@ -55,19 +69,26 @@ export default function ProductCard({ product }) {
         : getAvailableStock(variant) > 0
   );
 
+  // Price
   const validPrices = activeVariants
     .map((variant) => Number(variant.price))
     .filter(Number.isFinite);
 
   const lowestPrice =
-    validPrices.length > 0 ? Math.min(...validPrices) : null;
+    validPrices.length > 0
+      ? Math.min(...validPrices)
+      : null;
 
+  // Selected variant
   const selectedVariant =
     availableVariants.find(
       (variant) => variant.id === selectedVariantId
     ) ||
-    (availableVariants.length === 1 ? availableVariants[0] : null);
+    (availableVariants.length === 1
+      ? availableVariants[0]
+      : null);
 
+  // Cart item
   const cartItem = selectedVariant
     ? cartItems.find(
         (item) => item.variantId === selectedVariant.id
@@ -84,23 +105,106 @@ export default function ProductCard({ product }) {
     ? getAvailableStock(selectedVariant)
     : 0;
 
-  async function handleAddToBag() {
-    if (!selectedVariant || isBusy || availableStock <= 0) return;
+  // Add product to cart
+  async function addProductToCart() {
+    if (
+      !selectedVariant ||
+      isBusy ||
+      availableStock <= 0
+    ) {
+      return false;
+    }
 
     setIsBusy(true);
     setActionError("");
 
     try {
-      const success = await addToCart(product, selectedVariant, 1);
+      const success = await addToCart(
+        product,
+        selectedVariant,
+        1
+      );
 
       if (!success) {
-        setActionError("Unable to add product. Please try again.");
+        setActionError(
+          "Unable to add product. Please try again."
+        );
+        return false;
       }
+
+      return true;
+    } catch (error) {
+      console.error("Add to cart error:", error);
+
+      setActionError(
+        error.message || "Unable to add product."
+      );
+
+      return false;
     } finally {
       setIsBusy(false);
     }
   }
 
+  // Handle Add button
+  async function handleAddToBag() {
+    if (
+      !selectedVariant ||
+      isBusy ||
+      availableStock <= 0
+    ) {
+      return;
+    }
+
+    setActionError("");
+
+    let currentUser = user;
+
+    // Verify session if authentication is still loading
+    if (authLoading || !currentUser) {
+      currentUser = await refreshUser();
+    }
+
+    // Guest user: open login modal
+    if (!currentUser) {
+      setShowLogin(true);
+      return;
+    }
+
+    // Logged-in user: add product
+    await addProductToCart();
+  }
+
+  // After successful OTP login
+  async function handleLoginSuccess() {
+    setActionError("");
+
+    try {
+      // Verify that the session cookie is available
+      const authenticatedUser = await refreshUser();
+
+      if (!authenticatedUser) {
+        setActionError(
+          "Login successful, but session verification failed. Please try again."
+        );
+        return;
+      }
+
+      // Close modal after session verification
+      setShowLogin(false);
+
+      // Automatically add previously selected product
+      await addProductToCart();
+    } catch (error) {
+      console.error("Login verification error:", error);
+
+      setActionError(
+        "Unable to verify login. Please try again."
+      );
+    }
+  }
+
+  // Decrease quantity
   async function handleDecrease() {
     if (!cartItem || isBusy) return;
 
@@ -111,16 +215,25 @@ export default function ProductCard({ product }) {
       const success =
         quantity <= 1
           ? await removeFromCart(selectedVariant.id)
-          : await updateQuantity(selectedVariant.id, quantity - 1);
+          : await updateQuantity(
+              selectedVariant.id,
+              quantity - 1
+            );
 
       if (!success) {
-        setActionError("Unable to update cart. Please try again.");
+        setActionError(
+          "Unable to update cart. Please try again."
+        );
       }
+    } catch (error) {
+      console.error("Decrease quantity error:", error);
+      setActionError("Unable to update cart.");
     } finally {
       setIsBusy(false);
     }
   }
 
+  // Increase quantity
   async function handleIncrease() {
     if (
       !cartItem ||
@@ -140,180 +253,229 @@ export default function ProductCard({ product }) {
       );
 
       if (!success) {
-        setActionError("Unable to update cart. Please try again.");
+        setActionError(
+          "Unable to update cart. Please try again."
+        );
       }
+    } catch (error) {
+      console.error("Increase quantity error:", error);
+      setActionError("Unable to update cart.");
     } finally {
       setIsBusy(false);
     }
   }
 
   return (
-    <article className="group flex h-full flex-col overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-sm transition-all duration-200 hover:-translate-y-1 hover:border-green-100 hover:shadow-lg">
+    <>
+      <article className="group flex h-full flex-col overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-sm transition-all duration-200 hover:-translate-y-1 hover:border-green-100 hover:shadow-lg">
 
-      {/* Product Image */}
-      <Link
-        href={`/products/${product.id}`}
-        className="relative block overflow-hidden bg-gray-50"
-      >
-        <div className="flex aspect-square items-center justify-center">
-          {imageUrl ? (
-            <img
-              src={imageUrl}
-              alt={product.images?.[0]?.altText || product.name}
-              loading="lazy"
-              className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
-            />
-          ) : (
-            <Package size={44} className="text-gray-300" />
-          )}
-        </div>
-
-        {availableVariants.length === 0 && (
-          <span className="absolute left-2.5 top-2.5 rounded-full bg-white/95 px-2.5 py-1 text-[10px] font-bold text-red-600 shadow-sm">
-            Out of Stock
-          </span>
-        )}
-
-        {product.brand && (
-          <span className="absolute bottom-2.5 left-2.5 max-w-[80%] truncate rounded-md bg-white/90 px-2 py-1 text-[10px] font-medium text-gray-600 backdrop-blur">
-            {product.brand}
-          </span>
-        )}
-      </Link>
-
-      {/* Product Information */}
-      <div className="flex flex-1 flex-col p-3 sm:p-3.5">
-
-        <Link href={`/products/${product.id}`}>
-          <p className="truncate text-[11px] font-medium text-green-700">
-            {product.category?.name || "Local Product"}
-          </p>
-
-          <h3 className="mt-1 line-clamp-2 min-h-10 text-sm font-semibold leading-5 text-gray-800 transition-colors group-hover:text-green-700">
-            {product.name}
-          </h3>
-        </Link>
-
-        {/* Variant Selector */}
-        {availableVariants.length > 1 && (
-          <div className="mt-2.5">
-            <select
-              value={selectedVariantId}
-              onChange={(event) => {
-                setSelectedVariantId(event.target.value);
-                setActionError("");
-              }}
-              className="h-8 w-full rounded-lg border border-gray-200 bg-gray-50 px-2 text-[11px] font-medium text-gray-600 outline-none transition focus:border-green-500 focus:bg-white"
-            >
-              <option value="">Choose variant</option>
-
-              {availableVariants.map((variant) => (
-                <option key={variant.id} value={variant.id}>
-                  {variant.title || variant.sku || "Standard"} - ₹
-                  {Number(variant.price).toFixed(0)}
-                </option>
-              ))}
-            </select>
-          </div>
-        )}
-
-        {/* Price + Cart Action */}
-        <div className="mt-auto pt-4">
-          <div className="flex min-h-10 items-center justify-between gap-2">
-
-            {/* Price */}
-            <div className="min-w-0">
-              <p className="text-base font-extrabold tracking-tight text-gray-900">
-                {price !== null && Number.isFinite(price)
-                  ? `₹${price.toFixed(0)}`
-                  : "N/A"}
-              </p>
-
-              {availableVariants.length > 0 && (
-                <p className="mt-0.5 text-[10px] font-medium text-green-600">
-                  <Check size={11} className="mr-0.5 inline" />
-                  In Stock
-                </p>
-              )}
-            </div>
-
-            {/* Add Button / Quantity Stepper */}
-            {quantity === 0 ? (
-              <button
-                type="button"
-                onClick={handleAddToBag}
-                disabled={
-                  availableVariants.length === 0 ||
-                  !selectedVariant ||
-                  isBusy
+        {/* Product Image */}
+        <Link
+          href={`/products/${product.id}`}
+          className="relative block overflow-hidden bg-gray-50"
+        >
+          <div className="flex aspect-square items-center justify-center">
+            {imageUrl ? (
+              <img
+                src={imageUrl}
+                alt={
+                  product.images?.[0]?.altText ||
+                  product.name
                 }
-                className="flex h-9 min-w-[68px] shrink-0 items-center justify-center gap-1 rounded-lg border border-green-600 bg-white px-3 text-xs font-bold text-green-700 transition hover:bg-green-700 hover:text-white active:scale-95 disabled:cursor-not-allowed disabled:border-gray-200 disabled:bg-gray-100 disabled:text-gray-400"
-              >
-                {isBusy ? (
-                  <LoaderCircle size={14} className="animate-spin" />
-                ) : (
-                  <ShoppingBag size={13} />
-                )}
-
-                {isBusy
-                  ? "WAIT"
-                  : availableVariants.length === 0
-                    ? "SOLD"
-                    : availableVariants.length > 1 && !selectedVariant
-                      ? "SELECT"
-                      : "ADD"}
-              </button>
+                loading="lazy"
+                className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+              />
             ) : (
-              <div className="flex h-9 shrink-0 items-center gap-2 rounded-lg bg-green-700 px-2 text-white shadow-sm">
-                <button
-                  type="button"
-                  onClick={handleDecrease}
-                  disabled={isBusy}
-                  className="flex h-7 w-5 items-center justify-center rounded hover:bg-green-600 active:scale-90 disabled:opacity-50"
-                  aria-label="Decrease quantity"
-                >
-                  <Minus size={14} strokeWidth={2.5} />
-                </button>
-
-                <span className="min-w-3 text-center text-xs font-bold">
-                  {isBusy ? (
-                    <LoaderCircle size={13} className="animate-spin" />
-                  ) : (
-                    quantity
-                  )}
-                </span>
-
-                <button
-                  type="button"
-                  onClick={handleIncrease}
-                  disabled={isBusy || quantity >= availableStock}
-                  className="flex h-7 w-5 items-center justify-center rounded hover:bg-green-600 active:scale-90 disabled:cursor-not-allowed disabled:opacity-40"
-                  aria-label="Increase quantity"
-                >
-                  <Plus size={14} strokeWidth={2.5} />
-                </button>
-              </div>
+              <Package
+                size={44}
+                className="text-gray-300"
+              />
             )}
           </div>
 
-          {actionError && (
-            <p className="mt-2 text-[10px] font-medium text-red-600">
-              {actionError}
+          {availableVariants.length === 0 && (
+            <span className="absolute left-2.5 top-2.5 rounded-full bg-white/95 px-2.5 py-1 text-[10px] font-bold text-red-600 shadow-sm">
+              Out of Stock
+            </span>
+          )}
+
+          {product.brand && (
+            <span className="absolute bottom-2.5 left-2.5 max-w-[80%] truncate rounded-md bg-white/90 px-2 py-1 text-[10px] font-medium text-gray-600 backdrop-blur">
+              {product.brand}
+            </span>
+          )}
+        </Link>
+
+        {/* Product Information */}
+        <div className="flex flex-1 flex-col p-3 sm:p-3.5">
+
+          <Link href={`/products/${product.id}`}>
+            <p className="truncate text-[11px] font-medium text-green-700">
+              {product.category?.name || "Local Product"}
             </p>
+
+            <h3 className="mt-1 line-clamp-2 min-h-10 text-sm font-semibold leading-5 text-gray-800 transition-colors group-hover:text-green-700">
+              {product.name}
+            </h3>
+          </Link>
+
+          {/* Variant Selector */}
+          {availableVariants.length > 1 && (
+            <div className="mt-2.5">
+              <select
+                value={selectedVariantId}
+                onChange={(event) => {
+                  setSelectedVariantId(event.target.value);
+                  setActionError("");
+                }}
+                className="h-8 w-full rounded-lg border border-gray-200 bg-gray-50 px-2 text-[11px] font-medium text-gray-600 outline-none transition focus:border-green-500 focus:bg-white"
+              >
+                <option value="">Choose variant</option>
+
+                {availableVariants.map((variant) => (
+                  <option
+                    key={variant.id}
+                    value={variant.id}
+                  >
+                    {variant.title || variant.sku || "Standard"} - ₹
+                    {Number(variant.price).toFixed(0)}
+                  </option>
+                ))}
+              </select>
+            </div>
+          )}
+
+          {/* Price + Cart Action */}
+          <div className="mt-auto pt-4">
+            <div className="flex min-h-10 items-center justify-between gap-2">
+
+              {/* Price */}
+              <div className="min-w-0">
+                <p className="text-base font-extrabold tracking-tight text-gray-900">
+                  {price !== null && Number.isFinite(price)
+                    ? `₹${price.toFixed(0)}`
+                    : "N/A"}
+                </p>
+
+                {availableVariants.length > 0 && (
+                  <p className="mt-0.5 text-[10px] font-medium text-green-600">
+                    <Check
+                      size={11}
+                      className="mr-0.5 inline"
+                    />
+                    In Stock
+                  </p>
+                )}
+              </div>
+
+              {/* Add Button / Quantity Stepper */}
+              {quantity === 0 ? (
+                <button
+                  type="button"
+                  onClick={handleAddToBag}
+                  disabled={
+                    availableVariants.length === 0 ||
+                    !selectedVariant ||
+                    isBusy ||
+                    authLoading
+                  }
+                  className="flex h-9 min-w-[68px] shrink-0 items-center justify-center gap-1 rounded-lg border border-green-600 bg-white px-3 text-xs font-bold text-green-700 transition hover:bg-green-700 hover:text-white active:scale-95 disabled:cursor-not-allowed disabled:border-gray-200 disabled:bg-gray-100 disabled:text-gray-400"
+                >
+                  {isBusy || authLoading ? (
+                    <LoaderCircle
+                      size={14}
+                      className="animate-spin"
+                    />
+                  ) : (
+                    <ShoppingBag size={13} />
+                  )}
+
+                  {isBusy || authLoading
+                    ? "WAIT"
+                    : availableVariants.length === 0
+                      ? "SOLD"
+                      : availableVariants.length > 1 &&
+                          !selectedVariant
+                        ? "SELECT"
+                        : "ADD"}
+                </button>
+              ) : (
+                <div className="flex h-9 shrink-0 items-center gap-2 rounded-lg bg-green-700 px-2 text-white shadow-sm">
+                  <button
+                    type="button"
+                    onClick={handleDecrease}
+                    disabled={isBusy}
+                    className="flex h-7 w-5 items-center justify-center rounded hover:bg-green-600 active:scale-90 disabled:opacity-50"
+                    aria-label="Decrease quantity"
+                  >
+                    <Minus
+                      size={14}
+                      strokeWidth={2.5}
+                    />
+                  </button>
+
+                  <span className="min-w-3 text-center text-xs font-bold">
+                    {isBusy ? (
+                      <LoaderCircle
+                        size={13}
+                        className="animate-spin"
+                      />
+                    ) : (
+                      quantity
+                    )}
+                  </span>
+
+                  <button
+                    type="button"
+                    onClick={handleIncrease}
+                    disabled={
+                      isBusy || quantity >= availableStock
+                    }
+                    className="flex h-7 w-5 items-center justify-center rounded hover:bg-green-600 active:scale-90 disabled:cursor-not-allowed disabled:opacity-40"
+                    aria-label="Increase quantity"
+                  >
+                    <Plus
+                      size={14}
+                      strokeWidth={2.5}
+                    />
+                  </button>
+                </div>
+              )}
+            </div>
+
+            {/* Error */}
+            {actionError && (
+              <p
+                role="alert"
+                className="mt-2 text-[10px] font-medium text-red-600"
+              >
+                {actionError}
+              </p>
+            )}
+          </div>
+
+          {/* Seller */}
+          {product.sellerProfile?.businessName && (
+            <div className="mt-3 flex items-center gap-1.5 border-t border-gray-100 pt-2.5">
+              <Store
+                size={12}
+                className="shrink-0 text-gray-400"
+              />
+
+              <span className="truncate text-[11px] font-medium text-gray-500">
+                {product.sellerProfile.businessName}
+              </span>
+            </div>
           )}
         </div>
+      </article>
 
-        {/* Seller */}
-        {product.sellerProfile?.businessName && (
-          <div className="mt-3 flex items-center gap-1.5 border-t border-gray-100 pt-2.5">
-            <Store size={12} className="shrink-0 text-gray-400" />
-
-            <span className="truncate text-[11px] font-medium text-gray-500">
-              {product.sellerProfile.businessName}
-            </span>
-          </div>
-        )}
-      </div>
-    </article>
+      {/* Customer Login Modal */}
+      <CustomerLoginModal
+        isOpen={showLogin}
+        onClose={() => setShowLogin(false)}
+        onSuccess={handleLoginSuccess}
+      />
+    </>
   );
 }

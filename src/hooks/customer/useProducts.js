@@ -10,6 +10,9 @@ export default function useProducts({
   page = 1,
   limit = 20,
   enabled = true,
+  latitude,
+  longitude,
+  radiusKm = 5,
 } = {}) {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -42,14 +45,23 @@ export default function useProducts({
       if (categoryId) params.set("categoryId", categoryId);
       if (shopId) params.set("shopId", shopId);
 
+      if (latitude !== undefined && longitude !== undefined) {
+        params.set("latitude", String(latitude));
+        params.set("longitude", String(longitude));
+        params.set("radiusKm", String(radiusKm));
+      }
+
       const response = await fetch(
         `/api/v1/products?${params.toString()}`,
-        { signal }
+        {
+          signal,
+          cache: "no-store",
+        }
       );
 
       const result = await response.json();
 
-      if (!response.ok) {
+      if (!response.ok || !result.success) {
         throw new Error(
           result.message || "Failed to fetch products."
         );
@@ -75,16 +87,24 @@ export default function useProducts({
         setLoading(false);
       }
     }
-  }, [search, categoryId, shopId, page, limit, enabled]);
+  }, [
+    search,
+    categoryId,
+    shopId,
+    page,
+    limit,
+    enabled,
+    latitude,
+    longitude,
+    radiusKm,
+  ]);
 
   useEffect(() => {
     const controller = new AbortController();
 
     fetchProducts(controller.signal);
 
-    return () => {
-      controller.abort();
-    };
+    return () => controller.abort();
   }, [fetchProducts]);
 
   return {

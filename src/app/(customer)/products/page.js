@@ -9,16 +9,23 @@ import {
   Package,
   RotateCcw,
   ArrowRight,
+  MapPin,
 } from "lucide-react";
 
 import useProducts from "@/hooks/customer/useProducts";
 import useCategories from "@/hooks/customer/useCategories";
 import ProductGrid from "@/components/customer/product/ProductGrid";
 import ProductFilters from "@/components/customer/product/ProductFilters";
+import { useLocationContext } from "@/context/customer/LocationContext";
 
 export default function ProductsPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
+
+  const {
+    selectedLocation,
+    isHydrated,
+  } = useLocationContext();
 
   const search = (
     searchParams.get("search") ||
@@ -36,34 +43,52 @@ export default function ProductsPage() {
     inStock: false,
   });
 
-  // Fetch Products
+  // Selected browsing location.
+  const latitude = selectedLocation?.latitude;
+  const longitude = selectedLocation?.longitude;
+
+  const hasLocation =
+    Number.isFinite(Number(latitude)) &&
+    Number.isFinite(Number(longitude)) &&
+    latitude !== null &&
+    longitude !== null;
+
+  // Fetch nearby products.
   const {
     products = [],
     loading,
     error,
+    total,
   } = useProducts({
     search,
     categoryId,
     page: 1,
     limit: 50,
+    enabled: isHydrated && hasLocation,
+    latitude: hasLocation ? latitude : undefined,
+    longitude: hasLocation ? longitude : undefined,
+    radiusKm: 5,
   });
 
-  // Fetch Categories
+  // Fetch categories.
   const { categories = [] } = useCategories();
 
-  // Client-side filtering
+  // Client-side filtering.
   const filteredProducts = useMemo(() => {
     return products.filter((product) => {
       const variants = (product.variants || []).filter(
         (variant) => variant.isActive !== false
       );
 
-      // Price Filter
       const minPrice =
-        filters.minPrice !== "" ? Number(filters.minPrice) : null;
+        filters.minPrice !== ""
+          ? Number(filters.minPrice)
+          : null;
 
       const maxPrice =
-        filters.maxPrice !== "" ? Number(filters.maxPrice) : null;
+        filters.maxPrice !== ""
+          ? Number(filters.maxPrice)
+          : null;
 
       if (
         minPrice !== null &&
@@ -79,6 +104,7 @@ export default function ProductsPage() {
         return false;
       }
 
+      // Price filter.
       if (minPrice !== null || maxPrice !== null) {
         const hasMatchingPrice = variants.some((variant) => {
           const price = Number(variant.price);
@@ -93,7 +119,7 @@ export default function ProductsPage() {
         if (!hasMatchingPrice) return false;
       }
 
-      // In-stock Filter
+      // In-stock filter.
       if (filters.inStock) {
         const hasStock = variants.some((variant) => {
           const availableStock =
@@ -106,7 +132,10 @@ export default function ProductsPage() {
                     Number(variant.inventory?.reservedQuantity || 0)
                 );
 
-          return Number.isFinite(availableStock) && availableStock > 0;
+          return (
+            Number.isFinite(availableStock) &&
+            availableStock > 0
+          );
         });
 
         if (!hasStock) return false;
@@ -116,7 +145,7 @@ export default function ProductsPage() {
     });
   }, [products, filters]);
 
-  // Active Filter Count
+  // Active filter count.
   const activeFilterCount = [
     filters.minPrice !== "",
     filters.maxPrice !== "",
@@ -124,7 +153,7 @@ export default function ProductsPage() {
     Boolean(categoryId),
   ].filter(Boolean).length;
 
-  // Handle Filters
+  // Handle filters.
   function handleFilterChange(nextFilters) {
     setFilters((previous) => ({
       ...previous,
@@ -136,7 +165,7 @@ export default function ProductsPage() {
     }
   }
 
-  // Reset Filters
+  // Reset filters.
   function handleResetFilters() {
     setFilters({
       minPrice: "",
@@ -147,7 +176,7 @@ export default function ProductsPage() {
     setCategoryId("");
   }
 
-  // Clear Search
+  // Clear search.
   function handleClearSearch() {
     const params = new URLSearchParams(searchParams.toString());
 
@@ -206,120 +235,158 @@ export default function ProductsPage() {
           </div>
         </div>
 
-        {/* Main Content */}
-        <div className="grid grid-cols-1 gap-6 lg:grid-cols-[250px_minmax(0,1fr)]">
+        {/* Location Loading */}
+        {!isHydrated ? (
+          <div className="rounded-2xl border border-gray-100 bg-white px-5 py-16 text-center">
+            <MapPin size={30} className="mx-auto animate-pulse text-green-700" />
+            <p className="mt-3 text-sm text-gray-500">
+              Loading your location...
+            </p>
+          </div>
+        ) : !hasLocation ? (
+          /* Location Required */
+          <div className="rounded-2xl border border-gray-100 bg-white px-5 py-16 text-center shadow-sm">
+            <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-green-50">
+              <MapPin size={30} className="text-green-700" />
+            </div>
 
-          {/* Desktop Filters */}
-          <aside className="hidden lg:block">
-            <div className="sticky top-24 overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-sm">
-              <div className="flex items-center justify-between border-b border-gray-100 px-5 py-4">
-                <div className="flex items-center gap-2">
-                  <SlidersHorizontal
-                    size={17}
-                    className="text-green-700"
+            <h3 className="mt-5 text-lg font-semibold text-gray-900">
+              Select your location
+            </h3>
+
+            <p className="mx-auto mt-2 max-w-sm text-sm leading-6 text-gray-500">
+              Select your current location to discover products
+              available from nearby shops within 5 km.
+            </p>
+
+            <p className="mt-4 text-sm font-medium text-green-700">
+              Use the location selector in the header to continue.
+            </p>
+          </div>
+        ) : (
+          <>
+            {/* Main Content */}
+            <div className="grid grid-cols-1 gap-6 lg:grid-cols-[250px_minmax(0,1fr)]">
+
+              {/* Desktop Filters */}
+              <aside className="hidden lg:block">
+                <div className="sticky top-24 overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-sm">
+                  <div className="flex items-center justify-between border-b border-gray-100 px-5 py-4">
+                    <div className="flex items-center gap-2">
+                      <SlidersHorizontal
+                        size={17}
+                        className="text-green-700"
+                      />
+                      <h2 className="font-semibold text-gray-900">
+                        Filters
+                      </h2>
+                    </div>
+
+                    {activeFilterCount > 0 && (
+                      <button
+                        type="button"
+                        onClick={handleResetFilters}
+                        className="text-xs font-semibold text-green-700 hover:text-green-800"
+                      >
+                        Reset all
+                      </button>
+                    )}
+                  </div>
+
+                  <div className="p-5">
+                    <ProductFilters {...filterProps} />
+                  </div>
+                </div>
+              </aside>
+
+              {/* Products Section */}
+              <section className="min-w-0">
+
+                {/* Results Toolbar */}
+                <div className="mb-5 flex items-center justify-between gap-3 rounded-xl border border-gray-100 bg-white px-4 py-3 shadow-sm">
+                  <div className="min-w-0">
+                    <h2 className="font-semibold text-gray-900">
+                      {search ? "Matching Products" : "Nearby Products"}
+                    </h2>
+
+                    <p className="mt-0.5 text-xs text-gray-500">
+                      {loading
+                        ? "Finding products..."
+                        : `${filteredProducts.length} of ${total} products found`}
+                    </p>
+
+                    <p className="mt-1 text-xs text-green-700">
+                      <MapPin size={12} className="mr-1 inline" />
+                      {selectedLocation.area || selectedLocation.city},{" "}
+                      Within 5 km
+                    </p>
+                  </div>
+
+                  {/* Mobile Filters */}
+                  <div className="lg:hidden">
+                    <ProductFilters {...filterProps} />
+                  </div>
+                </div>
+
+                {/* Product Results */}
+                {error ? (
+                  <div className="rounded-2xl border border-red-100 bg-white p-8 text-center">
+                    <p className="font-semibold text-red-600">
+                      Unable to load products
+                    </p>
+
+                    <p className="mt-2 text-sm text-gray-500">
+                      {error}
+                    </p>
+
+                    <button
+                      type="button"
+                      onClick={() => window.location.reload()}
+                      className="mt-4 inline-flex items-center gap-2 rounded-lg bg-green-700 px-4 py-2 text-sm font-semibold text-white hover:bg-green-800"
+                    >
+                      <RotateCcw size={15} />
+                      Try again
+                    </button>
+                  </div>
+                ) : !loading && filteredProducts.length === 0 ? (
+                  <div className="rounded-2xl border border-gray-100 bg-white px-5 py-16 text-center shadow-sm">
+                    <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-green-50">
+                      <Package size={30} className="text-green-700" />
+                    </div>
+
+                    <h3 className="mt-5 text-lg font-semibold text-gray-900">
+                      No nearby products found
+                    </h3>
+
+                    <p className="mx-auto mt-2 max-w-sm text-sm leading-6 text-gray-500">
+                      {filters.inStock
+                        ? "No in-stock products match your current filters."
+                        : search
+                          ? `We couldn't find any nearby products matching "${search}".`
+                          : "There are no products available within 5 km of your selected location."}
+                    </p>
+
+                    <button
+                      type="button"
+                      onClick={() => {
+                        handleResetFilters();
+                        if (search) handleClearSearch();
+                      }}
+                      className="mt-5 rounded-xl bg-green-700 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-green-800"
+                    >
+                      Clear filters
+                    </button>
+                  </div>
+                ) : (
+                  <ProductGrid
+                    products={filteredProducts}
+                    loading={loading}
                   />
-                  <h2 className="font-semibold text-gray-900">
-                    Filters
-                  </h2>
-                </div>
-
-                {activeFilterCount > 0 && (
-                  <button
-                    type="button"
-                    onClick={handleResetFilters}
-                    className="text-xs font-semibold text-green-700 hover:text-green-800"
-                  >
-                    Reset all
-                  </button>
                 )}
-              </div>
-
-              <div className="p-5">
-                <ProductFilters {...filterProps} />
-              </div>
+              </section>
             </div>
-          </aside>
-
-          {/* Products Section */}
-          <section className="min-w-0">
-
-            {/* Results Toolbar */}
-            <div className="mb-5 flex items-center justify-between gap-3 rounded-xl border border-gray-100 bg-white px-4 py-3 shadow-sm">
-              <div className="min-w-0">
-                <h2 className="font-semibold text-gray-900">
-                  {search ? "Matching Products" : "All Products"}
-                </h2>
-
-                <p className="mt-0.5 text-xs text-gray-500">
-                  {loading
-                    ? "Finding products..."
-                    : `${filteredProducts.length} products found`}
-                </p>
-              </div>
-
-              {/* Mobile Filters */}
-              <div className="lg:hidden">
-                <ProductFilters {...filterProps} />
-              </div>
-            </div>
-
-            {/* Product Results */}
-            {error ? (
-              <div className="rounded-2xl border border-red-100 bg-white p-8 text-center">
-                <p className="font-semibold text-red-600">
-                  Unable to load products
-                </p>
-
-                <p className="mt-2 text-sm text-gray-500">
-                  {error}
-                </p>
-
-                <button
-                  type="button"
-                  onClick={() => window.location.reload()}
-                  className="mt-4 inline-flex items-center gap-2 rounded-lg bg-green-700 px-4 py-2 text-sm font-semibold text-white hover:bg-green-800"
-                >
-                  <RotateCcw size={15} />
-                  Try again
-                </button>
-              </div>
-            ) : !loading && filteredProducts.length === 0 ? (
-              <div className="rounded-2xl border border-gray-100 bg-white px-5 py-16 text-center shadow-sm">
-                <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-green-50">
-                  <Package size={30} className="text-green-700" />
-                </div>
-
-                <h3 className="mt-5 text-lg font-semibold text-gray-900">
-                  No products found
-                </h3>
-
-                <p className="mx-auto mt-2 max-w-sm text-sm leading-6 text-gray-500">
-                  {filters.inStock
-                    ? "No in-stock products match your current filters. Try resetting your filters."
-                    : search
-                      ? `We couldn't find any products matching "${search}". Try another search.`
-                      : "Try changing your filters to discover more products."}
-                </p>
-
-                <button
-                  type="button"
-                  onClick={() => {
-                    handleResetFilters();
-                    if (search) handleClearSearch();
-                  }}
-                  className="mt-5 rounded-xl bg-green-700 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-green-800"
-                >
-                  Clear filters
-                </button>
-              </div>
-            ) : (
-              <ProductGrid
-                products={filteredProducts}
-                loading={loading}
-              />
-            )}
-          </section>
-        </div>
+          </>
+        )}
       </div>
     </div>
   );

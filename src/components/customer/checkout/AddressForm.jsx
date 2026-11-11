@@ -26,11 +26,15 @@ export default function AddressForm({
     ...initialValues,
   });
 
+  const [error, setError] = useState("");
+
   useEffect(() => {
     setForm({
       ...initialForm,
       ...initialValues,
     });
+
+    setError("");
   }, [initialValues]);
 
   function handleChange(event) {
@@ -40,35 +44,66 @@ export default function AddressForm({
       ...previous,
       [name]: value,
     }));
+
+    // Clear error when user edits the form
+    if (error) {
+      setError("");
+    }
   }
 
   async function handleSubmit(event) {
     event.preventDefault();
     setError("");
 
-    if (!/^[6-9]\d{9}$/.test(form.phone.trim())) {
+    const cleanedForm = {
+      ...form,
+      fullName: form.fullName.trim(),
+      phone: form.phone.trim(),
+      address: form.address.trim(),
+      landmark: form.landmark.trim(),
+      city: form.city.trim(),
+      state: form.state.trim(),
+      pincode: form.pincode.trim(),
+    };
+
+    if (!cleanedForm.fullName) {
+      setError("Please enter your full name.");
+      return;
+    }
+
+    if (!/^[6-9]\d{9}$/.test(cleanedForm.phone)) {
       setError("Please enter a valid 10-digit mobile number.");
       return;
     }
 
-    if (!/^\d{6}$/.test(form.pincode.trim())) {
+    if (!cleanedForm.address) {
+      setError("Please enter your complete address.");
+      return;
+    }
+
+    if (!/^\d{6}$/.test(cleanedForm.pincode)) {
       setError("Please enter a valid 6-digit pincode.");
       return;
     }
 
+    if (!cleanedForm.city) {
+      setError("Please enter your city.");
+      return;
+    }
+
+    if (!cleanedForm.state) {
+      setError("Please enter your state.");
+      return;
+    }
+
     try {
-      await onSubmit({
-        ...form,
-        fullName: form.fullName.trim(),
-        phone: form.phone.trim(),
-        address: form.address.trim(),
-        landmark: form.landmark.trim(),
-        city: form.city.trim(),
-        state: form.state.trim(),
-        pincode: form.pincode.trim(),
-      });
+      await onSubmit(cleanedForm);
     } catch (err) {
-      setError(err.message || "Unable to save address.");
+      console.error("Address form error:", err);
+
+      setError(
+        err.message || "Unable to save address. Please try again."
+      );
     }
   }
 
@@ -80,6 +115,7 @@ export default function AddressForm({
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
+
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
@@ -108,12 +144,16 @@ export default function AddressForm({
 
       {/* Error */}
       {error && (
-        <div className="rounded-lg bg-red-50 p-3 text-sm text-red-600">
+        <div
+          role="alert"
+          className="rounded-lg border border-red-100 bg-red-50 p-3 text-sm text-red-600"
+        >
           {error}
         </div>
       )}
 
       <div className="grid gap-4 sm:grid-cols-2">
+
         {/* Full Name */}
         <div>
           <label className={labelClass}>
@@ -263,6 +303,7 @@ export default function AddressForm({
 
       {/* Actions */}
       <div className="flex flex-col-reverse gap-3 border-t border-gray-100 pt-4 sm:flex-row sm:justify-end">
+
         <button
           type="button"
           onClick={onCancel}
@@ -278,7 +319,10 @@ export default function AddressForm({
           className="flex items-center justify-center gap-2 rounded-lg bg-black px-5 py-2.5 text-sm font-medium text-white hover:bg-gray-800 disabled:cursor-not-allowed disabled:opacity-60"
         >
           {saving && (
-            <Loader2 size={16} className="animate-spin" />
+            <Loader2
+              size={16}
+              className="animate-spin"
+            />
           )}
 
           {saving ? "Saving..." : "Save Address"}
