@@ -223,6 +223,7 @@ export type UserWhereInput = {
   cart?: Prisma.XOR<Prisma.CartNullableScalarRelationFilter, Prisma.CartWhereInput> | null
   reviewedDeliveryApplications?: Prisma.DeliveryPartnerProfileListRelationFilter
   deliveryPartnerReviewHistory?: Prisma.DeliveryPartnerApplicationHistoryListRelationFilter
+  supportTickets?: Prisma.SupportTicketListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -244,6 +245,7 @@ export type UserOrderByWithRelationInput = {
   cart?: Prisma.CartOrderByWithRelationInput
   reviewedDeliveryApplications?: Prisma.DeliveryPartnerProfileOrderByRelationAggregateInput
   deliveryPartnerReviewHistory?: Prisma.DeliveryPartnerApplicationHistoryOrderByRelationAggregateInput
+  supportTickets?: Prisma.SupportTicketOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -268,6 +270,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   cart?: Prisma.XOR<Prisma.CartNullableScalarRelationFilter, Prisma.CartWhereInput> | null
   reviewedDeliveryApplications?: Prisma.DeliveryPartnerProfileListRelationFilter
   deliveryPartnerReviewHistory?: Prisma.DeliveryPartnerApplicationHistoryListRelationFilter
+  supportTickets?: Prisma.SupportTicketListRelationFilter
 }, "id" | "phone" | "email">
 
 export type UserOrderByWithAggregationInput = {
@@ -319,6 +322,7 @@ export type UserCreateInput = {
   cart?: Prisma.CartCreateNestedOneWithoutUserInput
   reviewedDeliveryApplications?: Prisma.DeliveryPartnerProfileCreateNestedManyWithoutReviewedByInput
   deliveryPartnerReviewHistory?: Prisma.DeliveryPartnerApplicationHistoryCreateNestedManyWithoutReviewedByInput
+  supportTickets?: Prisma.SupportTicketCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -340,6 +344,7 @@ export type UserUncheckedCreateInput = {
   cart?: Prisma.CartUncheckedCreateNestedOneWithoutUserInput
   reviewedDeliveryApplications?: Prisma.DeliveryPartnerProfileUncheckedCreateNestedManyWithoutReviewedByInput
   deliveryPartnerReviewHistory?: Prisma.DeliveryPartnerApplicationHistoryUncheckedCreateNestedManyWithoutReviewedByInput
+  supportTickets?: Prisma.SupportTicketUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserUpdateInput = {
@@ -361,6 +366,7 @@ export type UserUpdateInput = {
   cart?: Prisma.CartUpdateOneWithoutUserNestedInput
   reviewedDeliveryApplications?: Prisma.DeliveryPartnerProfileUpdateManyWithoutReviewedByNestedInput
   deliveryPartnerReviewHistory?: Prisma.DeliveryPartnerApplicationHistoryUpdateManyWithoutReviewedByNestedInput
+  supportTickets?: Prisma.SupportTicketUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -382,6 +388,7 @@ export type UserUncheckedUpdateInput = {
   cart?: Prisma.CartUncheckedUpdateOneWithoutUserNestedInput
   reviewedDeliveryApplications?: Prisma.DeliveryPartnerProfileUncheckedUpdateManyWithoutReviewedByNestedInput
   deliveryPartnerReviewHistory?: Prisma.DeliveryPartnerApplicationHistoryUncheckedUpdateManyWithoutReviewedByNestedInput
+  supportTickets?: Prisma.SupportTicketUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -620,6 +627,20 @@ export type UserUpdateOneRequiredWithoutCartNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutCartInput, Prisma.UserUpdateWithoutCartInput>, Prisma.UserUncheckedUpdateWithoutCartInput>
 }
 
+export type UserCreateNestedOneWithoutSupportTicketsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutSupportTicketsInput, Prisma.UserUncheckedCreateWithoutSupportTicketsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutSupportTicketsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutSupportTicketsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutSupportTicketsInput, Prisma.UserUncheckedCreateWithoutSupportTicketsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutSupportTicketsInput
+  upsert?: Prisma.UserUpsertWithoutSupportTicketsInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutSupportTicketsInput, Prisma.UserUpdateWithoutSupportTicketsInput>, Prisma.UserUncheckedUpdateWithoutSupportTicketsInput>
+}
+
 export type UserCreateWithoutOtpVerificationsInput = {
   id?: string
   phone: string
@@ -638,6 +659,7 @@ export type UserCreateWithoutOtpVerificationsInput = {
   cart?: Prisma.CartCreateNestedOneWithoutUserInput
   reviewedDeliveryApplications?: Prisma.DeliveryPartnerProfileCreateNestedManyWithoutReviewedByInput
   deliveryPartnerReviewHistory?: Prisma.DeliveryPartnerApplicationHistoryCreateNestedManyWithoutReviewedByInput
+  supportTickets?: Prisma.SupportTicketCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutOtpVerificationsInput = {
@@ -658,6 +680,7 @@ export type UserUncheckedCreateWithoutOtpVerificationsInput = {
   cart?: Prisma.CartUncheckedCreateNestedOneWithoutUserInput
   reviewedDeliveryApplications?: Prisma.DeliveryPartnerProfileUncheckedCreateNestedManyWithoutReviewedByInput
   deliveryPartnerReviewHistory?: Prisma.DeliveryPartnerApplicationHistoryUncheckedCreateNestedManyWithoutReviewedByInput
+  supportTickets?: Prisma.SupportTicketUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutOtpVerificationsInput = {
@@ -694,6 +717,7 @@ export type UserUpdateWithoutOtpVerificationsInput = {
   cart?: Prisma.CartUpdateOneWithoutUserNestedInput
   reviewedDeliveryApplications?: Prisma.DeliveryPartnerProfileUpdateManyWithoutReviewedByNestedInput
   deliveryPartnerReviewHistory?: Prisma.DeliveryPartnerApplicationHistoryUpdateManyWithoutReviewedByNestedInput
+  supportTickets?: Prisma.SupportTicketUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutOtpVerificationsInput = {
@@ -714,6 +738,7 @@ export type UserUncheckedUpdateWithoutOtpVerificationsInput = {
   cart?: Prisma.CartUncheckedUpdateOneWithoutUserNestedInput
   reviewedDeliveryApplications?: Prisma.DeliveryPartnerProfileUncheckedUpdateManyWithoutReviewedByNestedInput
   deliveryPartnerReviewHistory?: Prisma.DeliveryPartnerApplicationHistoryUncheckedUpdateManyWithoutReviewedByNestedInput
+  supportTickets?: Prisma.SupportTicketUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutSellerProfileInput = {
@@ -734,6 +759,7 @@ export type UserCreateWithoutSellerProfileInput = {
   cart?: Prisma.CartCreateNestedOneWithoutUserInput
   reviewedDeliveryApplications?: Prisma.DeliveryPartnerProfileCreateNestedManyWithoutReviewedByInput
   deliveryPartnerReviewHistory?: Prisma.DeliveryPartnerApplicationHistoryCreateNestedManyWithoutReviewedByInput
+  supportTickets?: Prisma.SupportTicketCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutSellerProfileInput = {
@@ -754,6 +780,7 @@ export type UserUncheckedCreateWithoutSellerProfileInput = {
   cart?: Prisma.CartUncheckedCreateNestedOneWithoutUserInput
   reviewedDeliveryApplications?: Prisma.DeliveryPartnerProfileUncheckedCreateNestedManyWithoutReviewedByInput
   deliveryPartnerReviewHistory?: Prisma.DeliveryPartnerApplicationHistoryUncheckedCreateNestedManyWithoutReviewedByInput
+  supportTickets?: Prisma.SupportTicketUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutSellerProfileInput = {
@@ -790,6 +817,7 @@ export type UserUpdateWithoutSellerProfileInput = {
   cart?: Prisma.CartUpdateOneWithoutUserNestedInput
   reviewedDeliveryApplications?: Prisma.DeliveryPartnerProfileUpdateManyWithoutReviewedByNestedInput
   deliveryPartnerReviewHistory?: Prisma.DeliveryPartnerApplicationHistoryUpdateManyWithoutReviewedByNestedInput
+  supportTickets?: Prisma.SupportTicketUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutSellerProfileInput = {
@@ -810,6 +838,7 @@ export type UserUncheckedUpdateWithoutSellerProfileInput = {
   cart?: Prisma.CartUncheckedUpdateOneWithoutUserNestedInput
   reviewedDeliveryApplications?: Prisma.DeliveryPartnerProfileUncheckedUpdateManyWithoutReviewedByNestedInput
   deliveryPartnerReviewHistory?: Prisma.DeliveryPartnerApplicationHistoryUncheckedUpdateManyWithoutReviewedByNestedInput
+  supportTickets?: Prisma.SupportTicketUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutReviewedDeliveryApplicationsInput = {
@@ -830,6 +859,7 @@ export type UserCreateWithoutReviewedDeliveryApplicationsInput = {
   addresses?: Prisma.AddressCreateNestedManyWithoutUserInput
   cart?: Prisma.CartCreateNestedOneWithoutUserInput
   deliveryPartnerReviewHistory?: Prisma.DeliveryPartnerApplicationHistoryCreateNestedManyWithoutReviewedByInput
+  supportTickets?: Prisma.SupportTicketCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutReviewedDeliveryApplicationsInput = {
@@ -850,6 +880,7 @@ export type UserUncheckedCreateWithoutReviewedDeliveryApplicationsInput = {
   addresses?: Prisma.AddressUncheckedCreateNestedManyWithoutUserInput
   cart?: Prisma.CartUncheckedCreateNestedOneWithoutUserInput
   deliveryPartnerReviewHistory?: Prisma.DeliveryPartnerApplicationHistoryUncheckedCreateNestedManyWithoutReviewedByInput
+  supportTickets?: Prisma.SupportTicketUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutReviewedDeliveryApplicationsInput = {
@@ -875,6 +906,7 @@ export type UserCreateWithoutDeliveryProfileInput = {
   cart?: Prisma.CartCreateNestedOneWithoutUserInput
   reviewedDeliveryApplications?: Prisma.DeliveryPartnerProfileCreateNestedManyWithoutReviewedByInput
   deliveryPartnerReviewHistory?: Prisma.DeliveryPartnerApplicationHistoryCreateNestedManyWithoutReviewedByInput
+  supportTickets?: Prisma.SupportTicketCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutDeliveryProfileInput = {
@@ -895,6 +927,7 @@ export type UserUncheckedCreateWithoutDeliveryProfileInput = {
   cart?: Prisma.CartUncheckedCreateNestedOneWithoutUserInput
   reviewedDeliveryApplications?: Prisma.DeliveryPartnerProfileUncheckedCreateNestedManyWithoutReviewedByInput
   deliveryPartnerReviewHistory?: Prisma.DeliveryPartnerApplicationHistoryUncheckedCreateNestedManyWithoutReviewedByInput
+  supportTickets?: Prisma.SupportTicketUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutDeliveryProfileInput = {
@@ -931,6 +964,7 @@ export type UserUpdateWithoutReviewedDeliveryApplicationsInput = {
   addresses?: Prisma.AddressUpdateManyWithoutUserNestedInput
   cart?: Prisma.CartUpdateOneWithoutUserNestedInput
   deliveryPartnerReviewHistory?: Prisma.DeliveryPartnerApplicationHistoryUpdateManyWithoutReviewedByNestedInput
+  supportTickets?: Prisma.SupportTicketUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutReviewedDeliveryApplicationsInput = {
@@ -951,6 +985,7 @@ export type UserUncheckedUpdateWithoutReviewedDeliveryApplicationsInput = {
   addresses?: Prisma.AddressUncheckedUpdateManyWithoutUserNestedInput
   cart?: Prisma.CartUncheckedUpdateOneWithoutUserNestedInput
   deliveryPartnerReviewHistory?: Prisma.DeliveryPartnerApplicationHistoryUncheckedUpdateManyWithoutReviewedByNestedInput
+  supportTickets?: Prisma.SupportTicketUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserUpsertWithoutDeliveryProfileInput = {
@@ -982,6 +1017,7 @@ export type UserUpdateWithoutDeliveryProfileInput = {
   cart?: Prisma.CartUpdateOneWithoutUserNestedInput
   reviewedDeliveryApplications?: Prisma.DeliveryPartnerProfileUpdateManyWithoutReviewedByNestedInput
   deliveryPartnerReviewHistory?: Prisma.DeliveryPartnerApplicationHistoryUpdateManyWithoutReviewedByNestedInput
+  supportTickets?: Prisma.SupportTicketUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutDeliveryProfileInput = {
@@ -1002,6 +1038,7 @@ export type UserUncheckedUpdateWithoutDeliveryProfileInput = {
   cart?: Prisma.CartUncheckedUpdateOneWithoutUserNestedInput
   reviewedDeliveryApplications?: Prisma.DeliveryPartnerProfileUncheckedUpdateManyWithoutReviewedByNestedInput
   deliveryPartnerReviewHistory?: Prisma.DeliveryPartnerApplicationHistoryUncheckedUpdateManyWithoutReviewedByNestedInput
+  supportTickets?: Prisma.SupportTicketUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutDeliveryPartnerReviewHistoryInput = {
@@ -1022,6 +1059,7 @@ export type UserCreateWithoutDeliveryPartnerReviewHistoryInput = {
   addresses?: Prisma.AddressCreateNestedManyWithoutUserInput
   cart?: Prisma.CartCreateNestedOneWithoutUserInput
   reviewedDeliveryApplications?: Prisma.DeliveryPartnerProfileCreateNestedManyWithoutReviewedByInput
+  supportTickets?: Prisma.SupportTicketCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutDeliveryPartnerReviewHistoryInput = {
@@ -1042,6 +1080,7 @@ export type UserUncheckedCreateWithoutDeliveryPartnerReviewHistoryInput = {
   addresses?: Prisma.AddressUncheckedCreateNestedManyWithoutUserInput
   cart?: Prisma.CartUncheckedCreateNestedOneWithoutUserInput
   reviewedDeliveryApplications?: Prisma.DeliveryPartnerProfileUncheckedCreateNestedManyWithoutReviewedByInput
+  supportTickets?: Prisma.SupportTicketUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutDeliveryPartnerReviewHistoryInput = {
@@ -1078,6 +1117,7 @@ export type UserUpdateWithoutDeliveryPartnerReviewHistoryInput = {
   addresses?: Prisma.AddressUpdateManyWithoutUserNestedInput
   cart?: Prisma.CartUpdateOneWithoutUserNestedInput
   reviewedDeliveryApplications?: Prisma.DeliveryPartnerProfileUpdateManyWithoutReviewedByNestedInput
+  supportTickets?: Prisma.SupportTicketUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutDeliveryPartnerReviewHistoryInput = {
@@ -1098,6 +1138,7 @@ export type UserUncheckedUpdateWithoutDeliveryPartnerReviewHistoryInput = {
   addresses?: Prisma.AddressUncheckedUpdateManyWithoutUserNestedInput
   cart?: Prisma.CartUncheckedUpdateOneWithoutUserNestedInput
   reviewedDeliveryApplications?: Prisma.DeliveryPartnerProfileUncheckedUpdateManyWithoutReviewedByNestedInput
+  supportTickets?: Prisma.SupportTicketUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutCustomerOrdersInput = {
@@ -1118,6 +1159,7 @@ export type UserCreateWithoutCustomerOrdersInput = {
   cart?: Prisma.CartCreateNestedOneWithoutUserInput
   reviewedDeliveryApplications?: Prisma.DeliveryPartnerProfileCreateNestedManyWithoutReviewedByInput
   deliveryPartnerReviewHistory?: Prisma.DeliveryPartnerApplicationHistoryCreateNestedManyWithoutReviewedByInput
+  supportTickets?: Prisma.SupportTicketCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutCustomerOrdersInput = {
@@ -1138,6 +1180,7 @@ export type UserUncheckedCreateWithoutCustomerOrdersInput = {
   cart?: Prisma.CartUncheckedCreateNestedOneWithoutUserInput
   reviewedDeliveryApplications?: Prisma.DeliveryPartnerProfileUncheckedCreateNestedManyWithoutReviewedByInput
   deliveryPartnerReviewHistory?: Prisma.DeliveryPartnerApplicationHistoryUncheckedCreateNestedManyWithoutReviewedByInput
+  supportTickets?: Prisma.SupportTicketUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutCustomerOrdersInput = {
@@ -1174,6 +1217,7 @@ export type UserUpdateWithoutCustomerOrdersInput = {
   cart?: Prisma.CartUpdateOneWithoutUserNestedInput
   reviewedDeliveryApplications?: Prisma.DeliveryPartnerProfileUpdateManyWithoutReviewedByNestedInput
   deliveryPartnerReviewHistory?: Prisma.DeliveryPartnerApplicationHistoryUpdateManyWithoutReviewedByNestedInput
+  supportTickets?: Prisma.SupportTicketUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCustomerOrdersInput = {
@@ -1194,6 +1238,7 @@ export type UserUncheckedUpdateWithoutCustomerOrdersInput = {
   cart?: Prisma.CartUncheckedUpdateOneWithoutUserNestedInput
   reviewedDeliveryApplications?: Prisma.DeliveryPartnerProfileUncheckedUpdateManyWithoutReviewedByNestedInput
   deliveryPartnerReviewHistory?: Prisma.DeliveryPartnerApplicationHistoryUncheckedUpdateManyWithoutReviewedByNestedInput
+  supportTickets?: Prisma.SupportTicketUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutProductViewsInput = {
@@ -1214,6 +1259,7 @@ export type UserCreateWithoutProductViewsInput = {
   cart?: Prisma.CartCreateNestedOneWithoutUserInput
   reviewedDeliveryApplications?: Prisma.DeliveryPartnerProfileCreateNestedManyWithoutReviewedByInput
   deliveryPartnerReviewHistory?: Prisma.DeliveryPartnerApplicationHistoryCreateNestedManyWithoutReviewedByInput
+  supportTickets?: Prisma.SupportTicketCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutProductViewsInput = {
@@ -1234,6 +1280,7 @@ export type UserUncheckedCreateWithoutProductViewsInput = {
   cart?: Prisma.CartUncheckedCreateNestedOneWithoutUserInput
   reviewedDeliveryApplications?: Prisma.DeliveryPartnerProfileUncheckedCreateNestedManyWithoutReviewedByInput
   deliveryPartnerReviewHistory?: Prisma.DeliveryPartnerApplicationHistoryUncheckedCreateNestedManyWithoutReviewedByInput
+  supportTickets?: Prisma.SupportTicketUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutProductViewsInput = {
@@ -1270,6 +1317,7 @@ export type UserUpdateWithoutProductViewsInput = {
   cart?: Prisma.CartUpdateOneWithoutUserNestedInput
   reviewedDeliveryApplications?: Prisma.DeliveryPartnerProfileUpdateManyWithoutReviewedByNestedInput
   deliveryPartnerReviewHistory?: Prisma.DeliveryPartnerApplicationHistoryUpdateManyWithoutReviewedByNestedInput
+  supportTickets?: Prisma.SupportTicketUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutProductViewsInput = {
@@ -1290,6 +1338,7 @@ export type UserUncheckedUpdateWithoutProductViewsInput = {
   cart?: Prisma.CartUncheckedUpdateOneWithoutUserNestedInput
   reviewedDeliveryApplications?: Prisma.DeliveryPartnerProfileUncheckedUpdateManyWithoutReviewedByNestedInput
   deliveryPartnerReviewHistory?: Prisma.DeliveryPartnerApplicationHistoryUncheckedUpdateManyWithoutReviewedByNestedInput
+  supportTickets?: Prisma.SupportTicketUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutAddressesInput = {
@@ -1310,6 +1359,7 @@ export type UserCreateWithoutAddressesInput = {
   cart?: Prisma.CartCreateNestedOneWithoutUserInput
   reviewedDeliveryApplications?: Prisma.DeliveryPartnerProfileCreateNestedManyWithoutReviewedByInput
   deliveryPartnerReviewHistory?: Prisma.DeliveryPartnerApplicationHistoryCreateNestedManyWithoutReviewedByInput
+  supportTickets?: Prisma.SupportTicketCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutAddressesInput = {
@@ -1330,6 +1380,7 @@ export type UserUncheckedCreateWithoutAddressesInput = {
   cart?: Prisma.CartUncheckedCreateNestedOneWithoutUserInput
   reviewedDeliveryApplications?: Prisma.DeliveryPartnerProfileUncheckedCreateNestedManyWithoutReviewedByInput
   deliveryPartnerReviewHistory?: Prisma.DeliveryPartnerApplicationHistoryUncheckedCreateNestedManyWithoutReviewedByInput
+  supportTickets?: Prisma.SupportTicketUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutAddressesInput = {
@@ -1366,6 +1417,7 @@ export type UserUpdateWithoutAddressesInput = {
   cart?: Prisma.CartUpdateOneWithoutUserNestedInput
   reviewedDeliveryApplications?: Prisma.DeliveryPartnerProfileUpdateManyWithoutReviewedByNestedInput
   deliveryPartnerReviewHistory?: Prisma.DeliveryPartnerApplicationHistoryUpdateManyWithoutReviewedByNestedInput
+  supportTickets?: Prisma.SupportTicketUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutAddressesInput = {
@@ -1386,6 +1438,7 @@ export type UserUncheckedUpdateWithoutAddressesInput = {
   cart?: Prisma.CartUncheckedUpdateOneWithoutUserNestedInput
   reviewedDeliveryApplications?: Prisma.DeliveryPartnerProfileUncheckedUpdateManyWithoutReviewedByNestedInput
   deliveryPartnerReviewHistory?: Prisma.DeliveryPartnerApplicationHistoryUncheckedUpdateManyWithoutReviewedByNestedInput
+  supportTickets?: Prisma.SupportTicketUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutCartInput = {
@@ -1406,6 +1459,7 @@ export type UserCreateWithoutCartInput = {
   addresses?: Prisma.AddressCreateNestedManyWithoutUserInput
   reviewedDeliveryApplications?: Prisma.DeliveryPartnerProfileCreateNestedManyWithoutReviewedByInput
   deliveryPartnerReviewHistory?: Prisma.DeliveryPartnerApplicationHistoryCreateNestedManyWithoutReviewedByInput
+  supportTickets?: Prisma.SupportTicketCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutCartInput = {
@@ -1426,6 +1480,7 @@ export type UserUncheckedCreateWithoutCartInput = {
   addresses?: Prisma.AddressUncheckedCreateNestedManyWithoutUserInput
   reviewedDeliveryApplications?: Prisma.DeliveryPartnerProfileUncheckedCreateNestedManyWithoutReviewedByInput
   deliveryPartnerReviewHistory?: Prisma.DeliveryPartnerApplicationHistoryUncheckedCreateNestedManyWithoutReviewedByInput
+  supportTickets?: Prisma.SupportTicketUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutCartInput = {
@@ -1462,6 +1517,7 @@ export type UserUpdateWithoutCartInput = {
   addresses?: Prisma.AddressUpdateManyWithoutUserNestedInput
   reviewedDeliveryApplications?: Prisma.DeliveryPartnerProfileUpdateManyWithoutReviewedByNestedInput
   deliveryPartnerReviewHistory?: Prisma.DeliveryPartnerApplicationHistoryUpdateManyWithoutReviewedByNestedInput
+  supportTickets?: Prisma.SupportTicketUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCartInput = {
@@ -1482,6 +1538,107 @@ export type UserUncheckedUpdateWithoutCartInput = {
   addresses?: Prisma.AddressUncheckedUpdateManyWithoutUserNestedInput
   reviewedDeliveryApplications?: Prisma.DeliveryPartnerProfileUncheckedUpdateManyWithoutReviewedByNestedInput
   deliveryPartnerReviewHistory?: Prisma.DeliveryPartnerApplicationHistoryUncheckedUpdateManyWithoutReviewedByNestedInput
+  supportTickets?: Prisma.SupportTicketUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserCreateWithoutSupportTicketsInput = {
+  id?: string
+  phone: string
+  name?: string | null
+  email?: string | null
+  passwordHash?: string | null
+  role?: $Enums.UserRole
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  otpVerifications?: Prisma.OtpVerificationCreateNestedManyWithoutUserInput
+  sellerProfile?: Prisma.SellerProfileCreateNestedOneWithoutUserInput
+  deliveryProfile?: Prisma.DeliveryPartnerProfileCreateNestedOneWithoutUserInput
+  customerOrders?: Prisma.OrderCreateNestedManyWithoutCustomerInput
+  productViews?: Prisma.ProductViewCreateNestedManyWithoutUserInput
+  addresses?: Prisma.AddressCreateNestedManyWithoutUserInput
+  cart?: Prisma.CartCreateNestedOneWithoutUserInput
+  reviewedDeliveryApplications?: Prisma.DeliveryPartnerProfileCreateNestedManyWithoutReviewedByInput
+  deliveryPartnerReviewHistory?: Prisma.DeliveryPartnerApplicationHistoryCreateNestedManyWithoutReviewedByInput
+}
+
+export type UserUncheckedCreateWithoutSupportTicketsInput = {
+  id?: string
+  phone: string
+  name?: string | null
+  email?: string | null
+  passwordHash?: string | null
+  role?: $Enums.UserRole
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  otpVerifications?: Prisma.OtpVerificationUncheckedCreateNestedManyWithoutUserInput
+  sellerProfile?: Prisma.SellerProfileUncheckedCreateNestedOneWithoutUserInput
+  deliveryProfile?: Prisma.DeliveryPartnerProfileUncheckedCreateNestedOneWithoutUserInput
+  customerOrders?: Prisma.OrderUncheckedCreateNestedManyWithoutCustomerInput
+  productViews?: Prisma.ProductViewUncheckedCreateNestedManyWithoutUserInput
+  addresses?: Prisma.AddressUncheckedCreateNestedManyWithoutUserInput
+  cart?: Prisma.CartUncheckedCreateNestedOneWithoutUserInput
+  reviewedDeliveryApplications?: Prisma.DeliveryPartnerProfileUncheckedCreateNestedManyWithoutReviewedByInput
+  deliveryPartnerReviewHistory?: Prisma.DeliveryPartnerApplicationHistoryUncheckedCreateNestedManyWithoutReviewedByInput
+}
+
+export type UserCreateOrConnectWithoutSupportTicketsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutSupportTicketsInput, Prisma.UserUncheckedCreateWithoutSupportTicketsInput>
+}
+
+export type UserUpsertWithoutSupportTicketsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutSupportTicketsInput, Prisma.UserUncheckedUpdateWithoutSupportTicketsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutSupportTicketsInput, Prisma.UserUncheckedCreateWithoutSupportTicketsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutSupportTicketsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutSupportTicketsInput, Prisma.UserUncheckedUpdateWithoutSupportTicketsInput>
+}
+
+export type UserUpdateWithoutSupportTicketsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  otpVerifications?: Prisma.OtpVerificationUpdateManyWithoutUserNestedInput
+  sellerProfile?: Prisma.SellerProfileUpdateOneWithoutUserNestedInput
+  deliveryProfile?: Prisma.DeliveryPartnerProfileUpdateOneWithoutUserNestedInput
+  customerOrders?: Prisma.OrderUpdateManyWithoutCustomerNestedInput
+  productViews?: Prisma.ProductViewUpdateManyWithoutUserNestedInput
+  addresses?: Prisma.AddressUpdateManyWithoutUserNestedInput
+  cart?: Prisma.CartUpdateOneWithoutUserNestedInput
+  reviewedDeliveryApplications?: Prisma.DeliveryPartnerProfileUpdateManyWithoutReviewedByNestedInput
+  deliveryPartnerReviewHistory?: Prisma.DeliveryPartnerApplicationHistoryUpdateManyWithoutReviewedByNestedInput
+}
+
+export type UserUncheckedUpdateWithoutSupportTicketsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  otpVerifications?: Prisma.OtpVerificationUncheckedUpdateManyWithoutUserNestedInput
+  sellerProfile?: Prisma.SellerProfileUncheckedUpdateOneWithoutUserNestedInput
+  deliveryProfile?: Prisma.DeliveryPartnerProfileUncheckedUpdateOneWithoutUserNestedInput
+  customerOrders?: Prisma.OrderUncheckedUpdateManyWithoutCustomerNestedInput
+  productViews?: Prisma.ProductViewUncheckedUpdateManyWithoutUserNestedInput
+  addresses?: Prisma.AddressUncheckedUpdateManyWithoutUserNestedInput
+  cart?: Prisma.CartUncheckedUpdateOneWithoutUserNestedInput
+  reviewedDeliveryApplications?: Prisma.DeliveryPartnerProfileUncheckedUpdateManyWithoutReviewedByNestedInput
+  deliveryPartnerReviewHistory?: Prisma.DeliveryPartnerApplicationHistoryUncheckedUpdateManyWithoutReviewedByNestedInput
 }
 
 
@@ -1496,6 +1653,7 @@ export type UserCountOutputType = {
   addresses: number
   reviewedDeliveryApplications: number
   deliveryPartnerReviewHistory: number
+  supportTickets: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1505,6 +1663,7 @@ export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.I
   addresses?: boolean | UserCountOutputTypeCountAddressesArgs
   reviewedDeliveryApplications?: boolean | UserCountOutputTypeCountReviewedDeliveryApplicationsArgs
   deliveryPartnerReviewHistory?: boolean | UserCountOutputTypeCountDeliveryPartnerReviewHistoryArgs
+  supportTickets?: boolean | UserCountOutputTypeCountSupportTicketsArgs
 }
 
 /**
@@ -1559,6 +1718,13 @@ export type UserCountOutputTypeCountDeliveryPartnerReviewHistoryArgs<ExtArgs ext
   where?: Prisma.DeliveryPartnerApplicationHistoryWhereInput
 }
 
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountSupportTicketsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.SupportTicketWhereInput
+}
+
 
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -1579,6 +1745,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   cart?: boolean | Prisma.User$cartArgs<ExtArgs>
   reviewedDeliveryApplications?: boolean | Prisma.User$reviewedDeliveryApplicationsArgs<ExtArgs>
   deliveryPartnerReviewHistory?: boolean | Prisma.User$deliveryPartnerReviewHistoryArgs<ExtArgs>
+  supportTickets?: boolean | Prisma.User$supportTicketsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -1629,6 +1796,7 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   cart?: boolean | Prisma.User$cartArgs<ExtArgs>
   reviewedDeliveryApplications?: boolean | Prisma.User$reviewedDeliveryApplicationsArgs<ExtArgs>
   deliveryPartnerReviewHistory?: boolean | Prisma.User$deliveryPartnerReviewHistoryArgs<ExtArgs>
+  supportTickets?: boolean | Prisma.User$supportTicketsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -1646,6 +1814,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     cart: Prisma.$CartPayload<ExtArgs> | null
     reviewedDeliveryApplications: Prisma.$DeliveryPartnerProfilePayload<ExtArgs>[]
     deliveryPartnerReviewHistory: Prisma.$DeliveryPartnerApplicationHistoryPayload<ExtArgs>[]
+    supportTickets: Prisma.$SupportTicketPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -2060,6 +2229,7 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   cart<T extends Prisma.User$cartArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$cartArgs<ExtArgs>>): Prisma.Prisma__CartClient<runtime.Types.Result.GetResult<Prisma.$CartPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   reviewedDeliveryApplications<T extends Prisma.User$reviewedDeliveryApplicationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$reviewedDeliveryApplicationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DeliveryPartnerProfilePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   deliveryPartnerReviewHistory<T extends Prisma.User$deliveryPartnerReviewHistoryArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$deliveryPartnerReviewHistoryArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DeliveryPartnerApplicationHistoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  supportTickets<T extends Prisma.User$supportTicketsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$supportTicketsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SupportTicketPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2689,6 +2859,30 @@ export type User$deliveryPartnerReviewHistoryArgs<ExtArgs extends runtime.Types.
   take?: number
   skip?: number
   distinct?: Prisma.DeliveryPartnerApplicationHistoryScalarFieldEnum | Prisma.DeliveryPartnerApplicationHistoryScalarFieldEnum[]
+}
+
+/**
+ * User.supportTickets
+ */
+export type User$supportTicketsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the SupportTicket
+   */
+  select?: Prisma.SupportTicketSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the SupportTicket
+   */
+  omit?: Prisma.SupportTicketOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SupportTicketInclude<ExtArgs> | null
+  where?: Prisma.SupportTicketWhereInput
+  orderBy?: Prisma.SupportTicketOrderByWithRelationInput | Prisma.SupportTicketOrderByWithRelationInput[]
+  cursor?: Prisma.SupportTicketWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.SupportTicketScalarFieldEnum | Prisma.SupportTicketScalarFieldEnum[]
 }
 
 /**

@@ -161,3 +161,8 @@ export type DeliveryZone = Prisma.DeliveryZoneModel
  * 
  */
 export type DeliveryZonePincode = Prisma.DeliveryZonePincodeModel
+/**
+ * Model SupportTicket
+ * 
+ */
+export type SupportTicket = Prisma.SupportTicketModel

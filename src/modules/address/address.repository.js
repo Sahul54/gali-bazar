@@ -58,31 +58,57 @@ export async function deleteAddress(id, userId) {
   return result.count > 0;
 }
 
+
 // Set an address as default
 export async function setDefaultAddress(id, userId) {
-  return prisma.$transaction(async (tx) => {
-    // Check address ownership
-    const address = await tx.address.findFirst({
-      where: {
-        id,
-        userId,
-      },
-    });
+  return prisma.$transaction(
+    async (tx) => {
+      // Check address ownership
+      const address = await tx.address.findFirst({
+        where: {
+          id,
+          userId,
+        },
+      });
 
-    if (!address) {
-      return null;
+      if (!address) {
+        return null;
+      }
+
+      // Remove default from customer's other addresses
+      await tx.address.updateMany({
+        where: {
+          userId,
+          isDefault: true,
+        },
+        data: {
+          isDefault: false,
+        },
+      });
+
+      // Set selected address as default
+      await tx.address.updateMany({
+        where: {
+          id,
+          userId,
+        },
+        data: {
+          isDefault: true,
+        },
+      });
+
+      // Return updated address
+      return tx.address.findFirst({
+        where: {
+          id,
+          userId,
+        },
+      });
+    },
+    {
+      maxWait: 10000,
+      timeout: 20000,
     }
-
-    // Remove default from all customer addresses
-    await tx.address.updateMany({
-      where: { userId },
-      data: { isDefault: false },
-    });
-
-    // Set selected address as default
-    return tx.address.update({
-      where: { id },
-      data: { isDefault: true },
-    });
-  });
+  );
 }
+
