@@ -145,3 +145,59 @@ Duplicate SKU protection, category validation, seller authorization aur stock co
 4. Downloadable Import Reports
 
 Har failed row ka reason aur successful import ka summary download karna.
+
+
+
+src/
+├── app/
+│   └── account/
+│       ├── layout.jsx
+│       ├── page.jsx
+│       ├── profile/
+│       │   └── page.jsx
+│       ├── orders/
+│       │   ├── page.jsx
+│       │   └── [id]/
+│       │       └── page.jsx
+│       ├── addresses/
+│       │   └── page.jsx
+│       ├── cart/
+│       │   └── page.jsx
+│       ├── recently-viewed/
+│       │   └── page.jsx
+│       └── support/
+│           └── page.jsx
+│
+├── components/
+│   └── customer/
+│       └── account/
+│           ├── AccountLayout.jsx
+│           ├── AccountSidebar.jsx
+│           ├── AccountOverview.jsx
+│           ├── WelcomeBanner.jsx
+│           ├── StatCard.jsx
+│           ├── ActiveOrderCard.jsx
+│           ├── RecentOrders.jsx
+│           ├── OrderCard.jsx
+│           ├── OrderStatusBadge.jsx
+│           ├── DefaultAddressCard.jsx
+│           ├── QuickAccess.jsx
+│           ├── SupportCard.jsx
+│           ├── ExploreMarketCard.jsx
+│           ├── SectionHeading.jsx
+│           ├── EmptyState.jsx
+│           ├── AccountLoader.jsx
+│           └── AccountError.jsx
+│
+├── lib/
+│   └── account/
+│       ├── constants.js
+│       ├── helpers.js
+│       └── validations.js
+│
+└── app/
+    └── api/
+        └── v1/
+            └── customer/
+                └── profile/
+                    └── route.js

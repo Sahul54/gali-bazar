@@ -136,3 +136,24 @@ export const DeliveryBatchStatus = {
 } as const
 
 export type DeliveryBatchStatus = (typeof DeliveryBatchStatus)[keyof typeof DeliveryBatchStatus]
+
+
+export const SupportTicketStatus = {
+  OPEN: 'OPEN',
+  IN_PROGRESS: 'IN_PROGRESS',
+  RESOLVED: 'RESOLVED'
+} as const
+
+export type SupportTicketStatus = (typeof SupportTicketStatus)[keyof typeof SupportTicketStatus]
+
+
+export const SupportTicketCategory = {
+  ORDER_ISSUE: 'ORDER_ISSUE',
+  PAYMENT_REFUND: 'PAYMENT_REFUND',
+  DELIVERY_ISSUE: 'DELIVERY_ISSUE',
+  PRODUCT_ISSUE: 'PRODUCT_ISSUE',
+  ACCOUNT_ISSUE: 'ACCOUNT_ISSUE',
+  OTHER: 'OTHER'
+} as const
+
+export type SupportTicketCategory = (typeof SupportTicketCategory)[keyof typeof SupportTicketCategory]

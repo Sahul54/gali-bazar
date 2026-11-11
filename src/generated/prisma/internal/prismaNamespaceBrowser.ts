@@ -74,7 +74,8 @@ export const ModelName = {
   Cart: 'Cart',
   CartItem: 'CartItem',
   DeliveryZone: 'DeliveryZone',
-  DeliveryZonePincode: 'DeliveryZonePincode'
+  DeliveryZonePincode: 'DeliveryZonePincode',
+  SupportTicket: 'SupportTicket'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -477,6 +478,21 @@ export const DeliveryZonePincodeScalarFieldEnum = {
 } as const
 
 export type DeliveryZonePincodeScalarFieldEnum = (typeof DeliveryZonePincodeScalarFieldEnum)[keyof typeof DeliveryZonePincodeScalarFieldEnum]
+
+
+export const SupportTicketScalarFieldEnum = {
+  id: 'id',
+  category: 'category',
+  subject: 'subject',
+  message: 'message',
+  status: 'status',
+  userId: 'userId',
+  orderId: 'orderId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type SupportTicketScalarFieldEnum = (typeof SupportTicketScalarFieldEnum)[keyof typeof SupportTicketScalarFieldEnum]
 
 
 export const SortOrder = {

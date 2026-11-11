@@ -23,7 +23,7 @@ export default function CustomerLayout({ children }) {
             {children}
           </main>
 
-          <CustomerFooter />
+          {/* <CustomerFooter /> */}
           <MobileNavigation />
         </div>
       </CheckoutProvider>

@@ -633,6 +633,40 @@ export type EnumInventoryMovementTypeWithAggregatesFilter<$PrismaModel = never> 
   _max?: Prisma.NestedEnumInventoryMovementTypeFilter<$PrismaModel>
 }
 
+export type EnumSupportTicketCategoryFilter<$PrismaModel = never> = {
+  equals?: $Enums.SupportTicketCategory | Prisma.EnumSupportTicketCategoryFieldRefInput<$PrismaModel>
+  in?: $Enums.SupportTicketCategory[] | Prisma.ListEnumSupportTicketCategoryFieldRefInput<$PrismaModel>
+  notIn?: $Enums.SupportTicketCategory[] | Prisma.ListEnumSupportTicketCategoryFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumSupportTicketCategoryFilter<$PrismaModel> | $Enums.SupportTicketCategory
+}
+
+export type EnumSupportTicketStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.SupportTicketStatus | Prisma.EnumSupportTicketStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.SupportTicketStatus[] | Prisma.ListEnumSupportTicketStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.SupportTicketStatus[] | Prisma.ListEnumSupportTicketStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumSupportTicketStatusFilter<$PrismaModel> | $Enums.SupportTicketStatus
+}
+
+export type EnumSupportTicketCategoryWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.SupportTicketCategory | Prisma.EnumSupportTicketCategoryFieldRefInput<$PrismaModel>
+  in?: $Enums.SupportTicketCategory[] | Prisma.ListEnumSupportTicketCategoryFieldRefInput<$PrismaModel>
+  notIn?: $Enums.SupportTicketCategory[] | Prisma.ListEnumSupportTicketCategoryFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumSupportTicketCategoryWithAggregatesFilter<$PrismaModel> | $Enums.SupportTicketCategory
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumSupportTicketCategoryFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumSupportTicketCategoryFilter<$PrismaModel>
+}
+
+export type EnumSupportTicketStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.SupportTicketStatus | Prisma.EnumSupportTicketStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.SupportTicketStatus[] | Prisma.ListEnumSupportTicketStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.SupportTicketStatus[] | Prisma.ListEnumSupportTicketStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumSupportTicketStatusWithAggregatesFilter<$PrismaModel> | $Enums.SupportTicketStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumSupportTicketStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumSupportTicketStatusFilter<$PrismaModel>
+}
+
 export type NestedStringFilter<$PrismaModel = never> = {
   equals?: string | Prisma.StringFieldRefInput<$PrismaModel>
   in?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel>
@@ -1187,6 +1221,40 @@ export type NestedEnumInventoryMovementTypeWithAggregatesFilter<$PrismaModel = n
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumInventoryMovementTypeFilter<$PrismaModel>
   _max?: Prisma.NestedEnumInventoryMovementTypeFilter<$PrismaModel>
+}
+
+export type NestedEnumSupportTicketCategoryFilter<$PrismaModel = never> = {
+  equals?: $Enums.SupportTicketCategory | Prisma.EnumSupportTicketCategoryFieldRefInput<$PrismaModel>
+  in?: $Enums.SupportTicketCategory[] | Prisma.ListEnumSupportTicketCategoryFieldRefInput<$PrismaModel>
+  notIn?: $Enums.SupportTicketCategory[] | Prisma.ListEnumSupportTicketCategoryFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumSupportTicketCategoryFilter<$PrismaModel> | $Enums.SupportTicketCategory
+}
+
+export type NestedEnumSupportTicketStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.SupportTicketStatus | Prisma.EnumSupportTicketStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.SupportTicketStatus[] | Prisma.ListEnumSupportTicketStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.SupportTicketStatus[] | Prisma.ListEnumSupportTicketStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumSupportTicketStatusFilter<$PrismaModel> | $Enums.SupportTicketStatus
+}
+
+export type NestedEnumSupportTicketCategoryWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.SupportTicketCategory | Prisma.EnumSupportTicketCategoryFieldRefInput<$PrismaModel>
+  in?: $Enums.SupportTicketCategory[] | Prisma.ListEnumSupportTicketCategoryFieldRefInput<$PrismaModel>
+  notIn?: $Enums.SupportTicketCategory[] | Prisma.ListEnumSupportTicketCategoryFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumSupportTicketCategoryWithAggregatesFilter<$PrismaModel> | $Enums.SupportTicketCategory
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumSupportTicketCategoryFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumSupportTicketCategoryFilter<$PrismaModel>
+}
+
+export type NestedEnumSupportTicketStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.SupportTicketStatus | Prisma.EnumSupportTicketStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.SupportTicketStatus[] | Prisma.ListEnumSupportTicketStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.SupportTicketStatus[] | Prisma.ListEnumSupportTicketStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumSupportTicketStatusWithAggregatesFilter<$PrismaModel> | $Enums.SupportTicketStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumSupportTicketStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumSupportTicketStatusFilter<$PrismaModel>
 }
 
 
